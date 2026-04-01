@@ -265,7 +265,7 @@ function saveScores(o) { localStorage.setItem(SCORES_KEY,   JSON.stringify(o)); 
 function loadPosters() { try { return JSON.parse(localStorage.getItem(POSTERS_KEY)  || '{}'); } catch { return {}; } }
 function savePosters(o){ localStorage.setItem(POSTERS_KEY,  JSON.stringify(o)); }
 
-const API_BASE = window.MANGA_API_BASE || 'https://api.yourdomain.com'; // change to your HTTPS API endpoint
+const API_BASE = "http://100.108.187.90:3000"; // change to your HTTPS API endpoint
 
 let customEntries = [];
 let savedScores   = loadScores();
