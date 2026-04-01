@@ -168,8 +168,21 @@ td:not(:nth-child(3)) { text-align: center; }
 
 <!-- hidden file input -->
 <input type="file" id="file-input" accept="image/*" style="display:none">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBPjcdi6XnD5JlHNbsszrP-tg-Swohf_w0",
+  authDomain: "mangatracker-80785.firebaseapp.com",
+  projectId: "mangatracker-80785",
+  storageBucket: "mangatracker-80785.firebasestorage.app",
+  messagingSenderId: "319538876019",
+  appId: "1:319538876019:web:e0d02954be746e652ca406"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 const RAW = [
   ["Vagabond",8,2019,"Ongoing",null],["Goblin Slayer",9,2019,"Ongoing",71],["Goblin Slayer Year One",9,2019,"Ongoing",102],
   ["Black Lagoon",9,2019,"Ongoing",null],["Berserk",100,2019,"Ongoing",null],["Gangsta",8,2019,"Ongoing",null],
@@ -267,7 +280,12 @@ function saveScores(o) { localStorage.setItem(SCORES_KEY,   JSON.stringify(o)); 
 function loadPosters() { try { return JSON.parse(localStorage.getItem(POSTERS_KEY)  || '{}'); } catch { return {}; } }
 function savePosters(o){ localStorage.setItem(POSTERS_KEY,  JSON.stringify(o)); }
 
-let customEntries = loadCustom();
+let customEntries = [];
+
+async function loadCustomFromFirebase() {
+  const snapshot = await db.collection("manga").get();
+  customEntries = snapshot.docs.map(doc => doc.data());
+}
 let savedScores   = loadScores();
 let posters       = loadPosters();  // title -> data URL or https URL
 
@@ -313,7 +331,7 @@ function addEntry() {
 
   const entry = { title, score, origScore: score, year, status, ch, isCustom: true };
   customEntries.push({ title, score, year, status, ch });
-  saveCustom(customEntries);
+  saveCustomToFirebase();
   data.push(entry);
 
   ['f-title','f-score','f-ch','f-year'].forEach(id => document.getElementById(id).value = '');
@@ -334,7 +352,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Enter' && formOpen) a
 function deleteEntry(title) {
   data = data.filter(d => d.title !== title);
   customEntries = customEntries.filter(e => e.title !== title);
-  saveCustom(customEntries);
+  saveCustomToFirebase();
   delete savedScores[title]; saveScores(savedScores);
   delete posters[title]; savePosters(posters);
   delete expanded[title];
@@ -521,7 +539,7 @@ function render() {
       saveScores(savedScores);
       if (item.isCustom) {
         const ce = customEntries.find(e => e.title === title);
-        if (ce) { ce.score = val; saveCustom(customEntries); }
+        if (ce) { ce.score = val; saveCustomToFirebase(); }
       }
       render();
       setTimeout(() => {
@@ -541,9 +559,19 @@ function render() {
       if (confirm(`Remove "${title}" from your list?`)) deleteEntry(title);
     });
   });
+  async function saveCustomToFirebase() {
+  const collection = db.collection("manga");
+
+  const snapshot = await collection.get();
+  snapshot.forEach(doc => doc.ref.delete());
+
+  for (const entry of customEntries) {
+    await collection.add(entry);
+  }
+}
 }
 
-render();
+startApp();
 </script>
 </body>
 </html>
