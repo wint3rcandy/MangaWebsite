@@ -559,7 +559,7 @@ function render() {
       if (confirm(`Remove "${title}" from your list?`)) deleteEntry(title);
     });
   });
-  async function saveCustomToFirebase() {
+async function saveCustomToFirebase() {
   const collection = db.collection("manga");
 
   const snapshot = await collection.get();
@@ -568,7 +568,19 @@ function render() {
   for (const entry of customEntries) {
     await collection.add(entry);
   }
-}
+} // ✅ closed properly
+
+async function startApp() {
+  await loadCustomFromFirebase();
+
+  data = [
+    ...RAW.map(([title, score, year, status, ch]) => ({
+      title, score: savedScores[title] ?? score, origScore: score, year, status, ch, isCustom: false
+    })),
+    ...customEntries.map(e => ({ ...e, origScore: e.score, isCustom: true }))
+  ];
+
+  render();
 }
 
 startApp();
