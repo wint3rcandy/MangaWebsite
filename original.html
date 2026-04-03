@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manga Tier Rankings</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 1.5rem; }
+.wrap { max-width: 940px; margin: 0 auto; }
+
+/* top bar */
+.top-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; flex-wrap: wrap; }
+.top-bar h1 { font-size: 20px; font-weight: 500; color: #FFD700; flex: 1; }
+.search-box { padding: 6px 10px; border: 0.5px solid #333; border-radius: 8px; font-size: 13px; background: #1a1a1a; color: #e0e0e0; width: 200px; }
+.search-box:focus { outline: none; border-color: #555; }
+
+/* add panel */
+.add-panel { background: #111; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.add-panel-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+.add-panel-header span { font-size: 13px; font-weight: 500; color: #888; }
+.toggle-btn { font-size: 20px; color: #FFD700; line-height: 1; transition: transform 0.25s; display: inline-block; }
+.toggle-btn.open { transform: rotate(45deg); }
+.add-form { display: none; margin-top: 1rem; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+.add-form.visible { display: flex; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 10px; color: #555; font-weight: 500; letter-spacing: 0.05em; }
+.field input, .field select { padding: 6px 9px; border: 0.5px solid #333; border-radius: 8px; font-size: 13px; background: #1a1a1a; color: #e0e0e0; }
+.field input:focus, .field select:focus { outline: none; border-color: #555; }
+.field-title { flex: 1; min-width: 200px; }
+.field-title input { width: 100%; }
+.field-score input { width: 70px; }
+.field-year input { width: 76px; }
+.field-ch input { width: 80px; }
+.field-status select { width: 105px; }
+.add-btn { padding: 6px 18px; background: #FFD700; color: #000; border: none; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; height: 32px; align-self: flex-end; }
+.add-btn:hover { background: #e6c200; }
+.err { font-size: 11px; color: #ef5350; margin-top: 6px; display: none; }
+
+/* stats */
+.stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+.stat { background: #1a1a1a; border-radius: 8px; padding: 6px 12px; font-size: 12px; color: #888; }
+.stat b { color: #ccc; font-weight: 500; }
+
+/* tier */
+.tier-section { margin-bottom: 6px; border-radius: 12px; overflow: hidden; border: 0.5px solid #2a2a2a; }
+.tier-header { padding: 8px 14px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.tier-count { font-size: 11px; opacity: 0.7; margin-left: auto; }
+.tier-toggle { font-size: 10px; opacity: 0.6; transition: transform 0.2s; }
+.tier-toggle.collapsed { transform: rotate(-90deg); }
+
+/* table */
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+colgroup col:nth-child(1) { width: 32px; }
+colgroup col:nth-child(2) { width: 32px; }
+colgroup col:nth-child(3) { width: auto; }
+colgroup col:nth-child(4) { width: 72px; }
+colgroup col:nth-child(5) { width: 78px; }
+colgroup col:nth-child(6) { width: 70px; }
+colgroup col:nth-child(7) { width: 56px; }
+colgroup col:nth-child(8) { width: 32px; }
+thead th { font-size: 10px; font-weight: 500; color: #555; text-align: left; padding: 5px 8px; border-bottom: 0.5px solid #222; background: #111; }
+thead th:not(:nth-child(3)) { text-align: center; }
+.row { border-bottom: 0.5px solid #1e1e1e; cursor: pointer; transition: background 0.12s; }
+.row:last-child { border-bottom: none; }
+.row:hover { filter: brightness(1.15); }
+td { padding: 6px 8px; font-size: 13px; color: #ccc; vertical-align: middle; }
+td:not(:nth-child(3)) { text-align: center; }
+.rank { color: #444; font-size: 11px; }
+
+/* poster thumb in table */
+.thumb-cell { width: 32px; text-align: center; }
+.thumb { width: 26px; height: 36px; object-fit: cover; border-radius: 3px; display: block; margin: 0 auto; border: 0.5px solid #333; }
+.thumb-placeholder { width: 26px; height: 36px; background: #1a1a1a; border-radius: 3px; display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 0.5px dashed #333; font-size: 10px; color: #333; }
+
+.title-cell { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.score-input { width: 56px; padding: 3px 6px; border: 0.5px solid #333; border-radius: 8px; font-size: 13px; font-weight: 500; text-align: center; background: #1a1a1a; color: #e0e0e0; transition: border-color 0.15s; }
+.score-input:focus { outline: none; border-color: #666; box-shadow: 0 0 0 2px rgba(128,128,128,0.15); }
+.score-input.changed { border-color: #2e7d32; }
+.badge { display: inline-block; padding: 2px 7px; border-radius: 99px; font-size: 11px; font-weight: 500; }
+.status-ongoing  { background: #0d2b0d; color: #66bb6a; }
+.status-finished { background: #0a1a2e; color: #42a5f5; }
+.status-hiatus   { background: #2a1a00; color: #ffa726; }
+.status-unknown  { background: #1a1a1a; color: #757575; }
+.ch { color: #444; font-size: 12px; }
+.ch.has-ch { color: #4a90a4; font-weight: 500; }
+.del-btn { background: none; border: none; color: #2a2a2a; cursor: pointer; font-size: 13px; padding: 2px 5px; border-radius: 4px; transition: color 0.15s; line-height: 1; }
+.del-btn:hover { color: #ef5350; }
+.new-entry td:nth-child(2)::before { content: ''; display: inline-block; width: 3px; height: 3px; background: #FFD700; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+
+/* expanded poster row */
+.expand-row { display: none; }
+.expand-row.open { display: table-row; }
+.expand-cell { padding: 0 !important; border-bottom: 0.5px solid #1e1e1e; }
+.expand-inner { display: flex; gap: 1.25rem; padding: 1rem 1.25rem; align-items: flex-start; }
+.poster-area { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.poster-img { width: 110px; height: 155px; object-fit: cover; border-radius: 6px; border: 0.5px solid #333; display: block; }
+.poster-empty { width: 110px; height: 155px; background: #141414; border-radius: 6px; border: 1px dashed #2a2a2a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #333; font-size: 11px; }
+.poster-empty svg { opacity: 0.3; }
+.poster-actions { display: flex; flex-direction: column; gap: 5px; width: 110px; }
+.poster-btn { padding: 5px 8px; font-size: 11px; border-radius: 6px; cursor: pointer; text-align: center; border: 0.5px solid #333; background: #1a1a1a; color: #888; transition: border-color 0.15s, color 0.15s; white-space: nowrap; }
+.poster-btn:hover { border-color: #FFD700; color: #FFD700; }
+.poster-btn.danger:hover { border-color: #ef5350; color: #ef5350; }
+.poster-info { flex: 1; }
+.poster-info h2 { font-size: 16px; font-weight: 500; color: #e0e0e0; margin-bottom: 6px; }
+.info-grid { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 12px; }
+.info-grid .lbl { color: #555; }
+.info-grid .val { color: #aaa; }
+.url-input { width: 100%; padding: 5px 8px; border: 0.5px solid #333; border-radius: 6px; font-size: 12px; background: #141414; color: #e0e0e0; margin-top: 8px; }
+.url-input:focus { outline: none; border-color: #555; }
+.url-row { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+.url-row input { flex: 1; padding: 5px 8px; border: 0.5px solid #333; border-radius: 6px; font-size: 12px; background: #141414; color: #e0e0e0; }
+.url-row input:focus { outline: none; border-color: #555; }
+.url-row button { padding: 5px 10px; font-size: 11px; border-radius: 6px; cursor: pointer; border: 0.5px solid #333; background: #1a1a1a; color: #888; white-space: nowrap; }
+.url-row button:hover { border-color: #FFD700; color: #FFD700; }
+
+.flash { animation: flashRow 0.5s ease; }
+@keyframes flashRow { 0%,100%{filter:none} 40%{filter:brightness(1.7)} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-bar">
+    <h1>🎌 Manga Rankings</h1>
+    <input class="search-box" type="text" placeholder="Search titles..." id="search" oninput="render()">
+  </div>
+
+  <div class="add-panel">
+    <div class="add-panel-header" onclick="toggleForm()">
+      <span>Add new entry</span>
+      <span class="toggle-btn" id="toggle-btn">+</span>
+    </div>
+    <div class="add-form" id="add-form">
+      <div class="field field-title">
+        <label>TITLE</label>
+        <input type="text" id="f-title" placeholder="Manga title...">
+      </div>
+      <div class="field field-score">
+        <label>SCORE</label>
+        <input type="number" id="f-score" placeholder="0–100" min="0" max="100" step="0.1">
+      </div>
+      <div class="field field-status">
+        <label>STATUS</label>
+        <select id="f-status">
+          <option value="Ongoing">Ongoing</option>
+          <option value="Finished">Finished</option>
+          <option value="Hiatus">Hiatus</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+      </div>
+      <div class="field field-ch">
+        <label>CHAPTER</label>
+        <input type="number" id="f-ch" placeholder="optional" min="1" step="1">
+      </div>
+      <div class="field field-year">
+        <label>YEAR READ</label>
+        <input type="number" id="f-year" placeholder="2026" min="2000" max="2100">
+      </div>
+      <button class="add-btn" onclick="addEntry()">Add →</button>
+    </div>
+    <div class="err" id="form-err"></div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+  <div id="tiers"></div>
+</div>
+
+<!-- hidden file input -->
+<input type="file" id="file-input" accept="image/*" style="display:none">
+
+<script>
+const RAW = [
+  ["Vagabond",8,2019,"Ongoing",null],["Goblin Slayer",9,2019,"Ongoing",71],["Goblin Slayer Year One",9,2019,"Ongoing",102],
+  ["Black Lagoon",9,2019,"Ongoing",null],["Berserk",100,2019,"Ongoing",null],["Gangsta",8,2019,"Ongoing",null],
+  ["Claymore",10,2020,"Finished",null],["Kuzu no Honkai Decor",9,2020,"Finished",null],["Domestic Na Kanojo",9,2020,"Ongoing",null],
+  ["Kengan Asura",100,2020,"Finished",null],["Kingdom",100,2020,"Ongoing",844],["Attack on Titan",9,2020,"Ongoing",null],
+  ["Vinland Saga",9,2020,"Ongoing",null],["666 Satan",8,2020,"Finished",null],["Spy x Family",9,2020,"Ongoing",null],
+  ["Tono No Kanri O Shite Miyou",8,2020,"Ongoing",null],["Wotaku Koi wa Muzukashii",7,2020,"Ongoing",null],
+  ["One Punch Man",100,2020,"Ongoing",null],["Chainsaw Man",100,2020,"Ongoing",null],["Demon Slayer",10,2020,"Finished",null],
+  ["Ane Naru Mono",8,2020,"Ongoing",null],["Jujutsu Kaisen",9,2020,"Ongoing",198],
+  ["We May Be an Inexperienced Couple But",8,2020,"Ongoing",null],["Haite Kudasai, Takamine San",10,2020,"Ongoing",null],
+  ["Daughter's Friend",7,2020,"Ongoing",null],["Please Don't Bully Me Nagatoro",8,2020,"Ongoing",null],
+  ["Pansuto",8,2020,"Ongoing",null],["One Piece",10,2020,"Ongoing",1118],["Dorohedoro",7,2020,"Finished",null],
+  ["Perowan!",6,2020,"Unknown",null],["Initial D",9,2020,"Finished",null],
+  ["Hell's Paradise",9,2021,"Ongoing",null],["Black Clover",9,2021,"Ongoing",null],["Blame!",10,2021,"Finished",null],
+  ["Monster",8,2021,"Finished",null],["Jagaaan",9,2021,"Finished",null],["All You Need Is Kill",8,2021,"Finished",null],
+  ["Fire Force",8,2021,"Ongoing",274],["Arms Dealer",9,2021,"Hiatus",58],["Haikyuu",10,2021,"Finished",null],
+  ["Great Teacher Onizuka",10,2021,"Finished",null],["Tokyo Ghoul",9,2021,"Finished",null],["Tokyo Ghoul:re",8,2021,"Finished",null],
+  ["Solo Leveling",10,2021,"Ongoing",175],["Blade of the Immortal",9,2021,"Finished",null],
+  ["Dress Up Darling",7,2022,"Ongoing",70],["Blue Lock",7,2022,"Ongoing",157],["Three Days of Happiness",10,2022,"Finished",null],
+  ["Neighbor's Sisters",7,2022,"Ongoing",49],["Mousou Shoujo",8,2022,"Ongoing",16],["Mob Psycho",8,2022,"Ongoing",101],
+  ["Kiss De Fusaide, Bare Naide",9,2022,"Ongoing",15],["Kedamonotachi No Jikan",8,2022,"Ongoing",25],
+  ["Memorize",10,2022,"Ongoing",100],["A Returner's Magic Should Be Special",8,2022,"Ongoing",182],
+  ["My Guardian Angel",8,2022,"Finished",null],["I Want to See You Embarrassed",9,2022,"Ongoing",10],
+  ["Kubo San Doesn't Leave Me Be",8,2022,"Ongoing",110],["Juujika no Rokunin",8,2022,"Ongoing",82],
+  ["Nengara Nenbyaku Ansatsu Renka",7,2022,"Ongoing",15],["Boy's Abyss",6,2022,"Ongoing",94],
+  ["That Girl is Cute... But Dangerous?",8,2022,"Ongoing",21],["Please Go Home, Akutsu-San!",8,2022,"Ongoing",108],
+  ["Blood and Butterflies",6,2022,"Ongoing",44],["Hisureba",7,2022,"Ongoing",19],
+  ["Match Made in Heaven by Chance",7,2022,"Ongoing",22],["I'm Not the Hero",7,2022,"Ongoing",7],
+  ["My Charms Are Wasted on Kuroiwa Medaka",7,2022,"Ongoing",22],["Keep This a Secret from Mom",8.5,2022,"Ongoing",53],
+  ["Madam",9,2022,"Ongoing",23],["Staying with Ajumma",7,2022,"Ongoing",23],
+  ["A Story About a Dragon and the Rising of an Adventurer",9,2022,"Ongoing",9],
+  ["Tokyo Revengers",8,2022,"Ongoing",197],["Yugami Doesn't Have Any Friends",6,2022,"Ongoing",26],
+  ["Ice Guy and the Cool Female Colleague",7.5,2022,"Ongoing",34],["Youngest Scion of the Mages",9,2022,"Ongoing",66],
+  ["Gyaru JK Onee x Shota",9,2022,"Finished",null],["I Obtained a Mythic Item",8,2022,"Ongoing",22],
+  ["My Sister's Friends",7,2022,"Ongoing",43],["Silent War",10,2022,"Finished",null],
+  ["I Want to Eat Your Pancreas",7,2022,"Finished",null],["Sex and Dungeon",6,2022,"Ongoing",35],
+  ["The Beginning After the End",9.5,2023,"Ongoing",172],["The Middle-Aged Newbie Adventurer",9.5,2023,"Ongoing",37],
+  ["I'm a Former Slave...",8.3,2023,"Ongoing",23],["Mizuki-Senpai No Koi Uranai",7.8,2023,"Ongoing",17],
+  ["Isekai NTR",6.9,2023,"Ongoing",26],["My Sister Is a Superstar",5.0,2023,"Ongoing",176],
+  ["The Eminence in the Shadow",8,2023,"Ongoing",46],["Dorei wo Choukyoushite Harem Tsukuru",7,2023,"Ongoing",37],
+  ["Crime & Punishment",7.5,2023,"Finished",40],["Hero Manager",7,2023,"Ongoing",26],
+  ["Elf Who Likes to Be Humiliated",9,2023,"Ongoing",66],["Chiisana Kanojo No Meswitch",8,2023,"Ongoing",9],
+  ["Golden Facade",6.5,2024,"Ongoing",30],["Freezing the World: I Built a Doomsday Safehouse",7.5,2024,"Ongoing",39],
+  ["Akuma wa Rozario ni Kiss o Suru",8,2024,"Ongoing",3],["Gantz",8.2,2024,"Finished",null],
+  ["Eden: It's an Endless World",7,2024,"Finished",null],["A Hero Trained by the Most Evil Demon King",8.1,2024,"Ongoing",21],
+  ["Nimotsu Mochi No Nousuji Musou",7.4,2024,"Ongoing",9],["An Outsider's Way In",9,2024,"Ongoing",97],
+  ["Mist Might Mayhem",10,2024,"Ongoing",41],["Heavenly Grand Archive's Young Master",6,2024,"Ongoing",82],
+  ["Boku wa Kimitachi wo Shihai Suru",8.3,2024,"Ongoing",42],["The Invincible Vanished Shadow Archer",6.8,2024,"Ongoing",15],
+  ["Blinded by the Setting Sun",9.3,2024,"Ongoing",187],["Sousou no Frieren",9,2024,"Ongoing",139],
+  ["Kagurabachi",7.8,2024,"Ongoing",61],["Dungeon Defense",7.8,2024,"Ongoing",47],
+  ["Childhood Friend of the Zenith",8,2024,"Ongoing",40],["Maplestory: The Last Adventurer",7.8,2024,"Ongoing",50],
+  ["I Killed an Academy Player",7.1,2024,"Ongoing",66],
+  ["Demonic Evolution",8,2025,"Ongoing",86],["Road to Kingdom",10,2025,"Ongoing",91],
+  ["King of the Labyrinth",7,2025,"Ongoing",14],["Dungeon ni Hisomu Yandere na Kanojo",10,2025,"Ongoing",21],
+  ["The Imminence in the Shadow",7,2025,"Ongoing",61],["The Brilliant Healer's New Life in the Shadows",9,2025,"Ongoing",15],
+  ["The Priest of Corruption",9.3,2025,"Ongoing",73],["Let This Grieving Soul Retire",9,2025,"Ongoing",53],
+  ["Bad Born Blood",7,2025,"Ongoing",21],["Infinite Mage",8.6,2025,"Ongoing",104],
+  ["Shuujin Tensei",8,2025,"Ongoing",2],["Daredemo Dakeru Kimi ga Suki",6,2025,"Ongoing",50],
+  ["The Strongest Female Masters",9,2025,"Ongoing",28],["Savage Hero",8.9,2025,"Ongoing",77],
+  ["Gomie Ika da to Tsuihousareta Shounin",6,2025,"Ongoing",10],["Okaeri, Papa",8.6,2025,"Ongoing",25],
+  ["Harem Ou no Isekai Press Manyuki",6,2025,"Ongoing",8],["Choukyoushi wa Mamono ni Kakomarete",8.7,2025,"Ongoing",8],
+  ["Dungeon Odyssey",10,2025,"Ongoing",124],["The Witch and the Mercenary",10,2025,"Ongoing",46],
+  ["Athletes Village: The Trap",10,2025,"Ongoing",22],["Set It!",8,2025,"Ongoing",53],
+  ["Omniscient Reader's Viewpoint",10,2025,"Ongoing",272],["Goblin's Ascent",7,2025,"Ongoing",16],
+  ["Teacher's Efforts",7.5,2025,"Ongoing",55],["Absolute Regression",8,2025,"Ongoing",61],
+  ["Nine Heavens Swordmaster",5,2025,"Ongoing",23],["Record of Highserk War",8.7,2025,"Ongoing",26],
+  ["Surviving the Game as a Barbarian",9,2025,"Ongoing",134],["Mushoku Tensei",7,2025,"Ongoing",68],
+  ["Pick Me Up",10,2026,"Ongoing",182],["Tower Dungeon",9,2026,"Ongoing",23],
+  ["The Kept Man of the Princess Knight",6,2026,"Ongoing",5],["Sayonara Eri",9,2026,"Finished",null],
+  ["Legend of the Northern Blade",8,2026,"Ongoing",null],
+];
+
+const TIERS = [
+  { id:"S", label:"S tier", min:100, bg:"#B8860B", fg:"#000", rowBg:"rgba(184,134,11,0.07)" },
+  { id:"A", label:"A tier", min:9,   bg:"#0D47A1", fg:"#fff", rowBg:"rgba(13,71,161,0.07)"  },
+  { id:"B", label:"B tier", min:8,   bg:"#4A148C", fg:"#fff", rowBg:"rgba(74,20,140,0.07)"  },
+  { id:"C", label:"C tier", min:7,   bg:"#212121", fg:"#bbb", rowBg:"rgba(100,100,100,0.05)"},
+  { id:"D", label:"D tier", min:6,   bg:"#7F0000", fg:"#fff", rowBg:"rgba(127,0,0,0.07)"    },
+  { id:"F", label:"F tier", min:0,   bg:"#3E1000", fg:"#ff7043", rowBg:"rgba(62,16,0,0.07)"},
+];
+
+function getTier(score) {
+  for (const t of TIERS) if (score >= t.min) return t;
+  return TIERS[TIERS.length-1];
+}
+
+const STORAGE_KEY  = 'manga_custom_entries';
+const SCORES_KEY   = 'manga_scores';
+const POSTERS_KEY  = 'manga_posters';
+
+function loadCustom()  { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)  || '[]'); } catch { return []; } }
+function saveCustom(a) { localStorage.setItem(STORAGE_KEY,  JSON.stringify(a)); }
+function loadScores()  { try { return JSON.parse(localStorage.getItem(SCORES_KEY)   || '{}'); } catch { return {}; } }
+function saveScores(o) { localStorage.setItem(SCORES_KEY,   JSON.stringify(o)); }
+function loadPosters() { try { return JSON.parse(localStorage.getItem(POSTERS_KEY)  || '{}'); } catch { return {}; } }
+function savePosters(o){ localStorage.setItem(POSTERS_KEY,  JSON.stringify(o)); }
+
+let customEntries = loadCustom();
+let savedScores   = loadScores();
+let posters       = loadPosters();  // title -> data URL or https URL
+
+let data = [
+  ...RAW.map(([title, score, year, status, ch]) => ({
+    title, score: savedScores[title] ?? score, origScore: score, year, status, ch, isCustom: false
+  })),
+  ...customEntries.map(e => ({ ...e, origScore: e.score, isCustom: true }))
+];
+
+let collapsed   = {};
+let expanded    = {};   // title -> bool
+let formOpen    = false;
+let pendingPosterTitle = null;
+
+/* ── form toggle ── */
+function toggleForm() {
+  formOpen = !formOpen;
+  document.getElementById('add-form').classList.toggle('visible', formOpen);
+  document.getElementById('toggle-btn').classList.toggle('open', formOpen);
+  if (formOpen) document.getElementById('f-title').focus();
+}
+
+function showErr(msg) {
+  const el = document.getElementById('form-err');
+  el.textContent = msg; el.style.display = msg ? 'block' : 'none';
+}
+
+/* ── add entry ── */
+function addEntry() {
+  const title   = document.getElementById('f-title').value.trim();
+  const score   = parseFloat(document.getElementById('f-score').value);
+  const status  = document.getElementById('f-status').value;
+  const chVal   = document.getElementById('f-ch').value;
+  const yearVal = document.getElementById('f-year').value;
+  const ch      = chVal   ? parseInt(chVal)   : null;
+  const year    = yearVal ? parseInt(yearVal) : new Date().getFullYear();
+
+  if (!title) return showErr('Title is required.');
+  if (isNaN(score) || score < 0 || score > 100) return showErr('Score must be between 0 and 100.');
+  if (data.find(d => d.title.toLowerCase() === title.toLowerCase())) return showErr('That title already exists.');
+  showErr('');
+
+  const entry = { title, score, origScore: score, year, status, ch, isCustom: true };
+  customEntries.push({ title, score, year, status, ch });
+  saveCustom(customEntries);
+  data.push(entry);
+
+  ['f-title','f-score','f-ch','f-year'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-status').value = 'Ongoing';
+
+  render();
+  setTimeout(() => {
+    document.querySelectorAll('tr.row').forEach(r => {
+      if (r.dataset.title === title) r.classList.add('flash');
+    });
+    setTimeout(() => document.querySelectorAll('tr.row').forEach(r => r.classList.remove('flash')), 600);
+  }, 50);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && formOpen) addEntry(); });
+
+/* ── delete ── */
+function deleteEntry(title) {
+  data = data.filter(d => d.title !== title);
+  customEntries = customEntries.filter(e => e.title !== title);
+  saveCustom(customEntries);
+  delete savedScores[title]; saveScores(savedScores);
+  delete posters[title]; savePosters(posters);
+  delete expanded[title];
+  render();
+}
+
+/* ── poster file upload ── */
+const fileInput = document.getElementById('file-input');
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  if (!file || !pendingPosterTitle) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    posters[pendingPosterTitle] = e.target.result;
+    savePosters(posters);
+    pendingPosterTitle = null;
+    fileInput.value = '';
+    render();
+  };
+  reader.readAsDataURL(file);
+});
+
+function triggerUpload(title) {
+  pendingPosterTitle = title;
+  fileInput.click();
+}
+
+function setPosterURL(title, url) {
+  if (!url.trim()) return;
+  posters[title] = url.trim();
+  savePosters(posters);
+  render();
+}
+
+function removePoster(title) {
+  delete posters[title];
+  savePosters(posters);
+  render();
+}
+
+/* ── expand row toggle ── */
+function toggleExpand(title) {
+  expanded[title] = !expanded[title];
+  // re-render only the expand row visibility for performance, but full render is simplest
+  render();
+}
+
+/* ── main render ── */
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = q ? data.filter(d => d.title.toLowerCase().includes(q)) : data;
+  const sorted = [...filtered].sort((a,b) => b.score - a.score || a.title.localeCompare(b.title));
+
+  document.getElementById('stats').innerHTML =
+    TIERS.map(t => {
+      const cnt = sorted.filter(d => getTier(d.score).id === t.id).length;
+      return cnt ? `<div class="stat"><b style="color:${t.bg}">${t.id}</b> ${cnt}</div>` : '';
+    }).join('') + `<div class="stat">Total <b>${sorted.length}</b></div>`;
+
+  const container = document.getElementById('tiers');
+  container.innerHTML = '';
+  let globalRank = 1;
+
+  TIERS.forEach(tier => {
+    const items = sorted.filter(d => getTier(d.score).id === tier.id);
+    if (!items.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'tier-section';
+
+    const isCol = collapsed[tier.id];
+    const hdr = document.createElement('div');
+    hdr.className = 'tier-header';
+    hdr.style.cssText = `background:${tier.bg};color:${tier.fg}`;
+    hdr.innerHTML = `<span>${tier.label}</span><span class="tier-count">${items.length} titles</span><span class="tier-toggle${isCol?' collapsed':''}">▼</span>`;
+    hdr.onclick = () => { collapsed[tier.id] = !collapsed[tier.id]; render(); };
+
+    const body = document.createElement('div');
+    body.style.display = isCol ? 'none' : 'block';
+
+    const tbl = document.createElement('table');
+    tbl.innerHTML = `<colgroup><col><col><col><col><col><col><col><col></colgroup>
+      <thead><tr><th>#</th><th></th><th>Title</th><th>Score</th><th>Status</th><th>Chapter</th><th>Year</th><th></th></tr></thead>`;
+    const tbody = document.createElement('tbody');
+
+    items.forEach(item => {
+      const rank = globalRank++;
+      const poster = posters[item.title];
+      const isExp  = !!expanded[item.title];
+      const statusKey = 'status-' + item.status.toLowerCase();
+      const chHtml = item.ch != null ? `<span class="ch has-ch">ch. ${item.ch}</span>` : `<span class="ch">—</span>`;
+      const changed = item.score !== item.origScore;
+
+      /* main row */
+      const tr = document.createElement('tr');
+      tr.className = 'row' + (item.isCustom ? ' new-entry' : '');
+      tr.style.background = tier.rowBg;
+      tr.dataset.title = item.title;
+
+      const thumbHtml = poster
+        ? `<img class="thumb" src="${poster}" alt="">`
+        : `<div class="thumb-placeholder">?</div>`;
+
+      tr.innerHTML = `
+        <td class="rank">${rank}</td>
+        <td class="thumb-cell">${thumbHtml}</td>
+        <td class="title-cell" title="${item.title}">${item.title}</td>
+        <td><input class="score-input${changed?' changed':''}" type="number" min="0" max="100" step="0.1" value="${item.score}" data-title="${item.title}"></td>
+        <td><span class="badge ${statusKey}">${item.status}</span></td>
+        <td>${chHtml}</td>
+        <td style="color:#444;font-size:12px">${item.year}</td>
+        <td><button class="del-btn" data-title="${item.title}" title="Remove">✕</button></td>
+      `;
+
+      /* click row (not inputs/buttons) to expand */
+      tr.addEventListener('click', e => {
+        if (e.target.closest('input') || e.target.closest('button')) return;
+        toggleExpand(item.title);
+      });
+
+      /* expand detail row */
+      const expTr = document.createElement('tr');
+      expTr.className = 'expand-row' + (isExp ? ' open' : '');
+      expTr.dataset.expandFor = item.title;
+
+      const tierCfg = getTier(item.score);
+      const urlInputId = `url-${item.title.replace(/\W/g,'_')}`;
+
+      expTr.innerHTML = `
+        <td class="expand-cell" colspan="8">
+          <div class="expand-inner">
+            <div class="poster-area">
+              ${poster
+                ? `<img class="poster-img" src="${poster}" alt="${item.title}">`
+                : `<div class="poster-empty">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                    <span>No poster</span>
+                  </div>`
+              }
+              <div class="poster-actions">
+                <div class="poster-btn" onclick="triggerUpload('${item.title.replace(/'/g,"\\'")}')">Upload image</div>
+                <div class="poster-btn" onclick="document.getElementById('${urlInputId}').style.display='flex';this.style.display='none'">Paste URL</div>
+                ${poster ? `<div class="poster-btn danger" onclick="removePoster('${item.title.replace(/'/g,"\\'")}')">Remove poster</div>` : ''}
+              </div>
+              <div class="url-row" id="${urlInputId}" style="display:none;width:110px;flex-wrap:wrap;gap:4px;">
+                <input type="text" placeholder="https://..." style="width:100%;font-size:11px;padding:4px 6px;border:0.5px solid #333;border-radius:6px;background:#141414;color:#e0e0e0;" id="${urlInputId}_val">
+                <button style="width:100%;padding:4px;font-size:11px;border-radius:6px;border:0.5px solid #333;background:#1a1a1a;color:#888;cursor:pointer;" onclick="setPosterURL('${item.title.replace(/'/g,"\\'")}', document.getElementById('${urlInputId}_val').value)">Set</button>
+              </div>
+            </div>
+            <div class="poster-info">
+              <h2>${item.title}</h2>
+              <div class="info-grid">
+                <span class="lbl">Score</span><span class="val" style="color:${tierCfg.bg};font-weight:500">${item.score} &nbsp;·&nbsp; ${tierCfg.id} tier</span>
+                <span class="lbl">Status</span><span class="val"><span class="badge ${statusKey}">${item.status}</span></span>
+                <span class="lbl">Chapter</span><span class="val">${item.ch != null ? 'ch. ' + item.ch : '—'}</span>
+                <span class="lbl">Year read</span><span class="val">${item.year}</span>
+              </div>
+            </div>
+          </div>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+      tbody.appendChild(expTr);
+    });
+
+    tbl.appendChild(tbody);
+    body.appendChild(tbl);
+    section.appendChild(hdr);
+    section.appendChild(body);
+    container.appendChild(section);
+  });
+
+  /* score change listeners */
+  document.querySelectorAll('.score-input').forEach(inp => {
+    inp.addEventListener('change', e => {
+      const title = e.target.dataset.title;
+      const val = parseFloat(e.target.value);
+      if (isNaN(val) || val < 0) return;
+      const item = data.find(d => d.title === title);
+      if (!item) return;
+      item.score = val;
+      savedScores[title] = val;
+      saveScores(savedScores);
+      if (item.isCustom) {
+        const ce = customEntries.find(e => e.title === title);
+        if (ce) { ce.score = val; saveCustom(customEntries); }
+      }
+      render();
+      setTimeout(() => {
+        document.querySelectorAll('tr.row').forEach(r => {
+          if (r.dataset.title === title) r.classList.add('flash');
+        });
+        setTimeout(() => document.querySelectorAll('tr.row').forEach(r => r.classList.remove('flash')), 600);
+      }, 50);
+    });
+  });
+
+  /* delete listeners */
+  document.querySelectorAll('.del-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const title = btn.dataset.title;
+      if (confirm(`Remove "${title}" from your list?`)) deleteEntry(title);
+    });
+  });
+}
+
+render();
+</script>
+</body>
+</html>
