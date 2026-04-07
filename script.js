@@ -144,7 +144,7 @@ async function saveEditEntry() {
   }
 
   formData.append("year", yearInput);
-  
+
   const file = document.getElementById("edit-image").files[0];
   if (file) formData.append("image", file);
 
@@ -281,7 +281,10 @@ async function loadEntries() {
                 <b class="${scoreClass(score)}">${escapeHtml(score)}</b>
               </span>
               <span>Ch: <b>${escapeHtml(chapter)}</b></span>
-              <span>Started: <b>${escapeHtml(year)}</b></span>
+              <span>
+                ${entry.status === "Finished" ? "Read" : "Started"}:
+                <b>${escapeHtml(year)}</b>
+              </span>
             </div>
             ${note ? `<div class="entry-note">${escapeHtml(note)}</div>` : ""}
           </div>
