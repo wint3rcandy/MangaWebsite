@@ -225,7 +225,7 @@ async function loadEntries() {
     const year = entry.year || "—";
 
     const card = document.createElement("div");
-    card.className = "entry-card";
+    card.className = `entry-card rank-${index + 1}`;
     card.innerHTML = `
       <div class="entry-poster">
         ${
@@ -243,7 +243,10 @@ async function loadEntries() {
 
             <div class="entry-meta">
               <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
-              <span>Score: <b>${escapeHtml(score)}</b></span>
+              <span>
+                Score:
+                <b class="${scoreClass(score)}">${escapeHtml(score)}</b>
+              </span>
               <span>Ch: <b>${escapeHtml(chapter)}</b></span>
               <span>Started: <b>${escapeHtml(year)}</b></span>
             </div>
@@ -261,6 +264,13 @@ async function loadEntries() {
   });
 
   container.appendChild(grid);
+}
+function scoreClass(score) {
+  const s = Number(score);
+  if (s >= 9) return "score-high";
+  if (s >= 7) return "score-mid";
+  if (s >= 5) return "score-low";
+  return "score-bad";
 }
 
 ensureEditModal();
