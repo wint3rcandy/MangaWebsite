@@ -76,6 +76,11 @@ function ensureEditModal() {
           <label>REPLACE IMAGE (optional)</label>
           <input type="file" id="edit-image" accept="image/*">
         </div>
+        
+        <div class="field full">
+          <label>NOTE / REVIEW</label>
+          <input type="text" id="edit-note">
+        </div>
       </div>
 
       <div class="modal-actions">
@@ -101,6 +106,7 @@ function openEditModal(id) {
   document.getElementById("edit-chapter").value = entry.chapter || "";
   document.getElementById("edit-year").value = entry.year || "";
   document.getElementById("edit-image").value = "";
+  document.getElementById("edit-note").value = entry.note || "";
 
   document.getElementById("edit-modal").classList.add("open");
 }
@@ -125,6 +131,7 @@ async function saveEditEntry() {
   formData.append("status", document.getElementById("edit-status").value);
   formData.append("chapter", document.getElementById("edit-chapter").value);
   formData.append("year", document.getElementById("edit-year").value);
+  formData.append("note", document.getElementById("edit-note").value.trim());
 
   const file = document.getElementById("edit-image").files[0];
   if (file) formData.append("image", file);
@@ -150,6 +157,7 @@ async function addEntry() {
   formData.append("status", document.getElementById("f-status").value);
   formData.append("chapter", document.getElementById("f-ch").value);
   formData.append("year", document.getElementById("f-year").value);
+  formData.append("note", document.getElementById("f-note").value.trim());
 
   const file = document.getElementById("f-image").files[0];
   if (file) formData.append("image", file);
@@ -223,6 +231,7 @@ async function loadEntries() {
     const score = entry.score || "—";
     const chapter = entry.chapter || "—";
     const year = entry.year || "—";
+    const note = entry.note || "";
 
     const card = document.createElement("div");
     card.className = `entry-card rank-${index + 1}`;
@@ -250,6 +259,7 @@ async function loadEntries() {
               <span>Ch: <b>${escapeHtml(chapter)}</b></span>
               <span>Started: <b>${escapeHtml(year)}</b></span>
             </div>
+            ${note ? `<div class="entry-note">${escapeHtml(note)}</div>` : ""}
           </div>
 
           <div class="card-actions">

@@ -63,7 +63,8 @@ app.post("/api/manga", upload.single("image"), (req, res) => {
     status: req.body.status || "",
     chapter: req.body.chapter || "",
     year: req.body.year || "",
-    image: req.file ? `/uploads/${req.file.filename}` : ""
+    image: req.file ? `/uploads/${req.file.filename}` : "",
+    note: req.body.note || "",
   };
 
   data.push(newEntry);
@@ -90,7 +91,8 @@ app.put("/api/manga/:id", upload.single("image"), (req, res) => {
     status: req.body.status !== undefined ? req.body.status : existing.status,
     chapter: req.body.chapter !== undefined ? req.body.chapter : existing.chapter,
     year: req.body.year !== undefined ? req.body.year : existing.year,
-    image: existing.image || ""
+    image: existing.image || "",
+    note: req.body.note !== undefined ? req.body.note : existing.note,
   };
 
   if (req.file) {

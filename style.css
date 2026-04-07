@@ -698,3 +698,14 @@ body {
 .entry-card.rank-3:hover {
   box-shadow: 0 0 30px rgba(205, 127, 50, 0.3);
 }
+.entry-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 3px solid rgba(178, 28, 42, 0.9);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  color: #cfcfcf;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
