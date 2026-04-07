@@ -1,61 +1,69 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manga </title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div class="wrap">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manga</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
 
-      <div class="top-bar">
-        <h1>🎌 Manga Rankings</h1>
-        <input class="search-box" type="text" placeholder="Search titles..." id="search" oninput="render()">
-      </div>
-
-      <div class="add-panel">
-        <div class="add-panel-header" onclick="toggleForm()">
-          <span>Add new entry</span>
-          <span class="toggle-btn" id="toggle-btn">+</span>
-        </div>
-        <div class="add-form" id="add-form">
-          <div class="field field-title">
-            <label>TITLE</label>
-            <input type="text" id="f-title" placeholder="Manga title...">
-          </div>
-          <div class="field field-score">
-            <label>SCORE</label>
-            <input type="number" id="f-score" placeholder="0–100" min="0" max="100" step="0.1">
-          </div>
-          <div class="field field-status">
-            <label>STATUS</label>
-            <select id="f-status">
-              <option value="Ongoing">Ongoing</option>
-              <option value="Finished">Finished</option>
-              <option value="Hiatus">Hiatus</option>
-              <option value="Unknown">Unknown</option>
-            </select>
-          </div>
-          <div class="field field-ch">
-            <label>CHAPTER</label>
-            <input type="number" id="f-ch" placeholder="optional" min="1" step="1">
-          </div>
-          <div class="field field-year">
-            <label>YEAR READ</label>
-            <input type="number" id="f-year" placeholder="2026" min="2000" max="2100">
-          </div>
-          <button class="add-btn" onclick="addEntry()">Add →</button>
-        </div>
-        <div class="err" id="form-err"></div>
-      </div>
-
-      <div class="stats" id="stats"></div>
-      <div id="tiers"></div>
+    <div class="top-bar">
+      <h1>🎌 Manga Rankings</h1>
+      <input class="search-box" type="text" placeholder="Search titles..." id="search" oninput="loadEntries()">
     </div>
 
-    <!-- hidden file input -->
-    <input type="file" id="file-input" accept="image/*" style="display:none">
-    <script src="script.js"></script> 
-  </body>
+    <div class="add-panel">
+      <div class="add-panel-header" onclick="toggleForm()">
+        <span>Add new entry</span>
+        <span class="toggle-btn" id="toggle-btn">+</span>
+      </div>
+
+      <div class="add-form" id="add-form">
+
+        <div class="field field-title">
+          <label>TITLE</label>
+          <input type="text" id="f-title">
+        </div>
+
+        <div class="field field-score">
+          <label>SCORE</label>
+          <input type="number" id="f-score">
+        </div>
+
+        <div class="field field-status">
+          <label>STATUS</label>
+          <select id="f-status">
+            <option>Ongoing</option>
+            <option>Finished</option>
+            <option>Hiatus</option>
+          </select>
+        </div>
+
+        <div class="field field-ch">
+          <label>CHAPTER</label>
+          <input type="number" id="f-ch">
+        </div>
+
+        <div class="field field-year">
+          <label>YEAR</label>
+          <input type="number" id="f-year">
+        </div>
+
+        <!-- 🔥 IMAGE UPLOAD -->
+        <div class="field">
+          <label>IMAGE</label>
+          <input type="file" id="f-image" accept="image/*">
+        </div>
+
+        <button class="add-btn" onclick="addEntry()">Add →</button>
+      </div>
+    </div>
+
+    <div id="tiers"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>

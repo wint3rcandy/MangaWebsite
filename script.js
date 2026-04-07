@@ -1,29 +1,31 @@
 const API = "http://192.168.1.166:3000/api/manga";
 
-let manga = [];
-
-// Load from backend
-async function load() {
-  try {
-    const res = await fetch(API);
-    manga = await res.json();
-    render();
-  } catch (err) {
-    console.error("API error:", err);
-  }
+function toggleForm() {
+  document.getElementById("add-form").classList.toggle("visible");
 }
 
-// Add new entry
-async function addEntry() {
-  const title = document.getElementById("f-title").value;
-  const score = parseFloat(document.getElementById("f-score").value);
-  const status = document.getElementById("f-status").value;
-  const chapter = parseInt(document.getElementById("f-ch").value);
-  const year = parseInt(document.getElementById("f-year").value);
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
 
-  if (!title) {
-    alert("Title required");
-    return;
+async function addEntry() {
+  const title = document.getElementById("f-title").value.trim();
+  const score = document.getElementById("f-score").value;
+  const status = document.getElementById("f-status").value;
+  const chapter = document.getElementById("f-ch").value;
+  const year = document.getElementById("f-year").value;
+
+  const fileInput = document.getElementById("f-image");
+  const file = fileInput.files[0];
+
+  let image = "";
+  if (file) {
+    image = await getBase64(file);
   }
 
   await fetch(API, {
@@ -36,49 +38,44 @@ async function addEntry() {
       score,
       status,
       chapter,
-      year
+      year,
+      image
     })
   });
 
-  // clear form
   document.getElementById("f-title").value = "";
   document.getElementById("f-score").value = "";
   document.getElementById("f-ch").value = "";
   document.getElementById("f-year").value = "";
+  fileInput.value = "";
 
-  load();
+  loadEntries();
 }
 
-// Render
-function render() {
+async function loadEntries() {
+  const res = await fetch(API);
+  const data = await res.json();
+
   const container = document.getElementById("tiers");
   container.innerHTML = "";
 
-  if (manga.length === 0) {
-    container.innerHTML = "<p style='color:#666'>No entries yet</p>";
+  if (data.length === 0) {
+    container.innerHTML = "<p>No entries yet</p>";
     return;
   }
 
-  manga.forEach(item => {
+  data.forEach(entry => {
     const div = document.createElement("div");
-    div.style.padding = "10px";
-    div.style.borderBottom = "1px solid #222";
-
     div.innerHTML = `
-      <strong>${item.title}</strong> 
-      — ${item.score ?? "?"} 
-      (${item.status || "Unknown"})
+      <div style="display:flex; align-items:center; gap:10px; margin:10px 0;">
+        ${entry.image ? `<img src="${entry.image}" style="width:40px;height:60px;object-fit:cover;border-radius:4px;">` : ""}
+        <div>
+          <b>${entry.title}</b> — ${entry.score} (${entry.status})
+        </div>
+      </div>
     `;
-
     container.appendChild(div);
   });
 }
-function toggleForm() {
-  const form = document.getElementById("add-form");
-  const btn = document.getElementById("toggle-btn");
 
-  form.classList.toggle("visible");
-  btn.classList.toggle("open");
-}
-// init
-load();
+loadEntries();
