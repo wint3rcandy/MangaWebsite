@@ -10,20 +10,15 @@ const PORT = 3000;
 const DATA_FILE = path.join(__dirname, "data.json");
 const UPLOADS_DIR = path.join(__dirname, "uploads");
 
-// make sure uploads folder exists
 if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
-// serve uploaded images publicly
 app.use("/uploads", express.static(UPLOADS_DIR));
 app.use(express.static(__dirname));
 app.use(cors());
-
-// keep this for non-file JSON requests if you ever need them
 app.use(express.json());
 
-// ---------- data helpers ----------
 function loadData() {
   try {
     const raw = fs.readFileSync(DATA_FILE, "utf8");
@@ -37,7 +32,6 @@ function saveData(data) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
-// ---------- multer setup ----------
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOADS_DIR);
@@ -51,7 +45,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// ---------- routes ----------
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "original.html"));
+});
+
 app.get("/api/manga", (req, res) => {
   res.json(loadData());
 });
@@ -73,6 +70,28 @@ app.post("/api/manga", upload.single("image"), (req, res) => {
   saveData(data);
 
   res.json(newEntry);
+});
+
+app.delete("/api/manga/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const data = loadData();
+  const entry = data.find(e => e.id === id);
+
+  if (!entry) {
+    return res.status(404).json({ error: "Entry not found" });
+  }
+
+  if (entry.image) {
+    const filePath = path.join(__dirname, entry.image);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+  }
+
+  const updated = data.filter(e => e.id !== id);
+  saveData(updated);
+
+  res.json({ success: true });
 });
 
 app.listen(PORT, () => {
