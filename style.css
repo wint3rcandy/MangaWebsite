@@ -23,6 +23,7 @@ body {
 
 .entry-grid {
   display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 🔥 2 per row */
   gap: 12px;
   margin-top: 14px;
 }
@@ -159,6 +160,7 @@ body {
 @media (max-width: 720px) {
   .entry-card {
     grid-template-columns: 64px 1fr;
+    grid-template-columns: 1fr;
   }
 
   .entry-poster,
