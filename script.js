@@ -1,40 +1,14 @@
 const API = "/api/manga";
 
+let editingId = null;
+let entryCache = {};
+
 function toggleForm() {
   const form = document.getElementById("add-form");
   const btn = document.getElementById("toggle-btn");
+
   form.classList.toggle("visible");
   btn.classList.toggle("open");
-}
-
-async function addEntry() {
-  const title = document.getElementById("f-title").value.trim();
-  const score = document.getElementById("f-score").value;
-  const status = document.getElementById("f-status").value;
-  const chapter = document.getElementById("f-ch").value;
-  const year = document.getElementById("f-year").value;
-  const file = document.getElementById("f-image").files[0];
-
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("score", score);
-  formData.append("status", status);
-  formData.append("chapter", chapter);
-  formData.append("year", year);
-  if (file) formData.append("image", file);
-
-  await fetch(API, {
-    method: "POST",
-    body: formData
-  });
-
-  document.getElementById("f-title").value = "";
-  document.getElementById("f-score").value = "";
-  document.getElementById("f-ch").value = "";
-  document.getElementById("f-year").value = "";
-  document.getElementById("f-image").value = "";
-
-  loadEntries();
 }
 
 function escapeHtml(str) {
@@ -54,6 +28,141 @@ function statusClass(status) {
   return "status-unknown";
 }
 
+function ensureEditModal() {
+  if (document.getElementById("edit-modal")) return;
+
+  const modal = document.createElement("div");
+  modal.id = "edit-modal";
+  modal.className = "edit-modal";
+  modal.innerHTML = `
+    <div class="edit-backdrop" onclick="closeEditModal()"></div>
+    <div class="edit-card">
+      <div class="edit-head">
+        <h3>Edit entry</h3>
+        <button class="modal-x" onclick="closeEditModal()">×</button>
+      </div>
+
+      <div class="edit-grid">
+        <div class="field full">
+          <label>TITLE</label>
+          <input type="text" id="edit-title">
+        </div>
+
+        <div class="field">
+          <label>SCORE</label>
+          <input type="number" id="edit-score">
+        </div>
+
+        <div class="field">
+          <label>STATUS</label>
+          <select id="edit-status">
+            <option>Ongoing</option>
+            <option>Finished</option>
+            <option>Hiatus</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>CHAPTER</label>
+          <input type="number" id="edit-chapter">
+        </div>
+
+        <div class="field">
+          <label>YEAR</label>
+          <input type="number" id="edit-year">
+        </div>
+
+        <div class="field full">
+          <label>REPLACE IMAGE (optional)</label>
+          <input type="file" id="edit-image" accept="image/*">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn ghost" onclick="closeEditModal()">Cancel</button>
+        <button class="modal-btn primary" onclick="saveEditEntry()">Save</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+function openEditModal(id) {
+  const entry = entryCache[id];
+  if (!entry) return;
+
+  ensureEditModal();
+  editingId = id;
+
+  document.getElementById("edit-title").value = entry.title || "";
+  document.getElementById("edit-score").value = entry.score || "";
+  document.getElementById("edit-status").value = entry.status || "Ongoing";
+  document.getElementById("edit-chapter").value = entry.chapter || "";
+  document.getElementById("edit-year").value = entry.year || "";
+  document.getElementById("edit-image").value = "";
+
+  document.getElementById("edit-modal").classList.add("open");
+}
+
+function closeEditModal() {
+  const modal = document.getElementById("edit-modal");
+  if (modal) modal.classList.remove("open");
+  editingId = null;
+}
+
+async function saveEditEntry() {
+  if (!editingId) return;
+
+  const formData = new FormData();
+  formData.append("title", document.getElementById("edit-title").value.trim());
+  formData.append("score", document.getElementById("edit-score").value);
+  formData.append("status", document.getElementById("edit-status").value);
+  formData.append("chapter", document.getElementById("edit-chapter").value);
+  formData.append("year", document.getElementById("edit-year").value);
+
+  const file = document.getElementById("edit-image").files[0];
+  if (file) {
+    formData.append("image", file);
+  }
+
+  await fetch(`${API}/${editingId}`, {
+    method: "PUT",
+    body: formData
+  });
+
+  closeEditModal();
+  loadEntries();
+}
+
+async function addEntry() {
+  const formData = new FormData();
+
+  formData.append("title", document.getElementById("f-title").value.trim());
+  formData.append("score", document.getElementById("f-score").value);
+  formData.append("status", document.getElementById("f-status").value);
+  formData.append("chapter", document.getElementById("f-ch").value);
+  formData.append("year", document.getElementById("f-year").value);
+
+  const file = document.getElementById("f-image").files[0];
+  if (file) {
+    formData.append("image", file);
+  }
+
+  await fetch(API, {
+    method: "POST",
+    body: formData
+  });
+
+  document.getElementById("f-title").value = "";
+  document.getElementById("f-score").value = "";
+  document.getElementById("f-ch").value = "";
+  document.getElementById("f-year").value = "";
+  document.getElementById("f-image").value = "";
+
+  loadEntries();
+}
+
 async function deleteEntry(id) {
   const ok = confirm("Delete this entry?");
   if (!ok) return;
@@ -70,22 +179,28 @@ async function loadEntries() {
   const res = await fetch(API);
   const data = await res.json();
 
-  const filtered = data.filter(entry => {
-    const title = String(entry.title || "").toLowerCase();
-    return title.includes(search);
-  });
+  entryCache = {};
+
+  const filtered = data
+    .filter(entry => {
+      const title = String(entry.title || "").toLowerCase();
+      return title.includes(search);
+    })
+    .sort((a, b) => {
+      const scoreA = Number(a.score || 0);
+      const scoreB = Number(b.score || 0);
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      return String(a.title || "").localeCompare(String(b.title || ""));
+    });
 
   const container = document.getElementById("tiers");
   container.innerHTML = "";
 
-  const total = filtered.length;
-  const withImages = filtered.filter(e => e.image).length;
-
   const stats = document.createElement("div");
   stats.className = "stats";
   stats.innerHTML = `
-    <div class="stat"><b>${total}</b> entries</div>
-    <div class="stat"><b>${withImages}</b> with images</div>
+    <div class="stat"><b>${filtered.length}</b> entries</div>
+    <div class="stat"><b>${filtered.filter(e => e.image).length}</b> with images</div>
   `;
   container.appendChild(stats);
 
@@ -98,47 +213,49 @@ async function loadEntries() {
     return;
   }
 
-  filtered
-    .sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")))
-    .forEach(entry => {
-      const card = document.createElement("div");
-      card.className = "entry-card";
+  filtered.forEach(entry => {
+    entryCache[entry.id] = entry;
 
-      const imgSrc = entry.image ? entry.image : "";
-      const score = entry.score === "" || entry.score === null || entry.score === undefined ? "—" : entry.score;
-      const chapter = entry.chapter === "" || entry.chapter === null || entry.chapter === undefined ? "—" : entry.chapter;
-      const year = entry.year === "" || entry.year === null || entry.year === undefined ? "—" : entry.year;
+    const score = entry.score === "" || entry.score === null || entry.score === undefined ? "—" : entry.score;
+    const chapter = entry.chapter === "" || entry.chapter === null || entry.chapter === undefined ? "—" : entry.chapter;
+    const year = entry.year === "" || entry.year === null || entry.year === undefined ? "—" : entry.year;
 
-      card.innerHTML = `
-        <div class="entry-poster">
-          ${
-            imgSrc
-              ? `<img class="poster-img" src="${imgSrc}" alt="${escapeHtml(entry.title)}">`
-              : `<div class="poster-empty">No Image</div>`
-          }
-        </div>
+    const card = document.createElement("div");
+    card.className = "entry-card";
+    card.innerHTML = `
+      <div class="entry-poster">
+        ${
+          entry.image
+            ? `<img class="poster-img" src="${entry.image}" alt="${escapeHtml(entry.title)}">`
+            : `<div class="poster-empty">No Image</div>`
+        }
+      </div>
 
-        <div class="entry-content">
-          <div class="entry-top">
-            <div>
-              <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
-              <div class="entry-meta">
-                <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
-                <span>Score: <b>${escapeHtml(score)}</b></span>
-                <span>Ch: <b>${escapeHtml(chapter)}</b></span>
-                <span>Year: <b>${escapeHtml(year)}</b></span>
-              </div>
+      <div class="entry-content">
+        <div class="entry-top">
+          <div class="entry-text">
+            <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
+            <div class="entry-meta">
+              <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
+              <span>Score: <b>${escapeHtml(score)}</b></span>
+              <span>Ch: <b>${escapeHtml(chapter)}</b></span>
+              <span>Year: <b>${escapeHtml(year)}</b></span>
             </div>
+          </div>
 
-            <button class="del-btn" onclick="deleteEntry(${entry.id})" title="Delete entry">✕</button>
+          <div class="card-actions">
+            <button class="card-btn edit" onclick="openEditModal(${entry.id})" title="Edit">✎</button>
+            <button class="card-btn delete" onclick="deleteEntry(${entry.id})" title="Delete">×</button>
           </div>
         </div>
-      `;
+      </div>
+    `;
 
-      grid.appendChild(card);
-    });
+    grid.appendChild(card);
+  });
 
   container.appendChild(grid);
 }
 
+ensureEditModal();
 loadEntries();

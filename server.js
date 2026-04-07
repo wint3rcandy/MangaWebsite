@@ -14,10 +14,10 @@ if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
-app.use("/uploads", express.static(UPLOADS_DIR));
-app.use(express.static(__dirname));
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static(UPLOADS_DIR));
+app.use(express.static(__dirname));
 
 function loadData() {
   try {
@@ -70,6 +70,43 @@ app.post("/api/manga", upload.single("image"), (req, res) => {
   saveData(data);
 
   res.json(newEntry);
+});
+
+app.put("/api/manga/:id", upload.single("image"), (req, res) => {
+  const id = Number(req.params.id);
+  const data = loadData();
+  const idx = data.findIndex(entry => entry.id === id);
+
+  if (idx === -1) {
+    return res.status(404).json({ error: "Entry not found" });
+  }
+
+  const existing = data[idx];
+
+  const updated = {
+    ...existing,
+    title: req.body.title !== undefined ? req.body.title : existing.title,
+    score: req.body.score !== undefined ? req.body.score : existing.score,
+    status: req.body.status !== undefined ? req.body.status : existing.status,
+    chapter: req.body.chapter !== undefined ? req.body.chapter : existing.chapter,
+    year: req.body.year !== undefined ? req.body.year : existing.year,
+    image: existing.image || ""
+  };
+
+  if (req.file) {
+    if (existing.image) {
+      const oldPath = path.join(__dirname, existing.image);
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
+    }
+    updated.image = `/uploads/${req.file.filename}`;
+  }
+
+  data[idx] = updated;
+  saveData(data);
+
+  res.json(updated);
 });
 
 app.delete("/api/manga/:id", (req, res) => {
