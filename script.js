@@ -277,7 +277,7 @@ async function loadEntries() {
             Score:
             <b class="${scoreClass(score)}">${escapeHtml(score)}</b>
           </span>
-          <span>Ch: <b>${escapeHtml(chapter)}</b></span>
+          ${chapter && chapter !== "—" ? `<span>Ch: <b>${escapeHtml(chapter)}</b></span>` : ""}
           <span>
             ${String(entry.status).toLowerCase() === "finished" ? "Read" : "Started"}:
             <b>${escapeHtml(year)}</b>
