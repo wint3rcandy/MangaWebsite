@@ -1,4 +1,5 @@
 // ===== DATA (you can edit/add here) =====
+// let data is an example of how the data will look 
 let data = [
   { title: "Berserk", score: 100, year: 2019, status: "Ongoing", ch: null },
   { title: "Chainsaw Man", score: 100, year: 2020, status: "Ongoing", ch: null },
