@@ -68,7 +68,7 @@ function ensureEditModal() {
         </div>
 
         <div class="field">
-          <label>YEAR</label>
+          <label>STARTED READING</label>
           <input type="number" id="edit-year">
         </div>
 
@@ -115,16 +115,19 @@ async function saveEditEntry() {
   if (!editingId) return;
 
   const formData = new FormData();
+
+  let score = parseFloat(document.getElementById("edit-score").value);
+  if (isNaN(score)) score = "";
+  else score = Math.max(0, Math.min(10, score));
+
   formData.append("title", document.getElementById("edit-title").value.trim());
-  formData.append("score", document.getElementById("edit-score").value);
+  formData.append("score", score);
   formData.append("status", document.getElementById("edit-status").value);
   formData.append("chapter", document.getElementById("edit-chapter").value);
   formData.append("year", document.getElementById("edit-year").value);
 
   const file = document.getElementById("edit-image").files[0];
-  if (file) {
-    formData.append("image", file);
-  }
+  if (file) formData.append("image", file);
 
   await fetch(`${API}/${editingId}`, {
     method: "PUT",
@@ -138,16 +141,18 @@ async function saveEditEntry() {
 async function addEntry() {
   const formData = new FormData();
 
+  let score = parseFloat(document.getElementById("f-score").value);
+  if (isNaN(score)) score = "";
+  else score = Math.max(0, Math.min(10, score));
+
   formData.append("title", document.getElementById("f-title").value.trim());
-  formData.append("score", document.getElementById("f-score").value);
+  formData.append("score", score);
   formData.append("status", document.getElementById("f-status").value);
   formData.append("chapter", document.getElementById("f-ch").value);
   formData.append("year", document.getElementById("f-year").value);
 
   const file = document.getElementById("f-image").files[0];
-  if (file) {
-    formData.append("image", file);
-  }
+  if (file) formData.append("image", file);
 
   await fetch(API, {
     method: "POST",
@@ -200,7 +205,6 @@ async function loadEntries() {
   stats.className = "stats";
   stats.innerHTML = `
     <div class="stat"><b>${filtered.length}</b> entries</div>
-    <div class="stat"><b>${filtered.filter(e => e.image).length}</b> with images</div>
   `;
   container.appendChild(stats);
 
@@ -213,12 +217,12 @@ async function loadEntries() {
     return;
   }
 
-  filtered.forEach(entry => {
+  filtered.forEach((entry, index) => {
     entryCache[entry.id] = entry;
 
-    const score = entry.score === "" || entry.score === null || entry.score === undefined ? "—" : entry.score;
-    const chapter = entry.chapter === "" || entry.chapter === null || entry.chapter === undefined ? "—" : entry.chapter;
-    const year = entry.year === "" || entry.year === null || entry.year === undefined ? "—" : entry.year;
+    const score = entry.score || "—";
+    const chapter = entry.chapter || "—";
+    const year = entry.year || "—";
 
     const card = document.createElement("div");
     card.className = "entry-card";
@@ -235,17 +239,19 @@ async function loadEntries() {
         <div class="entry-top">
           <div class="entry-text">
             <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
+            <div class="rank-label">#${index + 1} ranked</div>
+
             <div class="entry-meta">
               <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
               <span>Score: <b>${escapeHtml(score)}</b></span>
               <span>Ch: <b>${escapeHtml(chapter)}</b></span>
-              <span>Year: <b>${escapeHtml(year)}</b></span>
+              <span>Started: <b>${escapeHtml(year)}</b></span>
             </div>
           </div>
 
           <div class="card-actions">
-            <button class="card-btn edit" onclick="openEditModal(${entry.id})" title="Edit">✎</button>
-            <button class="card-btn delete" onclick="deleteEntry(${entry.id})" title="Delete">×</button>
+            <button class="card-btn edit" onclick="openEditModal(${entry.id})">✎</button>
+            <button class="card-btn delete" onclick="deleteEntry(${entry.id})">×</button>
           </div>
         </div>
       </div>

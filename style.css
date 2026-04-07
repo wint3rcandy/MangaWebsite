@@ -630,3 +630,9 @@ body {
     grid-template-columns: 1fr;
   }
 }
+.rank-label {
+  font-size: 12px;
+  color: #d2414c;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
