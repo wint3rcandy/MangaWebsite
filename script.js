@@ -4,50 +4,30 @@ function toggleForm() {
   document.getElementById("add-form").classList.toggle("visible");
 }
 
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(file);
-  });
-}
-
 async function addEntry() {
-  const title = document.getElementById("f-title").value.trim();
-  const score = document.getElementById("f-score").value;
-  const status = document.getElementById("f-status").value;
-  const chapter = document.getElementById("f-ch").value;
-  const year = document.getElementById("f-year").value;
+  const formData = new FormData();
 
-  const fileInput = document.getElementById("f-image");
-  const file = fileInput.files[0];
+  formData.append("title", document.getElementById("f-title").value.trim());
+  formData.append("score", document.getElementById("f-score").value);
+  formData.append("status", document.getElementById("f-status").value);
+  formData.append("chapter", document.getElementById("f-ch").value);
+  formData.append("year", document.getElementById("f-year").value);
 
-  let image = "";
+  const file = document.getElementById("f-image").files[0];
   if (file) {
-    image = await getBase64(file);
+    formData.append("image", file);
   }
 
   await fetch(API, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      title,
-      score,
-      status,
-      chapter,
-      year,
-      image
-    })
+    body: formData
   });
 
   document.getElementById("f-title").value = "";
   document.getElementById("f-score").value = "";
   document.getElementById("f-ch").value = "";
   document.getElementById("f-year").value = "";
-  fileInput.value = "";
+  document.getElementById("f-image").value = "";
 
   loadEntries();
 }
@@ -59,16 +39,24 @@ async function loadEntries() {
   const container = document.getElementById("tiers");
   container.innerHTML = "";
 
-  if (data.length === 0) {
+  if (!data.length) {
     container.innerHTML = "<p>No entries yet</p>";
     return;
   }
 
   data.forEach(entry => {
+    const imgSrc = entry.image
+      ? `http://192.168.1.166:3000${entry.image}`
+      : "";
+
     const div = document.createElement("div");
     div.innerHTML = `
       <div style="display:flex; align-items:center; gap:10px; margin:10px 0;">
-        ${entry.image ? `<img src="${entry.image}" style="width:40px;height:60px;object-fit:cover;border-radius:4px;">` : ""}
+        ${
+          imgSrc
+            ? `<img src="${imgSrc}" style="width:40px;height:60px;object-fit:cover;border-radius:4px;">`
+            : ""
+        }
         <div>
           <b>${entry.title}</b> — ${entry.score} (${entry.status})
         </div>
