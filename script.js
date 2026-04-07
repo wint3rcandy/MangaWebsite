@@ -76,7 +76,7 @@ function ensureEditModal() {
           <label>REPLACE IMAGE (optional)</label>
           <input type="file" id="edit-image" accept="image/*">
         </div>
-        
+
         <div class="field full">
           <label>NOTE / REVIEW</label>
           <input type="text" id="edit-note">
@@ -124,7 +124,7 @@ async function saveEditEntry() {
 
   let score = parseFloat(document.getElementById("edit-score").value);
   if (isNaN(score)) score = "";
-  else score = Math.max(0, Math.min(10, score));
+  else score = Math.max(0, Math.min(100, score));
 
   formData.append("title", document.getElementById("edit-title").value.trim());
   formData.append("score", score);
@@ -277,6 +277,7 @@ async function loadEntries() {
 }
 function scoreClass(score) {
   const s = Number(score);
+  if (s >= 11) return "super-high";
   if (s >= 9) return "score-high";
   if (s >= 7) return "score-mid";
   if (s >= 5) return "score-low";

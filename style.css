@@ -637,6 +637,10 @@ body {
   margin-bottom: 6px;
 }
 /* score colors */
+.super-high {
+  color: gold; /* or whatever you want */
+  font-weight: 800;
+}
 .score-high {
   color: #ff3b3b; /* red */
   font-weight: 700;
