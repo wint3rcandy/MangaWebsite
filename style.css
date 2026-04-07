@@ -6,7 +6,7 @@ body {
 }
 
 .wrap {
-  max-width: 1080px;
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -183,6 +183,7 @@ body {
 }
 
 .entry-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #101010 0%, #0d0d0d 100%);
@@ -538,4 +539,17 @@ body {
   .edit-grid {
     grid-template-columns: 1fr;
   }
+}
+.rank-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  backdrop-filter: blur(4px);
 }

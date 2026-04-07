@@ -270,7 +270,6 @@ async function loadEntries() {
 
       <div class="entry-content">
         <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
-        <div class="rank-label">#${index + 1} ranked</div>
 
         <div class="entry-meta">
           <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
@@ -292,6 +291,8 @@ async function loadEntries() {
           <button class="card-btn delete" onclick="deleteEntry(${entry.id})">×</button>
         </div>
       </div>
+
+      <div class="rank-badge">#${index + 1}</div>
     `;
 
     grid.appendChild(card);
