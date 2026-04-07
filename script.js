@@ -269,30 +269,27 @@ async function loadEntries() {
       </div>
 
       <div class="entry-content">
-        <div class="entry-top">
-          <div class="entry-text">
-            <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
-            <div class="rank-label">#${index + 1} ranked</div>
+        <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
+        <div class="rank-label">#${index + 1} ranked</div>
 
-            <div class="entry-meta">
-              <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
-              <span>
-                Score:
-                <b class="${scoreClass(score)}">${escapeHtml(score)}</b>
-              </span>
-              <span>Ch: <b>${escapeHtml(chapter)}</b></span>
-              <span>
-                ${entry.status === "Finished" ? "Read" : "Started"}:
-                <b>${escapeHtml(year)}</b>
-              </span>
-            </div>
-            ${note ? `<div class="entry-note">${escapeHtml(note)}</div>` : ""}
-          </div>
+        <div class="entry-meta">
+          <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
+          <span>
+            Score:
+            <b class="${scoreClass(score)}">${escapeHtml(score)}</b>
+          </span>
+          <span>Ch: <b>${escapeHtml(chapter)}</b></span>
+          <span>
+            ${String(entry.status).toLowerCase() === "finished" ? "Read" : "Started"}:
+            <b>${escapeHtml(year)}</b>
+          </span>
+        </div>
 
-          <div class="card-actions">
-            <button class="card-btn edit" onclick="openEditModal(${entry.id})">✎</button>
-            <button class="card-btn delete" onclick="deleteEntry(${entry.id})">×</button>
-          </div>
+        ${note ? `<div class="entry-note">${escapeHtml(note)}</div>` : ""}
+
+        <div class="card-actions">
+          <button class="card-btn edit" onclick="openEditModal(${entry.id})">✎</button>
+          <button class="card-btn delete" onclick="deleteEntry(${entry.id})">×</button>
         </div>
       </div>
     `;
