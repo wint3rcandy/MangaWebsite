@@ -229,7 +229,9 @@ body {
 }
 
 .entry-content {
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* pushes actions down */
 }
 
 .entry-top {
@@ -286,7 +288,7 @@ body {
 }
 
 .card-actions {
-  margin-top: 10px;
+  margin-top: auto; /* 🔥 key line */
   display: flex;
   justify-content: flex-end;
   gap: 8px;
