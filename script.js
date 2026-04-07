@@ -69,7 +69,7 @@ function ensureEditModal() {
 
         <div class="field">
           <label>STARTED READING</label>
-          <input type="number" id="edit-year">
+          <input type="text" id="edit-year" placeholder="e.g. 2019 or 02/22/2024">
         </div>
 
         <div class="field full">
@@ -130,9 +130,21 @@ async function saveEditEntry() {
   formData.append("score", score);
   formData.append("status", document.getElementById("edit-status").value);
   formData.append("chapter", document.getElementById("edit-chapter").value);
-  formData.append("year", document.getElementById("edit-year").value);
   formData.append("note", document.getElementById("edit-note").value.trim());
 
+  const yearInput = document.getElementById("edit-year").value.trim();
+
+  if (
+    yearInput &&
+    !/^\d{4}$/.test(yearInput) &&
+    !/^\d{2}\/\d{2}\/\d{4}$/.test(yearInput)
+  ) {
+    alert("Enter either YYYY or MM/DD/YYYY");
+    return;
+  }
+
+  formData.append("year", yearInput);
+  
   const file = document.getElementById("edit-image").files[0];
   if (file) formData.append("image", file);
 
@@ -147,6 +159,18 @@ async function saveEditEntry() {
 
 async function addEntry() {
   const formData = new FormData();
+  const yearInput = document.getElementById("f-year").value.trim();
+
+  if (
+    yearInput &&
+    !/^\d{4}$/.test(yearInput) &&
+    !/^\d{2}\/\d{2}\/\d{4}$/.test(yearInput)
+  ) {
+    alert("Enter either YYYY or MM/DD/YYYY");
+    return;
+  }
+
+  formData.append("year", yearInput);
 
   let score = parseFloat(document.getElementById("f-score").value);
   if (isNaN(score)) score = "";
