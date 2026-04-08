@@ -255,12 +255,8 @@ async function loadEntries() {
   const container = document.getElementById("tiers");
   container.innerHTML = "";
 
-  const stats = document.createElement("div");
-  stats.className = "stats";
-  stats.innerHTML = `
-    <div class="stat"><b>${filtered.length}</b> entries</div>
-  `;
-  container.appendChild(stats);
+  const entryCount = document.getElementById("entry-count");
+  if (entryCount) entryCount.textContent = `${filtered.length} entries`;
 
   const grid = document.createElement("div");
   grid.className = "entry-grid";

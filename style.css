@@ -572,6 +572,12 @@ body {
   gap: 1px;
 }
 
+.top-entry-count {
+  padding: 7px 11px;
+  font-size: 12px;
+  color: #bdbdbd;
+}
+
 .top-title {
   font-size: 22px;
   font-weight: 900;
