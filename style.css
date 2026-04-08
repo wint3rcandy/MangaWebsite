@@ -675,6 +675,17 @@ body {
   box-shadow: 0 0 0 3px rgba(178,28,42,0.12);
 }
 
+#sortSelect option {
+  background: #101010;
+  color: #d8d8d8;
+  font-weight: 600;
+}
+
+#sortSelect option:checked {
+  background: #2a0b12;
+  color: #ffffff;
+}
+
 .add-toggle {
   display: inline-flex;
   align-items: center;
