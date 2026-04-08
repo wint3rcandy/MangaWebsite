@@ -957,3 +957,68 @@ body::before {
     flex-wrap: wrap;
   }
 }
+
+/* FINAL PHONE GRID OVERRIDES */
+@media (max-width: 720px) {
+  .entry-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .entry-card {
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .entry-poster {
+    margin-bottom: 8px;
+  }
+
+  .poster-img,
+  .poster-empty {
+    border-radius: 8px;
+  }
+
+  .entry-title {
+    font-size: 13px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .entry-meta {
+    gap: 4px 6px;
+    font-size: 10px;
+  }
+
+  .badge {
+    padding: 3px 6px;
+    font-size: 9px;
+  }
+
+  .entry-note {
+    margin-top: 8px;
+    padding: 8px;
+    font-size: 11px;
+  }
+
+  .card-actions {
+    gap: 6px;
+  }
+
+  .card-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .rank-badge {
+    left: 8px;
+    bottom: 8px;
+    padding: 4px 7px;
+    font-size: 11px;
+  }
+}
