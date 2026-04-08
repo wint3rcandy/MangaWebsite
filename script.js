@@ -328,7 +328,7 @@ async function loadEntries() {
           <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
           <span>
             Score:
-            <b class="${scoreClass(score)}">${escapeHtml(score)}</b>
+            <b style="${scoreStyle(score)}">${escapeHtml(score)}</b>
           </span>
           ${chapter && chapter !== "—" ? `<span>Ch: <b>${escapeHtml(chapter)}</b></span>` : ""}
           <span>
@@ -353,13 +353,19 @@ async function loadEntries() {
 
   container.appendChild(grid);
 }
-function scoreClass(score) {
+function scoreStyle(score) {
   const s = Number(score);
-  if (s >= 11) return "super-high";
-  if (s >= 9) return "score-high";
-  if (s >= 7) return "score-mid";
-  if (s >= 5) return "score-low";
-  return "score-bad";
+
+  if (!Number.isFinite(s)) return "color: #888; font-weight: 700;";
+  if (s >= 11) return "color: gold; font-weight: 800;";
+
+  const clamped = Math.max(0, Math.min(10, s));
+  const t = clamped / 10;
+  const hue = Math.round(4 * t);
+  const saturation = Math.round(8 + 92 * Math.pow(t, 4));
+  const lightness = Math.round(62 + 8 * t);
+
+  return `color: hsl(${hue}, ${saturation}%, ${lightness}%); font-weight: 700;`;
 }
 document.getElementById("sortSelect")?.addEventListener("change", loadEntries);
 ensureEditModal();
