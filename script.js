@@ -213,19 +213,17 @@ const getSortTime = (val) => {
 
   const s = String(val).trim();
 
-  // MM/DD/YYYY — full date, sort to that exact day
-  const full = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  // MM/DD/YYYY
+  const full = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   if (full) {
     const [, mm, dd, yyyy] = full;
-    const t = new Date(Number(yyyy), Number(mm) - 1, Number(dd)).getTime();
-    if (!isNaN(t)) return t;
+    return new Date(Number(yyyy), Number(mm) - 1, Number(dd)).getTime();
   }
 
-  // YYYY only — sort to Jan 1 of that year
-  const yearOnly = s.match(/^(\d{4})$/);
-  if (yearOnly) {
-    const t = new Date(Number(yearOnly[1]), 0, 1).getTime();
-    if (!isNaN(t)) return t;
+  // YYYY
+  const year = s.match(/\d{4}/);
+  if (year) {
+    return new Date(Number(year[0]), 0, 1).getTime();
   }
 
   return 0;
@@ -274,12 +272,18 @@ async function loadEntries() {
   filtered.sort((a, b) => {
     const diff = getSortTime(b.year) - getSortTime(a.year);
     if (diff !== 0) return diff;
-    return String(a.title || "").localeCompare(String(b.title || ""));});
+    const sd = Number(b.score || 0) - Number(a.score || 0);
+    if (sd !== 0) return sd;
+    return String(a.title || "").localeCompare(String(b.title || ""));
+  });
   } else if (sortValue === "year-asc") {
     filtered.sort((a, b) => {
       const diff = getSortTime(a.year) - getSortTime(b.year);
       if (diff !== 0) return diff;
-      return String(a.title || "").localeCompare(String(b.title || ""));});
+      const sd = Number(b.score || 0) - Number(a.score || 0);
+      if (sd !== 0) return sd;
+      return String(a.title || "").localeCompare(String(b.title || ""));
+    });
   } else if (sortValue === "created-desc") {
     filtered.sort((a, b) => b.id - a.id);
   } else if (sortValue === "created-asc") {
