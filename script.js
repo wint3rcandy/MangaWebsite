@@ -5,10 +5,14 @@ let entryCache = {};
 
 function toggleForm() {
   const form = document.getElementById("add-form");
+  const panel = document.getElementById("add-panel");
   const btn = document.getElementById("toggle-btn");
+  const toggle = document.querySelector(".add-toggle");
 
-  form.classList.toggle("visible");
-  btn.classList.toggle("open");
+  const isOpen = form.classList.toggle("visible");
+  panel.classList.toggle("open", isOpen);
+  btn.classList.toggle("open", isOpen);
+  toggle?.setAttribute("aria-expanded", String(isOpen));
 }
 
 function escapeHtml(str) {

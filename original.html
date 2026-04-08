@@ -46,15 +46,14 @@
             <option value="score-asc">Score (Low)</option>
           </select>
         </div>
+        <button class="add-toggle" type="button" onclick="toggleForm()" aria-expanded="false" aria-controls="add-form">
+          <span>Add new entry</span>
+          <span class="toggle-btn" id="toggle-btn">+</span>
+        </button>
       </div>
     </div>
 
-    <div class="add-panel">
-      <div class="add-panel-header" onclick="toggleForm()">
-        <span>Add new entry</span>
-        <span class="toggle-btn" id="toggle-btn">+</span>
-      </div>
-
+    <div class="add-panel" id="add-panel">
       <div class="add-form" id="add-form">
 
         <div class="field field-title">
