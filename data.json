@@ -2,18 +2,22 @@
   {
     "id": 1,
     "title": "Vagabond",
-    "score": 8,
+    "score": "8",
     "status": "Ongoing",
     "chapter": "",
-    "year": "2019"
+    "year": "2019",
+    "image": "/uploads/1775595924003-944725784.png",
+    "note": ""
   },
   {
     "id": 2,
     "title": "Goblin Slayer",
-    "score": 9,
+    "score": "9",
     "status": "Ongoing",
     "chapter": "71",
-    "year": "2019"
+    "year": "2019",
+    "image": "/uploads/1775614357119-294267545.webp",
+    "note": ""
   },
   {
     "id": 3,
@@ -34,10 +38,12 @@
   {
     "id": 5,
     "title": "Berserk",
-    "score": 10,
+    "score": "100",
     "status": "Ongoing",
     "chapter": "",
-    "year": "2019"
+    "year": "2019",
+    "image": "/uploads/1775595907184-371356668.jpg",
+    "note": ""
   },
   {
     "id": 6,
@@ -50,10 +56,12 @@
   {
     "id": 7,
     "title": "Claymore",
-    "score": 10,
+    "score": "10",
     "status": "Finished",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775602371455-86433554.jpg",
+    "note": ""
   },
   {
     "id": 8,
@@ -82,10 +90,12 @@
   {
     "id": 11,
     "title": "Kingdom",
-    "score": 10,
+    "score": "100",
     "status": "Ongoing",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775598911635-572474004.jpg",
+    "note": ""
   },
   {
     "id": 12,
@@ -98,10 +108,12 @@
   {
     "id": 13,
     "title": "Vinland Saga",
-    "score": 9,
+    "score": "9",
     "status": "Ongoing",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775602630449-806555311.jpg",
+    "note": ""
   },
   {
     "id": 14,
@@ -146,18 +158,22 @@
   {
     "id": 19,
     "title": "Chainsaw Man",
-    "score": 10,
-    "status": "Ongoing",
+    "score": "10",
+    "status": "Finished",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775598862000-742706362.jpg",
+    "note": ""
   },
   {
     "id": 20,
     "title": "Demon Slayer",
-    "score": 10,
+    "score": "10",
     "status": "Finished",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775598653941-187200773.jpg",
+    "note": ""
   },
   {
     "id": 21,
@@ -186,10 +202,12 @@
   {
     "id": 24,
     "title": "Haite Kudasai, Takamine San",
-    "score": 10,
+    "score": "7",
     "status": "Ongoing",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775614173641-797136785.png",
+    "note": ""
   },
   {
     "id": 25,
@@ -218,18 +236,22 @@
   {
     "id": 28,
     "title": "One Piece",
-    "score": 10,
+    "score": "10",
     "status": "Ongoing",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775601843710-257561275.jpg",
+    "note": ""
   },
   {
     "id": 29,
     "title": "Dorohedoro",
-    "score": 7,
-    "status": "Unknown",
+    "score": "8",
+    "status": "Finished",
     "chapter": "",
-    "year": "2020"
+    "year": "2020",
+    "image": "/uploads/1775602036889-159902138.jpg",
+    "note": ""
   },
   {
     "id": 30,
@@ -250,10 +272,12 @@
   {
     "id": 32,
     "title": "Hells Paradise",
-    "score": 9,
+    "score": "9",
     "status": "Ongoing",
     "chapter": "",
-    "year": "2021"
+    "year": "2021",
+    "image": "/uploads/1775602513959-3962579.jpg",
+    "note": ""
   },
   {
     "id": 33,
@@ -266,10 +290,12 @@
   {
     "id": 34,
     "title": "Blame",
-    "score": 10,
-    "status": "Unknown",
+    "score": "10",
+    "status": "",
     "chapter": "",
-    "year": "2021"
+    "year": "2021",
+    "image": "/uploads/1775598456510-86017715.jpg",
+    "note": ""
   },
   {
     "id": 35,
@@ -322,10 +348,12 @@
   {
     "id": 41,
     "title": "Great Teacher Onizuka",
-    "score": 10,
-    "status": "Unknown",
+    "score": "10",
+    "status": "",
     "chapter": "",
-    "year": "2021"
+    "year": "2021",
+    "image": "/uploads/1775602441131-572071380.jpg",
+    "note": ""
   },
   {
     "id": 42,
@@ -354,10 +382,12 @@
   {
     "id": 45,
     "title": "Blade of the Immortal",
-    "score": 9,
+    "score": "9",
     "status": "Finished",
     "chapter": "",
-    "year": "2021"
+    "year": "2021",
+    "image": "/uploads/1775601746820-414627266.jpg",
+    "note": ""
   },
   {
     "id": 46,
@@ -426,10 +456,12 @@
   {
     "id": 54,
     "title": "Memorize",
-    "score": 10,
-    "status": "Ongoing",
-    "chapter": "86",
-    "year": "2022"
+    "score": "100",
+    "status": "Hiatus",
+    "chapter": "101",
+    "year": "2022",
+    "image": "/uploads/1775613633501-2189199.jpg",
+    "note": ""
   },
   {
     "id": 55,
@@ -896,11 +928,12 @@
   {
     "id": 112,
     "title": "Dungeon Defense",
-    "score": 7.8,
+    "score": "7.8",
     "status": "Ongoing",
     "chapter": "47",
-    "year": "2024",
-    "note": "12/19/2024:"
+    "year": "12/19/2024",
+    "note": "12/19/2024:",
+    "image": ""
   },
   {
     "id": 113,
@@ -938,14 +971,6 @@
     "note": "01/03/2025:"
   },
   {
-    "id": 117,
-    "title": "Road To Kingdom",
-    "score": 10,
-    "status": "Ongoing",
-    "chapter": "84",
-    "year": "2025"
-  },
-  {
     "id": 118,
     "title": "King Of The Labyrinth",
     "score": 7,
@@ -956,10 +981,12 @@
   {
     "id": 119,
     "title": "Dungeon Ni Hisomu Yandere Na Kanajo Ni Ore Wa Nando Mo Korosareru",
-    "score": 10,
+    "score": "10",
     "status": "Ongoing",
     "chapter": "21",
-    "year": "2025"
+    "year": "2025",
+    "image": "/uploads/1775598956807-631758279.jpg",
+    "note": ""
   },
   {
     "id": 120,
@@ -1035,14 +1062,6 @@
     "year": "2025"
   },
   {
-    "id": 129,
-    "title": "04/14/2025 Reread Road to Kingdom",
-    "score": 10,
-    "status": "Ongoing",
-    "chapter": "91",
-    "year": "2025"
-  },
-  {
     "id": 130,
     "title": "Savage Hero",
     "score": 8.9,
@@ -1094,11 +1113,12 @@
   {
     "id": 136,
     "title": "Dungeon Odyssey",
-    "score": 10,
+    "score": "100",
     "status": "Ongoing",
     "chapter": "124",
     "year": "2025",
-    "note": "06/26/2025:"
+    "note": "06/26/2025:",
+    "image": "/uploads/1775596689806-40933008.jpg"
   },
   {
     "id": 137,
@@ -1106,14 +1126,6 @@
     "score": 10,
     "status": "Ongoing",
     "chapter": "46",
-    "year": "2025"
-  },
-  {
-    "id": 138,
-    "title": "Athletes Village: The Trap",
-    "score": 10,
-    "status": "Ongoing",
-    "chapter": "22",
     "year": "2025"
   },
   {
@@ -1127,10 +1139,12 @@
   {
     "id": 140,
     "title": "Omniscient Readers Viewpoint",
-    "score": 10,
+    "score": "10",
     "status": "Ongoing",
     "chapter": "272",
-    "year": "2025"
+    "year": "2025",
+    "image": "/uploads/1775601905053-835061095.jpg",
+    "note": ""
   },
   {
     "id": 141,
@@ -1176,35 +1190,42 @@
   {
     "id": 146,
     "title": "Surviving the game as a barbarian",
-    "score": 9,
+    "score": "9",
     "status": "Ongoing",
     "chapter": "134",
-    "year": "2025"
+    "year": "2025",
+    "image": "/uploads/1775602582769-608768944.webp",
+    "note": ""
   },
   {
     "id": 147,
     "title": "Yuusha Party wo Tsuihosareta ore daga, ore Kara sudattekureta you de ureshii. …… nanode Dai Seijo, omae ni ottekoraete wa komaru no daga?",
-    "score": "",
-    "status": "Unknown",
+    "score": "7",
+    "status": "Ongoing",
     "chapter": "",
-    "year": "2025"
+    "year": "2025",
+    "image": "/uploads/1775614285070-573826476.webp",
+    "note": ""
   },
   {
     "id": 148,
     "title": "Mushoku Tensei",
-    "score": 7,
+    "score": "7",
     "status": "Ongoing",
     "chapter": "68",
     "year": "2025",
-    "note": "didn’t finish"
+    "note": "didn’t finish",
+    "image": "/uploads/1775601956488-655289674.jpg"
   },
   {
     "id": 149,
     "title": "Pick Me Up",
-    "score": 10,
+    "score": "10",
     "status": "Ongoing",
     "chapter": "182",
-    "year": "2026"
+    "year": "2026",
+    "image": "/uploads/1775601800379-727437996.jpg",
+    "note": ""
   },
   {
     "id": 150,
@@ -1237,5 +1258,28 @@
     "status": "Unknown",
     "chapter": "",
     "year": "2026"
+  },
+  {
+    "id": 1775598479635,
+    "title": "",
+    "score": "",
+    "status": "Ongoing",
+    "chapter": "",
+    "year": [
+      "",
+      ""
+    ],
+    "image": "",
+    "note": ""
+  },
+  {
+    "id": 1775598528494,
+    "title": "Athletes Village: The Trap",
+    "score": "10",
+    "status": "Ongoing",
+    "chapter": "",
+    "year": "01/01/2025",
+    "image": "/uploads/1775602334064-41657748.jpg",
+    "note": ""
   }
 ]
