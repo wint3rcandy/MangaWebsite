@@ -1,11 +1,21 @@
 body {
-  background:
-    radial-gradient(circle at top, rgba(178, 28, 42, 0.12), transparent 24%),
-    #0a0a0a;
+  background: #0a0a0a;
   color: #e0e0e0;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at top, rgba(178, 28, 42, 0.12), transparent 32%);
+  z-index: 0;
 }
 
 .wrap {
+  position: relative;
+  z-index: 1;
   max-width: none;
   margin: 0 auto;
 }
@@ -208,7 +218,7 @@ body {
 
 .entry-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 12px;
   margin-top: 14px;
 }
