@@ -15,6 +15,16 @@
       <input class="search-box" type="text" placeholder="Search titles..." id="search" oninput="loadEntries()">
     </div>
 
+    <select id="sortSelect">
+      <option value="default">Sort: Default</option>
+      <option value="year-desc">Year (Newest)</option>
+      <option value="year-asc">Year (Oldest)</option>
+      <option value="created-desc">Date Added (Newest)</option>
+      <option value="created-asc">Date Added (Oldest)</option>
+      <option value="score-desc">Score (Highest)</option>
+      <option value="score-asc">Score (Lowest)</option>
+    </select>
+
     <div class="add-panel">
       <div class="add-panel-header" onclick="toggleForm()">
         <span>Add new entry</span>

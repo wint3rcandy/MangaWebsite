@@ -524,3 +524,11 @@ body {
   border: 1px solid #333;
   backdrop-filter: blur(4px);
 }
+#sortSelect {
+  margin-left: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #111;
+  color: white;
+  border: 1px solid #333;
+}

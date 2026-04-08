@@ -170,17 +170,15 @@ async function addEntry() {
     return;
   }
 
-  formData.append("year", yearInput);
-
   let score = parseFloat(document.getElementById("f-score").value);
   if (isNaN(score)) score = "";
-  else score = Math.max(0, Math.min(10, score));
+  else score = Math.max(0, Math.min(100, score));
 
   formData.append("title", document.getElementById("f-title").value.trim());
   formData.append("score", score);
   formData.append("status", document.getElementById("f-status").value);
   formData.append("chapter", document.getElementById("f-ch").value);
-  formData.append("year", document.getElementById("f-year").value);
+  formData.append("year", yearInput);
   formData.append("note", document.getElementById("f-note").value.trim());
 
   const file = document.getElementById("f-image").files[0];
@@ -210,6 +208,34 @@ async function deleteEntry(id) {
 
   loadEntries();
 }
+const getSortTime = (val) => {
+  if (!val) return 0;
+
+  const s = String(val).trim();
+
+  // MM/DD/YYYY — full date, sort to that exact day
+  const full = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (full) {
+    const [, mm, dd, yyyy] = full;
+    const t = new Date(Number(yyyy), Number(mm) - 1, Number(dd)).getTime();
+    if (!isNaN(t)) return t;
+  }
+
+  // YYYY only — sort to Jan 1 of that year
+  const yearOnly = s.match(/^(\d{4})$/);
+  if (yearOnly) {
+    const t = new Date(Number(yearOnly[1]), 0, 1).getTime();
+    if (!isNaN(t)) return t;
+  }
+
+  return 0;
+};
+
+const getYear = (val) => {
+  if (!val) return 0;
+  const match = val.match(/\d{4}/);
+  return match ? Number(match[0]) : 0;
+};
 
 async function loadEntries() {
   const search = document.getElementById("search").value.trim().toLowerCase();
@@ -222,12 +248,6 @@ async function loadEntries() {
     .filter(entry => {
       const title = String(entry.title || "").toLowerCase();
       return title.includes(search);
-    })
-    .sort((a, b) => {
-      const scoreA = Number(a.score || 0);
-      const scoreB = Number(b.score || 0);
-      if (scoreB !== scoreA) return scoreB - scoreA;
-      return String(a.title || "").localeCompare(String(b.title || ""));
     });
 
   const container = document.getElementById("tiers");
@@ -248,7 +268,36 @@ async function loadEntries() {
     container.appendChild(grid);
     return;
   }
+  const sortValue = document.getElementById("sortSelect")?.value || "default";
 
+ if (sortValue === "year-desc") {
+  filtered.sort((a, b) => {
+    const diff = getSortTime(b.year) - getSortTime(a.year);
+    if (diff !== 0) return diff;
+    return String(a.title || "").localeCompare(String(b.title || ""));});
+  } else if (sortValue === "year-asc") {
+    filtered.sort((a, b) => {
+      const diff = getSortTime(a.year) - getSortTime(b.year);
+      if (diff !== 0) return diff;
+      return String(a.title || "").localeCompare(String(b.title || ""));});
+  } else if (sortValue === "created-desc") {
+    filtered.sort((a, b) => b.id - a.id);
+  } else if (sortValue === "created-asc") {
+    filtered.sort((a, b) => a.id - b.id);
+  } else if (sortValue === "score-desc") {
+    filtered.sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
+  } else if (sortValue === "score-asc") {
+    filtered.sort((a, b) => Number(a.score || 0) - Number(b.score || 0));
+  }
+    else {
+    // DEFAULT SORT (your original logic)
+    filtered.sort((a, b) => {
+      const scoreA = Number(a.score || 0);
+      const scoreB = Number(b.score || 0);
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      return String(a.title || "").localeCompare(String(b.title || ""));
+    });
+  }
   filtered.forEach((entry, index) => {
     entryCache[entry.id] = entry;
 
@@ -308,6 +357,6 @@ function scoreClass(score) {
   if (s >= 5) return "score-low";
   return "score-bad";
 }
-
+document.getElementById("sortSelect")?.addEventListener("change", loadEntries);
 ensureEditModal();
 loadEntries();
