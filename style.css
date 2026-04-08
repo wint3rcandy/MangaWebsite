@@ -1022,3 +1022,64 @@ body::before {
     font-size: 11px;
   }
 }
+
+/* FINAL DRAG RANK OVERRIDES */
+.rank-badge-draggable {
+  cursor: grab;
+  user-select: none;
+}
+
+.rank-badge-draggable:hover {
+  background: rgba(178, 28, 42, 0.16);
+  border-color: rgba(178, 28, 42, 0.42);
+}
+
+.rank-badge-draggable:active {
+  cursor: grabbing;
+}
+
+.entry-card.dragging {
+  opacity: 0.64;
+  transform: scale(0.985);
+}
+
+.entry-card.drop-before::before,
+.entry-card.drop-after::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(210, 65, 76, 0.18) 0%, rgba(210, 65, 76, 0.96) 50%, rgba(210, 65, 76, 0.18) 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.entry-card.drop-before::before {
+  left: 7px;
+}
+
+.entry-card.drop-after::after {
+  right: 7px;
+}
+
+@media (max-width: 720px) {
+  .entry-card.drop-before::before,
+  .entry-card.drop-after::after {
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: auto;
+    width: auto;
+    height: 4px;
+  }
+
+  .entry-card.drop-before::before {
+    top: 8px;
+  }
+
+  .entry-card.drop-after::after {
+    bottom: 8px;
+  }
+}

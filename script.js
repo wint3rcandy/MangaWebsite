@@ -4,6 +4,9 @@ let editingId = null;
 let entryCache = {};
 let hideNsfw = false;
 let searchClearFocused = false;
+let draggedRankId = null;
+let draggedScoreValue = null;
+let isSavingManualOrder = false;
 
 try {
   hideNsfw = localStorage.getItem("hide-nsfw") === "true";
@@ -318,6 +321,155 @@ const getYear = (val) => {
   return match ? Number(match[0]) : 0;
 };
 
+function getNumericScore(entry) {
+  const score = Number(entry?.score);
+  return Number.isFinite(score) ? score : Number.NEGATIVE_INFINITY;
+}
+
+function getManualOrder(entry) {
+  const manualOrder = Number(entry?.manualOrder);
+  return Number.isFinite(manualOrder) ? manualOrder : Number.POSITIVE_INFINITY;
+}
+
+function sortDefaultEntries(entries) {
+  entries.sort((a, b) => {
+    const scoreDiff = getNumericScore(b) - getNumericScore(a);
+    if (scoreDiff !== 0) return scoreDiff;
+
+    const orderDiff = getManualOrder(a) - getManualOrder(b);
+    if (orderDiff !== 0) return orderDiff;
+
+    return String(a.title || "").localeCompare(String(b.title || ""));
+  });
+}
+
+function clearRankDropIndicators(scope = document) {
+  scope.querySelectorAll(".entry-card.drop-before, .entry-card.drop-after")
+    .forEach(card => card.classList.remove("drop-before", "drop-after"));
+}
+
+function resetRankDragging(grid) {
+  clearRankDropIndicators(grid);
+  grid?.querySelector(".entry-card.dragging")?.classList.remove("dragging");
+  draggedRankId = null;
+  draggedScoreValue = null;
+}
+
+function getGridColumnCount(grid) {
+  const template = getComputedStyle(grid).gridTemplateColumns;
+  if (!template) return 1;
+  return Math.max(1, template.split(" ").filter(Boolean).length);
+}
+
+function getDropPosition(event, targetCard, grid) {
+  const rect = targetCard.getBoundingClientRect();
+  if (getGridColumnCount(grid) <= 1) {
+    return event.clientY < rect.top + rect.height / 2 ? "before" : "after";
+  }
+  return event.clientX < rect.left + rect.width / 2 ? "before" : "after";
+}
+
+async function saveManualTieOrder(grid, scoreValue) {
+  if (isSavingManualOrder) return;
+
+  const ids = Array.from(grid.querySelectorAll(".entry-card"))
+    .filter(card => Number(card.dataset.scoreValue) === scoreValue)
+    .map(card => Number(card.dataset.entryId));
+
+  if (ids.length < 2) return;
+
+  isSavingManualOrder = true;
+  let requestFailed = false;
+
+  try {
+    const response = await fetch(`${API}/reorder`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to save manual order");
+    }
+  } catch (error) {
+    requestFailed = true;
+    console.error(error);
+  } finally {
+    isSavingManualOrder = false;
+  }
+
+  if (requestFailed) {
+    alert("Couldn't save that rank order.");
+  }
+
+  loadEntries();
+}
+
+function setupRankDragging(grid) {
+  const handles = grid.querySelectorAll(".rank-badge-draggable");
+  const cards = grid.querySelectorAll(".entry-card");
+  if (!handles.length || !cards.length) return;
+
+  handles.forEach(handle => {
+    handle.addEventListener("dragstart", event => {
+      const card = handle.closest(".entry-card");
+      if (!card || isSavingManualOrder) return;
+
+      draggedRankId = Number(card.dataset.entryId);
+      draggedScoreValue = Number(card.dataset.scoreValue);
+      card.classList.add("dragging");
+
+      if (event.dataTransfer) {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", String(draggedRankId));
+      }
+    });
+
+    handle.addEventListener("dragend", () => {
+      resetRankDragging(grid);
+    });
+  });
+
+  cards.forEach(card => {
+    card.addEventListener("dragover", event => {
+      if (draggedRankId === null || isSavingManualOrder) return;
+      if (Number(card.dataset.entryId) === draggedRankId) return;
+      if (Number(card.dataset.scoreValue) !== draggedScoreValue) return;
+
+      event.preventDefault();
+      clearRankDropIndicators(grid);
+      const position = getDropPosition(event, card, grid);
+      card.classList.add(position === "before" ? "drop-before" : "drop-after");
+
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = "move";
+      }
+    });
+
+    card.addEventListener("drop", async event => {
+      if (draggedRankId === null || isSavingManualOrder) return;
+      if (Number(card.dataset.entryId) === draggedRankId) return;
+      if (Number(card.dataset.scoreValue) !== draggedScoreValue) return;
+
+      event.preventDefault();
+
+      const draggedCard = grid.querySelector(`.entry-card[data-entry-id="${draggedRankId}"]`);
+      if (!draggedCard || draggedCard === card) return;
+
+      const position = getDropPosition(event, card, grid);
+      clearRankDropIndicators(grid);
+
+      if (position === "before") {
+        grid.insertBefore(draggedCard, card);
+      } else {
+        grid.insertBefore(draggedCard, card.nextElementSibling);
+      }
+
+      await saveManualTieOrder(grid, draggedScoreValue);
+    });
+  });
+}
+
 async function loadEntries() {
   updateSearchClear();
   const search = document.getElementById("search").value.trim().toLowerCase();
@@ -349,6 +501,16 @@ async function loadEntries() {
     return;
   }
   const sortValue = document.getElementById("sortSelect")?.value || "default";
+  const canReorderTies = sortValue === "default" && search === "" && !hideNsfw;
+  const scoreCounts = new Map();
+
+  if (canReorderTies) {
+    filtered.forEach(entry => {
+      const numericScore = getNumericScore(entry);
+      if (!Number.isFinite(numericScore)) return;
+      scoreCounts.set(numericScore, (scoreCounts.get(numericScore) || 0) + 1);
+    });
+  }
 
  if (sortValue === "year-desc") {
   filtered.sort((a, b) => {
@@ -374,15 +536,8 @@ async function loadEntries() {
     filtered.sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
   } else if (sortValue === "score-asc") {
     filtered.sort((a, b) => Number(a.score || 0) - Number(b.score || 0));
-  }
-    else {
-    // DEFAULT SORT (your original logic)
-    filtered.sort((a, b) => {
-      const scoreA = Number(a.score || 0);
-      const scoreB = Number(b.score || 0);
-      if (scoreB !== scoreA) return scoreB - scoreA;
-      return String(a.title || "").localeCompare(String(b.title || ""));
-    });
+    } else {
+    sortDefaultEntries(filtered);
   }
   filtered.forEach((entry, index) => {
     entryCache[entry.id] = entry;
@@ -392,9 +547,16 @@ async function loadEntries() {
     const year = entry.year || "-";
     const note = entry.note || "";
     const nsfw = isNsfwEntry(entry);
+    const numericScore = getNumericScore(entry);
+    const canDragRank = canReorderTies && Number.isFinite(numericScore) && (scoreCounts.get(numericScore) || 0) > 1;
+    const rankBadgeHtml = canDragRank
+      ? `<div class="rank-badge rank-badge-draggable" draggable="true" title="Drag to reorder ties" aria-label="Drag to reorder ties">#${index + 1}</div>`
+      : `<div class="rank-badge">#${index + 1}</div>`;
 
     const card = document.createElement("div");
     card.className = `entry-card ${Number(score) === 100 ? "score-100" : ""}`;
+    card.dataset.entryId = String(entry.id);
+    card.dataset.scoreValue = String(numericScore);
     card.innerHTML = `
       <div class="entry-poster">
         ${
@@ -429,11 +591,15 @@ async function loadEntries() {
         </div>
       </div>
 
-      <div class="rank-badge">#${index + 1}</div>
+      ${rankBadgeHtml}
     `;
 
     grid.appendChild(card);
   });
+
+  if (canReorderTies) {
+    setupRankDragging(grid);
+  }
 
   container.appendChild(grid);
 }

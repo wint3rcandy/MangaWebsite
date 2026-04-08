@@ -36,6 +36,27 @@ function parseBoolean(value) {
   return value === true || value === "true" || value === 1 || value === "1" || value === "on";
 }
 
+function parseManualOrder(value) {
+  const num = Number(value);
+  return Number.isFinite(num) ? num : null;
+}
+
+function getNextManualOrder(data, scoreValue) {
+  const score = Number(scoreValue);
+  if (!Number.isFinite(score)) return null;
+
+  let max = -1;
+  for (const entry of data) {
+    if (Number(entry.score) !== score) continue;
+    const order = Number(entry.manualOrder);
+    if (Number.isFinite(order) && order > max) {
+      max = order;
+    }
+  }
+
+  return max + 1;
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOADS_DIR);
@@ -70,12 +91,45 @@ app.post("/api/manga", upload.single("image"), (req, res) => {
     image: req.file ? `/uploads/${req.file.filename}` : "",
     note: req.body.note || "",
     nsfw: parseBoolean(req.body.nsfw),
+    manualOrder: req.body.manualOrder !== undefined
+      ? parseManualOrder(req.body.manualOrder)
+      : getNextManualOrder(data, req.body.score),
   };
 
   data.push(newEntry);
   saveData(data);
 
   res.json(newEntry);
+});
+
+app.post("/api/manga/reorder", (req, res) => {
+  const ids = Array.isArray(req.body.ids)
+    ? req.body.ids.map(Number).filter(Number.isFinite)
+    : [];
+
+  if (ids.length < 2) {
+    return res.status(400).json({ error: "At least two ids are required" });
+  }
+
+  const data = loadData();
+  const entries = ids.map(id => data.find(entry => entry.id === id));
+
+  if (entries.some(entry => !entry)) {
+    return res.status(404).json({ error: "One or more entries were not found" });
+  }
+
+  const scores = new Set(entries.map(entry => Number(entry.score)));
+  if (scores.size > 1) {
+    return res.status(400).json({ error: "Only entries with the same score can be reordered" });
+  }
+
+  ids.forEach((id, index) => {
+    const entry = data.find(item => item.id === id);
+    if (entry) entry.manualOrder = index;
+  });
+
+  saveData(data);
+  res.json({ success: true, ids });
 });
 
 app.put("/api/manga/:id", upload.single("image"), (req, res) => {
@@ -88,17 +142,24 @@ app.put("/api/manga/:id", upload.single("image"), (req, res) => {
   }
 
   const existing = data[idx];
+  const nextScore = req.body.score !== undefined ? req.body.score : existing.score;
+  const scoreChanged = Number(nextScore) !== Number(existing.score);
 
   const updated = {
     ...existing,
     title: req.body.title !== undefined ? req.body.title : existing.title,
-    score: req.body.score !== undefined ? req.body.score : existing.score,
+    score: nextScore,
     status: req.body.status !== undefined ? req.body.status : existing.status,
     chapter: req.body.chapter !== undefined ? req.body.chapter : existing.chapter,
     year: req.body.year !== undefined ? req.body.year : existing.year,
     image: existing.image || "",
     note: req.body.note !== undefined ? req.body.note : existing.note,
     nsfw: req.body.nsfw !== undefined ? parseBoolean(req.body.nsfw) : parseBoolean(existing.nsfw),
+    manualOrder: req.body.manualOrder !== undefined
+      ? parseManualOrder(req.body.manualOrder)
+      : scoreChanged
+        ? getNextManualOrder(data, nextScore)
+        : parseManualOrder(existing.manualOrder),
   };
 
   if (req.file) {
