@@ -258,7 +258,7 @@ async function loadEntries() {
     const note = entry.note || "";
 
     const card = document.createElement("div");
-    card.className = `entry-card rank-${index + 1}`;
+    card.className = `entry-card ${Number(score) === 100 ? "score-100" : ""}`;
     card.innerHTML = `
       <div class="entry-poster">
         ${

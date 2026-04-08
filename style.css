@@ -288,7 +288,7 @@ body {
 }
 
 .card-actions {
-  margin-top: auto; /* 🔥 key line */
+  margin-top: auto; /* ߔ堫ey line */
   display: flex;
   justify-content: flex-end;
   gap: 8px;
@@ -427,7 +427,7 @@ body {
   margin-bottom: 6px;
 }
 
-/* score colors */
+/* score colors text*/
 .super-high {
   color: gold;
   font-weight: 800;
@@ -452,48 +452,17 @@ body {
   color: #888;
   font-weight: 700;
 }
-
-/* top 3 ranking cards */
-.entry-card.rank-1 {
-  border: 1px solid rgba(255, 215, 0, 0.8);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
+/* for ring arouund score 100 */
+.score-100 {
+  border: 1px solid gold;
+}
+.score-100:hover {
+  box-shadow: 
+    0 0 15px rgba(255, 215, 0, 0.6),
+    0 0 30px rgba(255, 215, 0, 0.4),
+    0 0 60px rgba(255, 215, 0, 0.25);
 }
 
-.entry-card.rank-2 {
-  border: 1px solid rgba(192, 192, 192, 0.7);
-  box-shadow: 0 0 20px rgba(192, 192, 192, 0.2);
-}
-
-.entry-card.rank-3 {
-  border: 1px solid rgba(205, 127, 50, 0.7);
-  box-shadow: 0 0 20px rgba(205, 127, 50, 0.2);
-}
-
-/* top 3 rank label colors */
-.rank-1 .rank-label {
-  color: gold;
-}
-
-.rank-2 .rank-label {
-  color: silver;
-}
-
-.rank-3 .rank-label {
-  color: #cd7f32;
-}
-
-/* optional hover glow for top 3 */
-.entry-card.rank-1:hover {
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
-}
-
-.entry-card.rank-2:hover {
-  box-shadow: 0 0 30px rgba(192, 192, 192, 0.3);
-}
-
-.entry-card.rank-3:hover {
-  box-shadow: 0 0 30px rgba(205, 127, 50, 0.3);
-}
 
 .entry-note {
   margin-top: 10px;
