@@ -3,6 +3,7 @@ const API = "/api/manga";
 let editingId = null;
 let entryCache = {};
 let hideNsfw = false;
+let searchClearFocused = false;
 
 try {
   hideNsfw = localStorage.getItem("hide-nsfw") === "true";
@@ -73,7 +74,7 @@ function ensureEditModal() {
     <div class="edit-card">
       <div class="edit-head">
         <h3>Edit entry</h3>
-        <button class="modal-x" onclick="closeEditModal()">×</button>
+        <button class="modal-x" onclick="closeEditModal()" aria-label="Close">&times;</button>
       </div>
 
       <div class="edit-grid">
@@ -255,6 +256,41 @@ async function deleteEntry(id) {
 
   loadEntries();
 }
+function updateSearchClear() {
+  const input = document.getElementById("search");
+  const clearBtn = document.getElementById("search-clear");
+  if (!input || !clearBtn) return;
+
+  const shouldShow = searchClearFocused || input.value.length > 0;
+  clearBtn.hidden = !shouldShow;
+}
+
+function showSearchClear() {
+  searchClearFocused = true;
+  updateSearchClear();
+}
+
+function hideSearchClear() {
+  searchClearFocused = false;
+  updateSearchClear();
+}
+
+function handleSearchInput() {
+  updateSearchClear();
+  loadEntries();
+}
+
+function clearSearch() {
+  const input = document.getElementById("search");
+  if (!input) return;
+
+  input.value = "";
+  searchClearFocused = true;
+  updateSearchClear();
+  loadEntries();
+  input.focus();
+}
+
 const getSortTime = (val) => {
   if (!val) return 0;
 
@@ -283,6 +319,7 @@ const getYear = (val) => {
 };
 
 async function loadEntries() {
+  updateSearchClear();
   const search = document.getElementById("search").value.trim().toLowerCase();
   const res = await fetch(API);
   const data = await res.json();
@@ -387,8 +424,8 @@ async function loadEntries() {
         ${note ? `<div class="entry-note">${escapeHtml(note)}</div>` : ""}
 
         <div class="card-actions">
-          <button class="card-btn edit" onclick="openEditModal(${entry.id})">✎</button>
-          <button class="card-btn delete" onclick="deleteEntry(${entry.id})">×</button>
+          <button class="card-btn edit" onclick="openEditModal(${entry.id})" aria-label="Edit entry">&#9998;</button>
+          <button class="card-btn delete" onclick="deleteEntry(${entry.id})" aria-label="Delete entry">&times;</button>
         </div>
       </div>
 

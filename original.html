@@ -13,7 +13,7 @@
     <div class="top-bar">
       <div class="top-bar-left">
         <div class="top-logo">
-          <span class="top-logo-icon">🎌</span>
+          <span class="top-logo-icon" aria-hidden="true">&#127884;</span>
           <div class="top-logo-text">
             <span class="top-title">Manga</span>
             <span class="top-subtitle">Rankings</span>
@@ -28,7 +28,8 @@
             <circle cx="8.5" cy="8.5" r="5.5" stroke="#555" stroke-width="1.5"/>
             <path d="M13 13L17 17" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <input class="search-box" type="text" placeholder="Search titles..." id="search" oninput="loadEntries()">
+          <input class="search-box" type="text" placeholder="Search titles..." id="search" oninput="handleSearchInput()" onfocus="showSearchClear()" onblur="hideSearchClear()" autocomplete="off">
+          <button class="search-clear" id="search-clear" type="button" onclick="clearSearch()" onmousedown="event.preventDefault()" aria-label="Clear search" hidden>&times;</button>
         </div>
       </div>
 
@@ -89,7 +90,7 @@
           <input type="text" id="f-year" placeholder="e.g. 2019 or 02/22/2024">
         </div>
 
-        <!-- 🔥 IMAGE UPLOAD -->
+        <!-- ðŸ”¥ IMAGE UPLOAD -->
         <div class="field field-image">
           <label>IMAGE</label>
           <input type="file" id="f-image" accept="image/*">
@@ -109,7 +110,7 @@
         </div>
         
 
-        <button class="add-btn" onclick="addEntry()">Add →</button>
+        <button class="add-btn" onclick="addEntry()">Add â†’</button>
       </div>
     </div>
 
