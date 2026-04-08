@@ -105,7 +105,7 @@ body {
   letter-spacing: 0.12em;
 }
 
-.field input,
+.field input:not([type="checkbox"]),
 .field select {
   padding: 11px 12px;
   border: 1px solid #303030;
@@ -115,19 +115,53 @@ body {
   color: #ededed;
 }
 
-.field input:focus,
+.field input:not([type="checkbox"]):focus,
 .field select:focus {
   outline: none;
   border-color: rgba(178, 28, 42, 0.75);
   box-shadow: 0 0 0 3px rgba(178, 28, 42, 0.12);
 }
 
+.check-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #303030;
+  border-radius: 12px;
+  background: #141414;
+  color: #ededed;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.check-chip input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #b71f2e;
+}
+
+.check-chip span {
+  color: #ededed;
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .add-form .field-title {
   grid-column: span 2;
 }
 
-.add-form .field:nth-of-type(6) {
+.add-form .field-note {
   grid-column: span 2;
+}
+
+.field-flag {
+  align-self: end;
 }
 
 .add-btn {
@@ -275,6 +309,11 @@ body {
 .status-unknown {
   background: rgba(120, 120, 120, 0.14);
   color: #aaa;
+}
+
+.badge-nsfw {
+  background: rgba(210, 65, 76, 0.16);
+  color: #ff9aa2;
 }
 
 .card-actions {
@@ -482,7 +521,7 @@ body {
   }
 
   .add-form .field-title,
-  .add-form .field:nth-of-type(6),
+  .add-form .field-note,
   .add-btn {
     grid-column: 1 / -1;
   }
@@ -686,9 +725,11 @@ body {
   color: #ffffff;
 }
 
+.nsfw-toggle,
 .add-toggle {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 9px;
   min-height: 39px;
   padding: 10px 14px;
@@ -700,15 +741,23 @@ body {
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
 }
 
+.nsfw-toggle:hover,
+.nsfw-toggle:focus-visible,
 .add-toggle:hover,
 .add-toggle:focus-visible {
   background: rgba(255,255,255,0.06);
   border-color: rgba(178,28,42,0.6);
   box-shadow: 0 0 0 3px rgba(178,28,42,0.12);
   outline: none;
+}
+
+.nsfw-toggle.active {
+  background: rgba(178,28,42,0.16);
+  border-color: rgba(178,28,42,0.68);
+  color: #ffe2e5;
 }
 
 @media (max-width: 900px) {

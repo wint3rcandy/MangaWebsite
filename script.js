@@ -2,6 +2,11 @@ const API = "/api/manga";
 
 let editingId = null;
 let entryCache = {};
+let hideNsfw = false;
+
+try {
+  hideNsfw = localStorage.getItem("hide-nsfw") === "true";
+} catch {}
 
 function toggleForm() {
   const form = document.getElementById("add-form");
@@ -30,6 +35,31 @@ function statusClass(status) {
   if (s === "finished") return "status-finished";
   if (s === "hiatus") return "status-hiatus";
   return "status-unknown";
+}
+
+function isNsfwEntry(entry) {
+  const value = entry?.nsfw;
+  return value === true || value === "true" || value === 1 || value === "1" || value === "on";
+}
+
+function updateNsfwToggle() {
+  const button = document.getElementById("nsfw-toggle");
+  if (!button) return;
+
+  button.textContent = hideNsfw ? "Show NSFW" : "Hide NSFW";
+  button.classList.toggle("active", hideNsfw);
+  button.setAttribute("aria-pressed", String(hideNsfw));
+}
+
+function toggleNsfwFilter() {
+  hideNsfw = !hideNsfw;
+
+  try {
+    localStorage.setItem("hide-nsfw", String(hideNsfw));
+  } catch {}
+
+  updateNsfwToggle();
+  loadEntries();
 }
 
 function ensureEditModal() {
@@ -76,6 +106,14 @@ function ensureEditModal() {
           <input type="text" id="edit-year" placeholder="e.g. 2019 or 02/22/2024">
         </div>
 
+        <div class="field">
+          <label>CONTENT FLAG</label>
+          <label class="check-chip" for="edit-nsfw">
+            <input type="checkbox" id="edit-nsfw">
+            <span>NSFW</span>
+          </label>
+        </div>
+
         <div class="field full">
           <label>REPLACE IMAGE (optional)</label>
           <input type="file" id="edit-image" accept="image/*">
@@ -109,6 +147,7 @@ function openEditModal(id) {
   document.getElementById("edit-status").value = entry.status || "Ongoing";
   document.getElementById("edit-chapter").value = entry.chapter || "";
   document.getElementById("edit-year").value = entry.year || "";
+  document.getElementById("edit-nsfw").checked = isNsfwEntry(entry);
   document.getElementById("edit-image").value = "";
   document.getElementById("edit-note").value = entry.note || "";
 
@@ -135,6 +174,7 @@ async function saveEditEntry() {
   formData.append("status", document.getElementById("edit-status").value);
   formData.append("chapter", document.getElementById("edit-chapter").value);
   formData.append("note", document.getElementById("edit-note").value.trim());
+  formData.append("nsfw", document.getElementById("edit-nsfw").checked ? "true" : "false");
 
   const yearInput = document.getElementById("edit-year").value.trim();
 
@@ -184,6 +224,7 @@ async function addEntry() {
   formData.append("chapter", document.getElementById("f-ch").value);
   formData.append("year", yearInput);
   formData.append("note", document.getElementById("f-note").value.trim());
+  formData.append("nsfw", document.getElementById("f-nsfw").checked ? "true" : "false");
 
   const file = document.getElementById("f-image").files[0];
   if (file) formData.append("image", file);
@@ -198,6 +239,8 @@ async function addEntry() {
   document.getElementById("f-ch").value = "";
   document.getElementById("f-year").value = "";
   document.getElementById("f-image").value = "";
+  document.getElementById("f-note").value = "";
+  document.getElementById("f-nsfw").checked = false;
 
   loadEntries();
 }
@@ -249,7 +292,9 @@ async function loadEntries() {
   const filtered = data
     .filter(entry => {
       const title = String(entry.title || "").toLowerCase();
-      return title.includes(search);
+      if (!title.includes(search)) return false;
+      if (hideNsfw && isNsfwEntry(entry)) return false;
+      return true;
     });
 
   const container = document.getElementById("tiers");
@@ -305,10 +350,11 @@ async function loadEntries() {
   filtered.forEach((entry, index) => {
     entryCache[entry.id] = entry;
 
-    const score = entry.score || "—";
-    const chapter = entry.chapter || "—";
-    const year = entry.year || "—";
+    const score = entry.score || "-";
+    const chapter = entry.chapter || "-";
+    const year = entry.year || "-";
     const note = entry.note || "";
+    const nsfw = isNsfwEntry(entry);
 
     const card = document.createElement("div");
     card.className = `entry-card ${Number(score) === 100 ? "score-100" : ""}`;
@@ -326,11 +372,12 @@ async function loadEntries() {
 
         <div class="entry-meta">
           <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
+          ${nsfw ? `<span class="badge badge-nsfw">NSFW</span>` : ""}
           <span>
             Score:
             <b style="${scoreStyle(score)}">${escapeHtml(score)}</b>
           </span>
-          ${chapter && chapter !== "—" ? `<span>Ch: <b>${escapeHtml(chapter)}</b></span>` : ""}
+          ${chapter && chapter !== "-" ? `<span>Ch: <b>${escapeHtml(chapter)}</b></span>` : ""}
           <span>
             ${String(entry.status).toLowerCase() === "finished" ? "Read" : "Started"}:
             <b>${escapeHtml(year)}</b>
@@ -368,5 +415,6 @@ function scoreStyle(score) {
   return `color: hsl(${hue}, ${saturation}%, ${lightness}%); font-weight: 700;`;
 }
 document.getElementById("sortSelect")?.addEventListener("change", loadEntries);
+updateNsfwToggle();
 ensureEditModal();
 loadEntries();

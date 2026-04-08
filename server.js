@@ -32,6 +32,10 @@ function saveData(data) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
+function parseBoolean(value) {
+  return value === true || value === "true" || value === 1 || value === "1" || value === "on";
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOADS_DIR);
@@ -65,6 +69,7 @@ app.post("/api/manga", upload.single("image"), (req, res) => {
     year: req.body.year || "",
     image: req.file ? `/uploads/${req.file.filename}` : "",
     note: req.body.note || "",
+    nsfw: parseBoolean(req.body.nsfw),
   };
 
   data.push(newEntry);
@@ -93,6 +98,7 @@ app.put("/api/manga/:id", upload.single("image"), (req, res) => {
     year: req.body.year !== undefined ? req.body.year : existing.year,
     image: existing.image || "",
     note: req.body.note !== undefined ? req.body.note : existing.note,
+    nsfw: req.body.nsfw !== undefined ? parseBoolean(req.body.nsfw) : parseBoolean(existing.nsfw),
   };
 
   if (req.file) {

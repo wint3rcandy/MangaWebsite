@@ -47,6 +47,9 @@
             <option value="score-asc">Score (Low)</option>
           </select>
         </div>
+        <button class="nsfw-toggle" type="button" id="nsfw-toggle" onclick="toggleNsfwFilter()" aria-pressed="false">
+          Hide NSFW
+        </button>
         <button class="add-toggle" type="button" onclick="toggleForm()" aria-expanded="false" aria-controls="add-form">
           <span>Add new entry</span>
           <span class="toggle-btn" id="toggle-btn">+</span>
@@ -87,14 +90,22 @@
         </div>
 
         <!-- 🔥 IMAGE UPLOAD -->
-        <div class="field">
+        <div class="field field-image">
           <label>IMAGE</label>
           <input type="file" id="f-image" accept="image/*">
         </div>
 
-        <div class="field" style="grid-column: span 2;">
+        <div class="field field-note">
           <label>NOTE / REVIEW</label>
           <input type="text" id="f-note" placeholder="Optional review...">
+        </div>
+
+        <div class="field field-flag">
+          <label>CONTENT FLAG</label>
+          <label class="check-chip" for="f-nsfw">
+            <input type="checkbox" id="f-nsfw">
+            <span>NSFW</span>
+          </label>
         </div>
         
 
