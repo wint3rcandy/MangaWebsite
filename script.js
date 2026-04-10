@@ -553,16 +553,15 @@ async function loadEntries() {
     } else {
     sortDefaultEntries(filtered);
   }
-  filtered.forEach((entry, index) => {
-    entryCache[entry.id] = entry;
+  const useTierGroups = sortValue === "default" || sortValue === "score-desc" || sortValue === "score-asc";
 
+  function buildCard(entry, index, canDragRank) {
     const score = entry.score || null;
     const chapter = entry.chapter || "-";
     const year = entry.year || "-";
     const note = entry.note || "";
     const nsfw = isNsfwEntry(entry);
     const numericScore = getNumericScore(entry);
-    const canDragRank = canReorderTies && numericScore !== Number.NEGATIVE_INFINITY && (scoreCounts.get(numericScore) || 0) > 1;
     const rankBadgeHtml = canDragRank
       ? `<div class="rank-badge rank-badge-draggable" draggable="true" title="Drag to reorder ties" aria-label="Drag to reorder ties">#${index + 1}</div>`
       : `<div class="rank-badge">#${index + 1}</div>`;
@@ -573,16 +572,13 @@ async function loadEntries() {
     card.dataset.scoreValue = String(numericScore);
     card.innerHTML = `
       <div class="entry-poster">
-        ${
-          entry.image
-            ? `<img class="poster-img" src="${entry.image}" alt="${escapeHtml(entry.title)}">`
-            : `<div class="poster-empty">No Image</div>`
+        ${entry.image
+          ? `<img class="poster-img" src="${entry.image}" alt="${escapeHtml(entry.title)}">`
+          : `<div class="poster-empty">No Image</div>`
         }
       </div>
-
       <div class="entry-content">
         <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
-
         <div class="entry-meta">
           <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
           ${nsfw ? `<span class="badge badge-nsfw">NSFW</span>` : ""}
@@ -593,26 +589,91 @@ async function loadEntries() {
             <b>${escapeHtml(year)}</b>
           </span>
         </div>
-
         ${note ? `<div class="entry-note">${escapeHtml(note)}</div>` : ""}
-
         <div class="card-actions">
           <button class="card-btn edit" onclick="openEditModal(${entry.id})" aria-label="Edit entry">&#9998;</button>
           <button class="card-btn delete" onclick="deleteEntry(${entry.id})" aria-label="Delete entry">&times;</button>
         </div>
       </div>
-
       ${rankBadgeHtml}
     `;
-
-    grid.appendChild(card);
-  });
-
-  if (canReorderTies) {
-    setupRankDragging(grid);
+    return card;
   }
 
-  container.appendChild(grid);
+  if (useTierGroups) {
+    // Group entries by tier
+    const groups = new Map(); // tier label → entries[]
+    filtered.forEach(entry => {
+      entryCache[entry.id] = entry;
+      const tier = entry.score || null;
+      const key = tier || "__ungraded__";
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(entry);
+    });
+
+    // Render each tier group in order
+    const tierKeys = [...groups.keys()].sort((a, b) => {
+      const ao = a === "__ungraded__" ? 99 : (TIER_ORDER[a] ?? 98);
+      const bo = b === "__ungraded__" ? 99 : (TIER_ORDER[b] ?? 98);
+      return ao - bo;
+    });
+
+    let globalIndex = 0;
+    tierKeys.forEach((key, groupIdx) => {
+      const entries = groups.get(key);
+      const tierLabel = key === "__ungraded__" ? null : key;
+      const tierClass = tierLabel ? `tier-${tierLabel.replace("+","plus")}` : "tier-ungraded";
+      const numericScore = tierLabel ? getNumericScore({ score: tierLabel }) : Number.NEGATIVE_INFINITY;
+      const canDragThisTier = canReorderTies && tierLabel !== null && entries.length > 1;
+
+      // Divider between groups (not before first)
+      if (groupIdx > 0) {
+        const divider = document.createElement("div");
+        divider.className = "tier-divider";
+        container.appendChild(divider);
+      }
+
+      // Tier label row
+      const labelRow = document.createElement("div");
+      labelRow.className = "tier-label-row";
+      labelRow.innerHTML = `<span class="tier-label-pill ${tierClass}">${tierLabel || "Ungraded"}</span><span class="tier-count">${entries.length}</span>`;
+      container.appendChild(labelRow);
+
+      // Grid for this tier
+      const tierGrid = document.createElement("div");
+      tierGrid.className = "entry-grid";
+      tierGrid.dataset.tierKey = key;
+
+      entries.forEach((entry) => {
+        const canDrag = canDragThisTier;
+        const card = buildCard(entry, globalIndex, canDrag);
+        tierGrid.appendChild(card);
+        globalIndex++;
+      });
+
+      if (canDragThisTier) {
+        setupRankDragging(tierGrid);
+      }
+
+      container.appendChild(tierGrid);
+    });
+
+  } else {
+    // Flat grid for non-tier sorts
+    filtered.forEach((entry, index) => {
+      entryCache[entry.id] = entry;
+      const numericScore = getNumericScore(entry);
+      const canDragRank = canReorderTies && numericScore !== Number.NEGATIVE_INFINITY && (scoreCounts.get(numericScore) || 0) > 1;
+      const card = buildCard(entry, index, canDragRank);
+      grid.appendChild(card);
+    });
+
+    if (canReorderTies) {
+      setupRankDragging(grid);
+    }
+
+    container.appendChild(grid);
+  }
 }
 // scoreStyle removed — tiers are styled via CSS classes
 
