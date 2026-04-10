@@ -87,8 +87,17 @@ function ensureEditModal() {
         </div>
 
         <div class="field">
-          <label>SCORE</label>
-          <input type="number" id="edit-score">
+          <label>TIER</label>
+          <select id="edit-score">
+            <option value="">-- Ungraded --</option>
+            <option value="S+">S+</option>
+            <option value="S">S</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+          </select>
         </div>
 
         <div class="field">
@@ -169,9 +178,7 @@ async function saveEditEntry() {
 
   const formData = new FormData();
 
-  let score = parseFloat(document.getElementById("edit-score").value);
-  if (isNaN(score)) score = "";
-  else score = Math.max(0, Math.min(100, score));
+  const score = document.getElementById("edit-score").value;
 
   formData.append("title", document.getElementById("edit-title").value.trim());
   formData.append("score", score);
@@ -218,9 +225,7 @@ async function addEntry() {
     return;
   }
 
-  let score = parseFloat(document.getElementById("f-score").value);
-  if (isNaN(score)) score = "";
-  else score = Math.max(0, Math.min(100, score));
+  const score = document.getElementById("f-score").value;
 
   formData.append("title", document.getElementById("f-title").value.trim());
   formData.append("score", score);
@@ -321,9 +326,18 @@ const getYear = (val) => {
   return match ? Number(match[0]) : 0;
 };
 
+const TIER_ORDER = { "S+": 0, "S": 1, "A": 2, "B": 3, "C": 4, "D": 5, "F": 6 };
+
+function getTierOrder(entry) {
+  const score = entry?.score;
+  if (score && TIER_ORDER.hasOwnProperty(score)) return TIER_ORDER[score];
+  return 99; // ungraded goes last
+}
+
 function getNumericScore(entry) {
-  const score = Number(entry?.score);
-  return Number.isFinite(score) ? score : Number.NEGATIVE_INFINITY;
+  // kept for drag-drop compatibility — use tier order as a pseudo-score
+  const order = getTierOrder(entry);
+  return order === 99 ? Number.NEGATIVE_INFINITY : -order; // higher = better
 }
 
 function getManualOrder(entry) {
@@ -333,8 +347,8 @@ function getManualOrder(entry) {
 
 function sortDefaultEntries(entries) {
   entries.sort((a, b) => {
-    const scoreDiff = getNumericScore(b) - getNumericScore(a);
-    if (scoreDiff !== 0) return scoreDiff;
+    const tierDiff = getTierOrder(a) - getTierOrder(b);
+    if (tierDiff !== 0) return tierDiff;
 
     const orderDiff = getManualOrder(a) - getManualOrder(b);
     if (orderDiff !== 0) return orderDiff;
@@ -507,7 +521,7 @@ async function loadEntries() {
   if (canReorderTies) {
     filtered.forEach(entry => {
       const numericScore = getNumericScore(entry);
-      if (!Number.isFinite(numericScore)) return;
+      if (numericScore === Number.NEGATIVE_INFINITY) return;
       scoreCounts.set(numericScore, (scoreCounts.get(numericScore) || 0) + 1);
     });
   }
@@ -516,7 +530,7 @@ async function loadEntries() {
   filtered.sort((a, b) => {
     const diff = getSortTime(b.year) - getSortTime(a.year);
     if (diff !== 0) return diff;
-    const sd = Number(b.score || 0) - Number(a.score || 0);
+    const sd = getTierOrder(a) - getTierOrder(b);
     if (sd !== 0) return sd;
     return String(a.title || "").localeCompare(String(b.title || ""));
   });
@@ -524,7 +538,7 @@ async function loadEntries() {
     filtered.sort((a, b) => {
       const diff = getSortTime(a.year) - getSortTime(b.year);
       if (diff !== 0) return diff;
-      const sd = Number(b.score || 0) - Number(a.score || 0);
+      const sd = getTierOrder(a) - getTierOrder(b);
       if (sd !== 0) return sd;
       return String(a.title || "").localeCompare(String(b.title || ""));
     });
@@ -533,28 +547,28 @@ async function loadEntries() {
   } else if (sortValue === "created-asc") {
     filtered.sort((a, b) => a.id - b.id);
   } else if (sortValue === "score-desc") {
-    filtered.sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
+    filtered.sort((a, b) => getTierOrder(a) - getTierOrder(b));
   } else if (sortValue === "score-asc") {
-    filtered.sort((a, b) => Number(a.score || 0) - Number(b.score || 0));
+    filtered.sort((a, b) => getTierOrder(b) - getTierOrder(a));
     } else {
     sortDefaultEntries(filtered);
   }
   filtered.forEach((entry, index) => {
     entryCache[entry.id] = entry;
 
-    const score = entry.score || "-";
+    const score = entry.score || null;
     const chapter = entry.chapter || "-";
     const year = entry.year || "-";
     const note = entry.note || "";
     const nsfw = isNsfwEntry(entry);
     const numericScore = getNumericScore(entry);
-    const canDragRank = canReorderTies && Number.isFinite(numericScore) && (scoreCounts.get(numericScore) || 0) > 1;
+    const canDragRank = canReorderTies && numericScore !== Number.NEGATIVE_INFINITY && (scoreCounts.get(numericScore) || 0) > 1;
     const rankBadgeHtml = canDragRank
       ? `<div class="rank-badge rank-badge-draggable" draggable="true" title="Drag to reorder ties" aria-label="Drag to reorder ties">#${index + 1}</div>`
       : `<div class="rank-badge">#${index + 1}</div>`;
 
     const card = document.createElement("div");
-    card.className = `entry-card ${Number(score) === 100 ? "score-100" : ""}`;
+    card.className = `entry-card ${score === "S+" ? "score-100" : ""}`;
     card.dataset.entryId = String(entry.id);
     card.dataset.scoreValue = String(numericScore);
     card.innerHTML = `
@@ -572,10 +586,7 @@ async function loadEntries() {
         <div class="entry-meta">
           <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
           ${nsfw ? `<span class="badge badge-nsfw">NSFW</span>` : ""}
-          <span>
-            Score:
-            <b style="${scoreStyle(score)}">${escapeHtml(score)}</b>
-          </span>
+          ${score ? `<span class="tier-badge tier-${score.replace("+","plus")}">${escapeHtml(score)}</span>` : `<span class="tier-badge tier-ungraded">—</span>`}
           ${chapter && chapter !== "-" ? `<span>Ch: <b>${escapeHtml(chapter)}</b></span>` : ""}
           <span>
             ${String(entry.status).toLowerCase() === "finished" ? "Read" : "Started"}:
@@ -603,20 +614,8 @@ async function loadEntries() {
 
   container.appendChild(grid);
 }
-function scoreStyle(score) {
-  const s = Number(score);
+// scoreStyle removed — tiers are styled via CSS classes
 
-  if (!Number.isFinite(s)) return "color: #888; font-weight: 700;";
-  if (s >= 11) return "color: gold; font-weight: 800;";
-
-  const clamped = Math.max(0, Math.min(10, s));
-  const t = clamped / 10;
-  const hue = Math.round(4 * t);
-  const saturation = Math.round(8 + 92 * Math.pow(t, 4));
-  const lightness = Math.round(62 + 8 * t);
-
-  return `color: hsl(${hue}, ${saturation}%, ${lightness}%); font-weight: 700;`;
-}
 document.getElementById("sortSelect")?.addEventListener("change", loadEntries);
 updateNsfwToggle();
 ensureEditModal();

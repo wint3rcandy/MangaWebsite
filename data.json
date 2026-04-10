@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Vagabond",
-    "score": "8",
+    "score": null,
     "status": "Hiatus",
     "chapter": "",
     "year": "2019",
@@ -14,7 +14,7 @@
   {
     "id": 2,
     "title": "Goblin Slayer",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "71",
     "year": "2019",
@@ -24,7 +24,7 @@
   {
     "id": 3,
     "title": "Goblin Slayer year one",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "66",
     "year": "2019",
@@ -33,7 +33,7 @@
   {
     "id": 4,
     "title": "Black lagoon",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2019",
@@ -45,7 +45,7 @@
   {
     "id": 5,
     "title": "Berserk",
-    "score": "100",
+    "score": "S+",
     "status": "Ongoing",
     "chapter": "",
     "year": "2019",
@@ -56,7 +56,7 @@
   {
     "id": 6,
     "title": "Gangsta",
-    "score": "8",
+    "score": null,
     "status": "Hiatus",
     "chapter": "",
     "year": "2019",
@@ -68,7 +68,7 @@
   {
     "id": 7,
     "title": "Claymore",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -79,7 +79,7 @@
   {
     "id": 8,
     "title": "Kuzu no honkai decor",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -91,7 +91,7 @@
   {
     "id": 9,
     "title": "Domestic Na Kanojo",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -103,7 +103,7 @@
   {
     "id": 10,
     "title": "Kengan Asura",
-    "score": 10,
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -113,7 +113,7 @@
   {
     "id": 11,
     "title": "Kingdom",
-    "score": "100",
+    "score": "S+",
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -124,7 +124,7 @@
   {
     "id": 12,
     "title": "Attack on Titan",
-    "score": "9",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -134,7 +134,7 @@
   {
     "id": 13,
     "title": "Vinland Saga",
-    "score": "9",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -146,7 +146,7 @@
   {
     "id": 14,
     "title": "666 Satan",
-    "score": 8,
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -155,7 +155,7 @@
   {
     "id": 15,
     "title": "Spy x Family",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -164,7 +164,7 @@
   {
     "id": 16,
     "title": "Tono No Kanri O Shite Miyou",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -176,7 +176,7 @@
   {
     "id": 17,
     "title": "wotaku koi wa muzukashii",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -185,7 +185,7 @@
   {
     "id": 18,
     "title": "One Punch Man",
-    "score": 10,
+    "score": "S",
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -195,7 +195,7 @@
   {
     "id": 19,
     "title": "Chainsaw Man",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -206,7 +206,7 @@
   {
     "id": 20,
     "title": "Demon Slayer",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -217,7 +217,7 @@
   {
     "id": 21,
     "title": "Ane Naru Mono",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -229,7 +229,7 @@
   {
     "id": 22,
     "title": "Jujutsu kaisan",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -241,7 +241,7 @@
   {
     "id": 23,
     "title": "We may be an inexperienced couple but",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -253,7 +253,7 @@
   {
     "id": 24,
     "title": "Haite Kudasai, Takamine San",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -265,7 +265,7 @@
   {
     "id": 25,
     "title": "Daughters friend",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -277,7 +277,7 @@
   {
     "id": 26,
     "title": "Please don’t bully me nagatoro",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -289,7 +289,7 @@
   {
     "id": 27,
     "title": "Pansuto",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -301,7 +301,7 @@
   {
     "id": 28,
     "title": "One Piece",
-    "score": "100",
+    "score": "S+",
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -313,7 +313,7 @@
   {
     "id": 29,
     "title": "Dorohedoro",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -323,7 +323,7 @@
   {
     "id": 30,
     "title": "Perowan!",
-    "score": 6,
+    "score": null,
     "status": "Unknown",
     "chapter": "",
     "year": "2020",
@@ -332,7 +332,7 @@
   {
     "id": 31,
     "title": "Initial D",
-    "score": "9",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -344,7 +344,7 @@
   {
     "id": 32,
     "title": "Hells Paradise",
-    "score": "9",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -356,7 +356,7 @@
   {
     "id": 33,
     "title": "Black clover",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2021",
@@ -368,7 +368,7 @@
   {
     "id": 34,
     "title": "Blame",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -380,7 +380,7 @@
   {
     "id": 35,
     "title": "Monster",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -392,7 +392,7 @@
   {
     "id": 36,
     "title": "Jagaaan",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2021",
@@ -402,7 +402,7 @@
   {
     "id": 37,
     "title": "All you need is kill",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -414,7 +414,7 @@
   {
     "id": 38,
     "title": "Fire Force",
-    "score": "7.1",
+    "score": null,
     "status": "Finished",
     "chapter": "274",
     "year": "2021",
@@ -426,7 +426,7 @@
   {
     "id": 39,
     "title": "Arms Dealer",
-    "score": "6",
+    "score": null,
     "status": "Hiatus",
     "chapter": "58",
     "year": "2021",
@@ -438,7 +438,7 @@
   {
     "id": 40,
     "title": "Haikyuu",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -450,7 +450,7 @@
   {
     "id": 41,
     "title": "Great Teacher Onizuka",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -462,7 +462,7 @@
   {
     "id": 42,
     "title": "Tokyo ghoul",
-    "score": "9",
+    "score": null,
     "status": "",
     "chapter": "",
     "year": "2021",
@@ -474,7 +474,7 @@
   {
     "id": 43,
     "title": "Tokyo ghoul re",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -486,7 +486,7 @@
   {
     "id": 44,
     "title": "Solo Leveling",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "175",
     "year": "2021",
@@ -498,7 +498,7 @@
   {
     "id": 45,
     "title": "Blade of the Immortal",
-    "score": "9",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -508,7 +508,7 @@
   {
     "id": 46,
     "title": "Dress up darling",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "70",
     "year": "2022",
@@ -520,7 +520,7 @@
   {
     "id": 47,
     "title": "Blue Lock",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "157",
     "year": "2022",
@@ -529,7 +529,7 @@
   {
     "id": 48,
     "title": "Three days of happiness",
-    "score": "10",
+    "score": "S",
     "status": "Finished",
     "chapter": "",
     "year": "2022",
@@ -541,7 +541,7 @@
   {
     "id": 49,
     "title": "Neighbors sisters",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "49",
     "year": "2022",
@@ -553,7 +553,7 @@
   {
     "id": 50,
     "title": "Mousou Shoujo",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "16",
     "year": "2022",
@@ -565,7 +565,7 @@
   {
     "id": 51,
     "title": "Mob Psycho",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "101",
     "year": "2022",
@@ -577,7 +577,7 @@
   {
     "id": 52,
     "title": "Kiss De Fusaide, Bare Naide",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "15",
     "year": "2022",
@@ -586,7 +586,7 @@
   {
     "id": 53,
     "title": "Kedamonotachi No Jikan",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "25",
     "year": "2022",
@@ -598,7 +598,7 @@
   {
     "id": 54,
     "title": "Memorize",
-    "score": "100",
+    "score": "S+",
     "status": "Hiatus",
     "chapter": "101",
     "year": "2022",
@@ -609,7 +609,7 @@
   {
     "id": 55,
     "title": "A Returner’s Magic Should Be Special",
-    "score": "8",
+    "score": null,
     "status": "Finished",
     "chapter": "182",
     "year": "2022",
@@ -621,7 +621,7 @@
   {
     "id": 56,
     "title": "My guardian Angel",
-    "score": 8,
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2022",
@@ -630,7 +630,7 @@
   {
     "id": 57,
     "title": "I want to see you embarrassed",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "10",
     "year": "2022",
@@ -642,7 +642,7 @@
   {
     "id": 58,
     "title": "Kubo San doesn’t leave me be",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "110",
     "year": "2022",
@@ -651,7 +651,7 @@
   {
     "id": 59,
     "title": "Juujika no rokun",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "82",
     "year": "2022",
@@ -660,7 +660,7 @@
   {
     "id": 60,
     "title": "Nengara Nenbyaku Ansatsu Renka",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "15",
     "year": "2022",
@@ -669,7 +669,7 @@
   {
     "id": 61,
     "title": "Boy’s Abyss",
-    "score": 6,
+    "score": null,
     "status": "Ongoing",
     "chapter": "94",
     "year": "2022",
@@ -678,7 +678,7 @@
   {
     "id": 62,
     "title": "That girl is cute… but dangerous?",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "21",
     "year": "2022",
@@ -687,7 +687,7 @@
   {
     "id": 63,
     "title": "Please go home, akutsu-San!",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "108",
     "year": "2022",
@@ -696,7 +696,7 @@
   {
     "id": 64,
     "title": "Blood and butterflies",
-    "score": "4",
+    "score": null,
     "status": "Ongoing",
     "chapter": "44",
     "year": "2022",
@@ -708,7 +708,7 @@
   {
     "id": 65,
     "title": "Hisureba",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "19",
     "year": "2022",
@@ -717,7 +717,7 @@
   {
     "id": 66,
     "title": "Match made in heaven by chance",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "22",
     "year": "2022",
@@ -726,7 +726,7 @@
   {
     "id": 67,
     "title": "I’m not the hero",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "7",
     "year": "2022",
@@ -735,7 +735,7 @@
   {
     "id": 68,
     "title": "My charms are wasted on Kuroiwa Medaka",
-    "score": 7,
+    "score": null,
     "status": "Unknown",
     "chapter": "22",
     "year": "2022",
@@ -744,7 +744,7 @@
   {
     "id": 69,
     "title": "Keep this a secret from mom",
-    "score": "8.5",
+    "score": null,
     "status": "Ongoing",
     "chapter": "53",
     "year": "2022",
@@ -756,7 +756,7 @@
   {
     "id": 70,
     "title": "Madam",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "23",
     "year": "2022",
@@ -768,7 +768,7 @@
   {
     "id": 71,
     "title": "Staying with ajumma",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "23",
     "year": "2022",
@@ -780,7 +780,7 @@
   {
     "id": 72,
     "title": "A story about a dragon and the rising of an adventurer",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "9",
     "year": "2022",
@@ -789,7 +789,7 @@
   {
     "id": 73,
     "title": "Tokyo Revengers",
-    "score": "5",
+    "score": null,
     "status": "Finished",
     "chapter": "197",
     "year": "2022",
@@ -801,7 +801,7 @@
   {
     "id": 74,
     "title": "Yugami doesn’t have any friends",
-    "score": 6,
+    "score": null,
     "status": "Ongoing",
     "chapter": "26",
     "year": "2022",
@@ -811,7 +811,7 @@
   {
     "id": 75,
     "title": "Ice Guy and the Cool Female Colleague",
-    "score": 7.5,
+    "score": null,
     "status": "Ongoing",
     "chapter": "34",
     "year": "2022",
@@ -820,7 +820,7 @@
   {
     "id": 76,
     "title": "Youngest Scion of the Mages",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "20",
     "year": "2022",
@@ -829,7 +829,7 @@
   {
     "id": 77,
     "title": "Gyaru Jk Onee x Shota",
-    "score": "9",
+    "score": null,
     "status": "",
     "chapter": "",
     "year": "2022",
@@ -841,7 +841,7 @@
   {
     "id": 78,
     "title": "I Obtained a Mythic Item",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "22",
     "year": "2022",
@@ -850,7 +850,7 @@
   {
     "id": 79,
     "title": "My Sisters Friends",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "43",
     "year": "2022",
@@ -862,7 +862,7 @@
   {
     "id": 80,
     "title": "Silent War",
-    "score": "10",
+    "score": "S",
     "status": "",
     "chapter": "",
     "year": "2022",
@@ -874,7 +874,7 @@
   {
     "id": 81,
     "title": "Ayashimon",
-    "score": 7,
+    "score": null,
     "status": "Unknown",
     "chapter": "",
     "year": "2022",
@@ -884,7 +884,7 @@
   {
     "id": 82,
     "title": "I Want To Eat Your Pancreas",
-    "score": 7,
+    "score": null,
     "status": "Unknown",
     "chapter": "",
     "year": "2022",
@@ -894,7 +894,7 @@
   {
     "id": 83,
     "title": "Sex And Dungeon",
-    "score": "6",
+    "score": null,
     "status": "Ongoing",
     "chapter": "35",
     "year": "2022",
@@ -906,7 +906,7 @@
   {
     "id": 84,
     "title": "The Beginning After The End",
-    "score": 9.5,
+    "score": null,
     "status": "Ongoing",
     "chapter": "172",
     "year": "2023",
@@ -915,7 +915,7 @@
   {
     "id": 85,
     "title": "The Middle-Aged Newbie Adventurer, Trained to the Brink of Death by the Strongest Party, Became Unbeatable",
-    "score": "9.5",
+    "score": null,
     "status": "Ongoing",
     "chapter": "37",
     "year": "2023",
@@ -927,7 +927,7 @@
   {
     "id": 86,
     "title": "I'm A Former Slave, But I Tried To Buy An Oni Slave Who I Later Found To Have Too Much Energy So I Want To Throw Him Away...",
-    "score": "8.3",
+    "score": null,
     "status": "Ongoing",
     "chapter": "23",
     "year": "2023",
@@ -939,7 +939,7 @@
   {
     "id": 87,
     "title": "Mizuki-Senpai No Koi Uranai",
-    "score": "7.8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "17",
     "year": "2023",
@@ -951,7 +951,7 @@
   {
     "id": 88,
     "title": "Isekai Ntr",
-    "score": "6.9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "26",
     "year": "2023",
@@ -963,7 +963,7 @@
   {
     "id": 89,
     "title": "My Sister Is A Superstar",
-    "score": "4",
+    "score": null,
     "status": "Ongoing",
     "chapter": "176",
     "year": "2023",
@@ -975,7 +975,7 @@
   {
     "id": 90,
     "title": "The Eminence In The Shadow",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "46",
     "year": "2023",
@@ -984,7 +984,7 @@
   {
     "id": 91,
     "title": "Dorei wo Choukyoushite harem Tsukuru",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "37",
     "year": "2023",
@@ -996,7 +996,7 @@
   {
     "id": 92,
     "title": "Crime & Punishment",
-    "score": "7.5",
+    "score": null,
     "status": "Ongoing",
     "chapter": "40",
     "year": "2023",
@@ -1008,7 +1008,7 @@
   {
     "id": 93,
     "title": "Hero Manager",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "26",
     "year": "2023",
@@ -1020,7 +1020,7 @@
   {
     "id": 94,
     "title": "Elf Who Likes To Be Humiliated",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "66",
     "year": "2023",
@@ -1032,7 +1032,7 @@
   {
     "id": 95,
     "title": "Chiisana Kanojo No Meswitch",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "9",
     "year": "2023",
@@ -1044,7 +1044,7 @@
   {
     "id": 96,
     "title": "Golden Facade",
-    "score": "6.5",
+    "score": null,
     "status": "Ongoing",
     "chapter": "30",
     "year": "2024",
@@ -1056,7 +1056,7 @@
   {
     "id": 97,
     "title": "Freezing The World: I Built A Doomsday Safehouse",
-    "score": 7.5,
+    "score": null,
     "status": "Ongoing",
     "chapter": "39",
     "year": "2024",
@@ -1065,7 +1065,7 @@
   {
     "id": 98,
     "title": "Akuma Wa Rozario Ni Kiss O Suru",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "3",
     "year": "2024",
@@ -1074,7 +1074,7 @@
   {
     "id": 99,
     "title": "Gantz",
-    "score": "8.2",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2024",
@@ -1086,7 +1086,7 @@
   {
     "id": 100,
     "title": "Eden, it’s a endless world",
-    "score": 7,
+    "score": null,
     "status": "Unknown",
     "chapter": "",
     "year": "2024",
@@ -1095,7 +1095,7 @@
   {
     "id": 101,
     "title": "A hero trained by the most evil demon king is unrivaled in the academy of returnees from another world",
-    "score": 8.1,
+    "score": null,
     "status": "Ongoing",
     "chapter": "21",
     "year": "2024"
@@ -1103,7 +1103,7 @@
   {
     "id": 102,
     "title": "Nimotsu Mochi No Nousuji Musou",
-    "score": 7.4,
+    "score": null,
     "status": "Ongoing",
     "chapter": "9",
     "year": "2024",
@@ -1112,7 +1112,7 @@
   {
     "id": 103,
     "title": "The reversal of my life as a side character",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "20",
     "year": "2024",
@@ -1121,7 +1121,7 @@
   {
     "id": 104,
     "title": "An outsider’s way in",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "97",
     "year": "2024",
@@ -1133,7 +1133,7 @@
   {
     "id": 105,
     "title": "Mist might mayhem",
-    "score": "10",
+    "score": "S",
     "status": "Ongoing",
     "chapter": "41",
     "year": "2024",
@@ -1144,7 +1144,7 @@
   {
     "id": 106,
     "title": "Heavenly Grand Archive’s young master",
-    "score": 6,
+    "score": null,
     "status": "Ongoing",
     "chapter": "82",
     "year": "2024",
@@ -1153,7 +1153,7 @@
   {
     "id": 107,
     "title": "Boku wa kimitachi wo shihai suru",
-    "score": "8.3",
+    "score": null,
     "status": "Ongoing",
     "chapter": "42",
     "year": "2024",
@@ -1165,7 +1165,7 @@
   {
     "id": 108,
     "title": "The invincible vanished shadow archer",
-    "score": 6.8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "15",
     "year": "2024",
@@ -1174,7 +1174,7 @@
   {
     "id": 109,
     "title": "Blinded by the setting sun",
-    "score": 9.3,
+    "score": null,
     "status": "Ongoing",
     "chapter": "187",
     "year": "2024",
@@ -1183,7 +1183,7 @@
   {
     "id": 110,
     "title": "Sousou Bo Freiren",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "139",
     "year": "12/13/2024",
@@ -1195,7 +1195,7 @@
   {
     "id": 111,
     "title": "Kagurabachi",
-    "score": 7.8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "61",
     "year": "2024",
@@ -1205,7 +1205,7 @@
   {
     "id": 112,
     "title": "Dungeon Defense",
-    "score": "7.8",
+    "score": null,
     "status": "Hiatus",
     "chapter": "47",
     "year": "12/19/2024",
@@ -1217,7 +1217,7 @@
   {
     "id": 113,
     "title": "Childhood Friend of The Zenith",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "40",
     "year": "2024",
@@ -1227,7 +1227,7 @@
   {
     "id": 114,
     "title": "Maplestory: The Last Adventurer",
-    "score": 7.8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "50",
     "year": "2024",
@@ -1237,7 +1237,7 @@
   {
     "id": 115,
     "title": "I killed an academy player",
-    "score": 7.1,
+    "score": null,
     "status": "Ongoing",
     "chapter": "66",
     "year": "2024",
@@ -1246,7 +1246,7 @@
   {
     "id": 116,
     "title": "Demonic Evolution",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "86",
     "year": "2025",
@@ -1256,7 +1256,7 @@
   {
     "id": 118,
     "title": "King Of The Labyrinth",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "14",
     "year": "2025",
@@ -1265,7 +1265,7 @@
   {
     "id": 119,
     "title": "Dungeon Ni Hisomu Yandere Na Kanajo Ni Ore Wa Nando Mo Korosareru",
-    "score": "10",
+    "score": "S",
     "status": "Ongoing",
     "chapter": "21",
     "year": "2025",
@@ -1276,7 +1276,7 @@
   {
     "id": 120,
     "title": "The imminence in the shadow",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "61",
     "year": "2025",
@@ -1285,7 +1285,7 @@
   {
     "id": 121,
     "title": "The brilliant healers new life in the shadows",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "15.1",
     "year": "01/30/2024",
@@ -1297,7 +1297,7 @@
   {
     "id": 122,
     "title": "The Priest of Corruption",
-    "score": "9.3",
+    "score": null,
     "status": "Hiatus",
     "chapter": "73",
     "year": "2025",
@@ -1309,7 +1309,7 @@
   {
     "id": 123,
     "title": "Let this grieving soul retire",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "53.2",
     "year": "2025",
@@ -1318,7 +1318,7 @@
   {
     "id": 124,
     "title": "Bad Born Blood",
-    "score": 7,
+    "score": null,
     "status": "Ongoing",
     "chapter": "21",
     "year": "2025",
@@ -1327,7 +1327,7 @@
   {
     "id": 125,
     "title": "Infinite Mage",
-    "score": 8.6,
+    "score": null,
     "status": "Ongoing",
     "chapter": "104",
     "year": "2025",
@@ -1336,7 +1336,7 @@
   {
     "id": 126,
     "title": "Shuujin Tensei",
-    "score": 8,
+    "score": null,
     "status": "Ongoing",
     "chapter": "2",
     "year": "2025",
@@ -1345,7 +1345,7 @@
   {
     "id": 127,
     "title": "Daredemo Dakeru Kimi ga Suki",
-    "score": 6,
+    "score": null,
     "status": "Ongoing",
     "chapter": "50",
     "year": "2025",
@@ -1354,7 +1354,7 @@
   {
     "id": 128,
     "title": "The Strongest Female Masters, Who Are Trying to Raise Me Up, Are in Shambles Over Their Training Policy",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "28",
     "year": "2025",
@@ -1363,7 +1363,7 @@
   {
     "id": 130,
     "title": "Savage Hero",
-    "score": "8.9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "77",
     "year": "2025",
@@ -1375,7 +1375,7 @@
   {
     "id": 131,
     "title": "Gomie Ika da to Tsuihousareta shounin",
-    "score": "6",
+    "score": null,
     "status": "Ongoing",
     "chapter": "10.2",
     "year": "2025",
@@ -1387,7 +1387,7 @@
   {
     "id": 132,
     "title": "Okaeri, papa",
-    "score": "8.6",
+    "score": null,
     "status": "Ongoing",
     "chapter": "25",
     "year": "2025",
@@ -1399,7 +1399,7 @@
   {
     "id": 133,
     "title": "Harem Ou no Isekai Press Manyuki ~Saikyou Musou no Ojisan wa Arayuru Shuzoku wo Yome ni suru",
-    "score": "6",
+    "score": null,
     "status": "Ongoing",
     "chapter": "8",
     "year": "2025",
@@ -1411,7 +1411,7 @@
   {
     "id": 134,
     "title": "Kyuutei Mahou-shi Kubi ni Nattande, Inaka ni Kaette mahou-ka no sensei ni Narimasu",
-    "score": "6",
+    "score": null,
     "status": "",
     "chapter": "",
     "year": "2025",
@@ -1423,7 +1423,7 @@
   {
     "id": 135,
     "title": "Choukyoushi wa Mamono ni Kakomarete ikite ikimasu ~yuusha party ni densetsu no mamono to deai saikyou ni natteta",
-    "score": "8.7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "8",
     "year": "06/12/2025",
@@ -1435,7 +1435,7 @@
   {
     "id": 136,
     "title": "Dungeon Odyssey",
-    "score": "100",
+    "score": "S+",
     "status": "Ongoing",
     "chapter": "124",
     "year": "06/26/2025",
@@ -1447,7 +1447,7 @@
   {
     "id": 137,
     "title": "The witch and the mercenary",
-    "score": "10",
+    "score": "S",
     "status": "Ongoing",
     "chapter": "46",
     "year": "2025",
@@ -1459,7 +1459,7 @@
   {
     "id": 139,
     "title": "Set It!",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "53",
     "year": "2025",
@@ -1471,7 +1471,7 @@
   {
     "id": 140,
     "title": "Omniscient Readers Viewpoint",
-    "score": "10",
+    "score": "S",
     "status": "Ongoing",
     "chapter": "272",
     "year": "2025",
@@ -1482,7 +1482,7 @@
   {
     "id": 141,
     "title": "Goblin’s Ascent",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "16",
     "year": "2025",
@@ -1494,7 +1494,7 @@
   {
     "id": 142,
     "title": "Teachers Efforts",
-    "score": "7.5",
+    "score": null,
     "status": "Ongoing",
     "chapter": "55",
     "year": "2025",
@@ -1506,7 +1506,7 @@
   {
     "id": 143,
     "title": "Absolute Regression",
-    "score": "8",
+    "score": null,
     "status": "Ongoing",
     "chapter": "93",
     "year": "2025",
@@ -1518,7 +1518,7 @@
   {
     "id": 144,
     "title": "Nine Heavens Swordmaster",
-    "score": "5",
+    "score": null,
     "status": "Ongoing",
     "chapter": "23",
     "year": "2025",
@@ -1530,7 +1530,7 @@
   {
     "id": 145,
     "title": "Record of Highserk War",
-    "score": "8.7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "26",
     "year": "12/08/2025",
@@ -1542,7 +1542,7 @@
   {
     "id": 146,
     "title": "Surviving the game as a barbarian",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "134",
     "year": "2025",
@@ -1552,7 +1552,7 @@
   {
     "id": 147,
     "title": "Yuusha Party wo Tsuihosareta ore daga, ore Kara sudattekureta you de ureshii. …… nanode Dai Seijo, omae ni ottekoraete wa komaru no daga?",
-    "score": "7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "",
     "year": "2025",
@@ -1562,7 +1562,7 @@
   {
     "id": 148,
     "title": "Mushoku Tensei",
-    "score": "6",
+    "score": null,
     "status": "Ongoing",
     "chapter": "68",
     "year": "2025",
@@ -1574,7 +1574,7 @@
   {
     "id": 149,
     "title": "Pick Me Up",
-    "score": "10",
+    "score": "S",
     "status": "Ongoing",
     "chapter": "182",
     "year": "2026",
@@ -1585,7 +1585,7 @@
   {
     "id": 150,
     "title": "Tower Dungeon",
-    "score": 9,
+    "score": null,
     "status": "Ongoing",
     "chapter": "23",
     "year": "2026",
@@ -1594,7 +1594,7 @@
   {
     "id": 151,
     "title": "The Kept Man of The Princess Knight",
-    "score": 6,
+    "score": null,
     "status": "Ongoing",
     "chapter": "5",
     "year": "2026",
@@ -1603,7 +1603,7 @@
   {
     "id": 152,
     "title": "Sayonara Eri",
-    "score": "9",
+    "score": null,
     "status": "Finished",
     "chapter": "",
     "year": "2026",
@@ -1615,7 +1615,7 @@
   {
     "id": 153,
     "title": "Legend of the Northern Blade",
-    "score": 8,
+    "score": null,
     "status": "Unknown",
     "chapter": "",
     "year": "2026",
@@ -1624,7 +1624,7 @@
   {
     "id": 1775696307780,
     "title": "Road to Kingdom",
-    "score": "100",
+    "score": "S+",
     "status": "Ongoing",
     "chapter": "84",
     "year": "2025",
@@ -1636,7 +1636,7 @@
   {
     "id": 1775699801852,
     "title": "Eternally Regressing Knight",
-    "score": "100",
+    "score": "S+",
     "status": "Ongoing",
     "chapter": "102",
     "year": "2026",
@@ -1648,7 +1648,7 @@
   {
     "id": 1775598528494,
     "title": "Athletes Village: The Trap",
-    "score": "10",
+    "score": "S",
     "status": "Ongoing",
     "chapter": "",
     "year": "01/01/2025",
@@ -1660,7 +1660,7 @@
   {
     "id": 1775699547034,
     "title": "The Regressed Mercenary's Machinations",
-    "score": "9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "81",
     "year": "2026",
@@ -1672,7 +1672,7 @@
   {
     "id": 1775699504502,
     "title": "Star Embracing Sword Master",
-    "score": "8.9",
+    "score": null,
     "status": "Ongoing",
     "chapter": "114",
     "year": "2026",
@@ -1684,7 +1684,7 @@
   {
     "id": 1775699306056,
     "title": "Absolute Sword Sense",
-    "score": "8.7",
+    "score": null,
     "status": "Ongoing",
     "chapter": "172",
     "year": "2026",
@@ -1696,7 +1696,7 @@
   {
     "id": 1775699402565,
     "title": "The Extra’s Academy Survival Guide",
-    "score": "8.4",
+    "score": null,
     "status": "Ongoing",
     "chapter": "97",
     "year": "2026",
@@ -1708,7 +1708,7 @@
   {
     "id": 1775699682509,
     "title": "Damn Reincarnation",
-    "score": "7.6",
+    "score": null,
     "status": "Ongoing",
     "chapter": "81",
     "year": "03/25/2026",
@@ -1720,7 +1720,7 @@
   {
     "id": 1775699233478,
     "title": "Absolute Dominion",
-    "score": "5",
+    "score": null,
     "status": "Ongoing",
     "chapter": "81",
     "year": "2026",

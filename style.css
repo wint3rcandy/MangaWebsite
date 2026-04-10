@@ -333,6 +333,68 @@ body::before {
   color: #ff9aa2;
 }
 
+/* ── Tier badges ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+
+.tier-Splus {
+  background: linear-gradient(135deg, rgba(255,215,0,0.22), rgba(255,165,0,0.12));
+  border-color: rgba(255, 200, 0, 0.5);
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255,200,0,0.5);
+}
+
+.tier-S {
+  background: rgba(255, 180, 0, 0.12);
+  border-color: rgba(255, 180, 0, 0.35);
+  color: #ffbe3a;
+}
+
+.tier-A {
+  background: rgba(100, 220, 120, 0.12);
+  border-color: rgba(100, 220, 120, 0.3);
+  color: #6edc8a;
+}
+
+.tier-B {
+  background: rgba(80, 180, 255, 0.12);
+  border-color: rgba(80, 180, 255, 0.3);
+  color: #66b8ff;
+}
+
+.tier-C {
+  background: rgba(180, 130, 255, 0.12);
+  border-color: rgba(180, 130, 255, 0.3);
+  color: #b88aff;
+}
+
+.tier-D {
+  background: rgba(255, 140, 60, 0.12);
+  border-color: rgba(255, 140, 60, 0.3);
+  color: #ff9a50;
+}
+
+.tier-F {
+  background: rgba(210, 65, 76, 0.14);
+  border-color: rgba(210, 65, 76, 0.35);
+  color: #e86070;
+}
+
+.tier-ungraded {
+  background: rgba(100, 100, 100, 0.1);
+  border-color: rgba(100, 100, 100, 0.2);
+  color: #555;
+}
+
 .card-actions {
   margin-top: auto; /* ß”å «ey line */
   display: flex;
