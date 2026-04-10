@@ -244,6 +244,51 @@ body::before {
   width: 100%;
   aspect-ratio: 3 / 4;
   margin-bottom: 10px;
+  position: relative;
+}
+
+.note-indicator {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #bbb;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.note-tooltip {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(4px);
+  color: #e8e8e8;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.entry-poster:hover .note-tooltip {
+  opacity: 1;
 }
 
 .poster-img,

@@ -663,6 +663,7 @@ async function loadEntries() {
           ? `<img class="poster-img" src="${entry.image}" alt="${escapeHtml(entry.title)}">`
           : `<div class="poster-empty">No Image</div>`
         }
+        ${note ? `<div class="note-tooltip">${escapeHtml(note)}</div><div class="note-indicator" aria-label="Has note">✎</div>` : ""}
       </div>
       <div class="entry-content">
         <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
@@ -676,7 +677,6 @@ async function loadEntries() {
             <b>${escapeHtml(year)}</b>
           </span>
         </div>
-        ${note ? `<div class="entry-note">${escapeHtml(note)}</div>` : ""}
         <div class="card-actions">
           <button class="card-btn edit" onclick="openEditModal(${entry.id})" aria-label="Edit entry">&#9998;</button>
           <button class="card-btn delete" onclick="deleteEntry(${entry.id})" aria-label="Delete entry">&times;</button>
