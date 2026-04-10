@@ -344,6 +344,7 @@ body::before {
   font-weight: 900;
   letter-spacing: 0.04em;
   border: 1px solid transparent;
+  position: relative;
 }
 
 .tier-Splus {
@@ -423,6 +424,39 @@ body::before {
   font-size: 11px;
   color: #444;
   font-weight: 600;
+}
+
+.tier-quick-edit {
+  cursor: pointer;
+  transition: opacity 0.1s;
+}
+
+.tier-quick-edit:hover {
+  opacity: 0.75;
+}
+
+.tier-quick-edit.editing .tier-label-text {
+  display: none;
+}
+
+.tier-quick-input {
+  display: none;
+  width: 2ch;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-align: center;
+  caret-color: currentColor;
+}
+
+.tier-quick-edit.editing .tier-quick-input {
+  display: inline-block;
 }
 
 .card-actions {

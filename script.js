@@ -484,6 +484,93 @@ function setupRankDragging(grid) {
   });
 }
 
+// Maps a single typed key to a tier value
+const KEY_TO_TIER = {
+  s: "S", a: "A", b: "B", c: "C", d: "D", f: "F"
+};
+
+function openQuickTierEdit(event, badge) {
+  event.stopPropagation();
+  if (badge.dataset.editing === "1") return;
+  badge.dataset.editing = "1";
+
+  const entryId = badge.dataset.entryId;
+  const current = badge.dataset.currentScore || "";
+
+  // Hidden zero-size input just to capture keystrokes
+  const input = document.createElement("input");
+  input.className = "tier-quick-input";
+  input.setAttribute("aria-hidden", "true");
+  badge.appendChild(input);
+  badge.classList.add("editing");
+  input.focus();
+
+  function cancel() {
+    cleanup();
+  }
+
+  function cleanup() {
+    delete badge.dataset.editing;
+    badge.classList.remove("editing");
+    if (input.parentNode === badge) badge.removeChild(input);
+  }
+
+  async function commit(newVal) {
+    cleanup();
+    if (!newVal || newVal === current) return;
+
+    // Update badge appearance immediately
+    const tierClass = newVal.replace("+", "plus");
+    badge.className = badge.className.replace(/tier-\S+/g, "").trim() + ` tier-${tierClass}`;
+    badge.dataset.currentScore = newVal;
+    badge.querySelector(".tier-label-text").textContent = newVal;
+
+    const formData = new FormData();
+    formData.append("score", newVal);
+    try {
+      await fetch(`${API}/${entryId}`, { method: "PUT", body: formData });
+    } catch (e) {
+      console.error("Failed to save tier", e);
+    }
+    loadEntries();
+  }
+
+  input.addEventListener("keydown", e => {
+    e.stopPropagation();
+
+    if (e.key === "Escape") { cancel(); return; }
+
+    const key = e.key.toLowerCase();
+
+    // "s+" requires checking if next key is "+"
+    if (key === "s") {
+      // wait briefly to see if "+" follows
+      e.preventDefault();
+      const timeout = setTimeout(() => commit("S"), 400);
+      input.addEventListener("keydown", function plusCheck(e2) {
+        clearTimeout(timeout);
+        input.removeEventListener("keydown", plusCheck);
+        if (e2.key === "+" || e2.key === "=") {
+          e2.preventDefault();
+          commit("S+");
+        } else {
+          commit("S");
+        }
+      }, { once: true });
+      return;
+    }
+
+    const tier = KEY_TO_TIER[key];
+    if (tier) {
+      e.preventDefault();
+      commit(tier);
+    }
+  });
+
+  input.addEventListener("blur", cancel);
+  input.addEventListener("click", e => e.stopPropagation());
+}
+
 async function loadEntries() {
   updateSearchClear();
   const search = document.getElementById("search").value.trim().toLowerCase();
@@ -582,7 +669,7 @@ async function loadEntries() {
         <div class="entry-meta">
           <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
           ${nsfw ? `<span class="badge badge-nsfw">NSFW</span>` : ""}
-          ${score ? `<span class="tier-badge tier-${score.replace("+","plus")}">${escapeHtml(score)}</span>` : `<span class="tier-badge tier-ungraded">—</span>`}
+          <span class="tier-badge tier-${(score || "ungraded").replace("+","plus")} tier-quick-edit" data-entry-id="${entry.id}" data-current-score="${score || ""}" onclick="openQuickTierEdit(event, this)" title="Click to change tier"><span class="tier-label-text">${score ? escapeHtml(score) : "—"}</span></span>
           ${chapter && chapter !== "-" ? `<span>Ch: <b>${escapeHtml(chapter)}</b></span>` : ""}
           <span>
             ${String(entry.status).toLowerCase() === "finished" ? "Read" : "Started"}:
