@@ -7,14 +7,15 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ── Reader page ─────────────────────────────────────── */
+    html { scroll-behavior: auto; }
+
+    /* ── Volume list page ───────────────────────────────── */
     .reader-wrap {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 16px 60px;
     }
 
-    /* Back bar */
     .reader-topbar {
       display: flex;
       align-items: center;
@@ -38,7 +39,6 @@
       transition: border-color 0.18s, background 0.18s, color 0.18s;
       flex-shrink: 0;
     }
-
     .back-btn:hover {
       border-color: rgba(178,28,42,0.6);
       background: rgba(178,28,42,0.08);
@@ -55,443 +55,436 @@
       text-overflow: ellipsis;
     }
 
-    /* ── Hero info strip ────────────────────────────────── */
+    /* Hero */
     .reader-hero {
       display: flex;
       gap: 20px;
       align-items: flex-start;
-      background: linear-gradient(135deg, #111 0%, #0d0d0d 60%, #120608 100%);
+      background: linear-gradient(135deg,#111 0%,#0d0d0d 60%,#120608 100%);
       border: 1px solid #1e1e1e;
       border-radius: 20px;
       padding: 20px;
       margin-bottom: 28px;
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.04) inset,
-        0 20px 50px rgba(0,0,0,0.4),
-        0 0 0 1px rgba(178,28,42,0.08);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(178,28,42,0.08);
       position: relative;
       overflow: hidden;
     }
-
     .reader-hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 10%; right: 10%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(178,28,42,0.6), transparent);
+      content:'';
+      position:absolute;
+      top:0;left:10%;right:10%;
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(178,28,42,0.6),transparent);
     }
-
     .reader-hero-cover {
-      width: 90px;
-      height: 120px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid #2d2d2d;
+      width:90px; height:120px; flex-shrink:0;
+      border-radius:10px; object-fit:cover; border:1px solid #2d2d2d;
     }
-
     .reader-hero-cover-empty {
-      width: 90px;
-      height: 120px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      border: 1px dashed #333;
-      background: #141414;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #444;
-      font-size: 11px;
+      width:90px; height:120px; flex-shrink:0;
+      border-radius:10px; border:1px dashed #333;
+      background:#141414; display:flex; align-items:center;
+      justify-content:center; color:#444; font-size:11px;
     }
+    .reader-hero-info { flex:1; min-width:0; }
+    .reader-hero-title { font-size:20px; font-weight:900; color:#f4f4f4; letter-spacing:-0.03em; margin-bottom:8px; }
+    .reader-hero-meta { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+    .reader-hero-note { font-size:13px; color:#aaa; line-height:1.5; border-left:3px solid rgba(178,28,42,0.7); padding-left:10px; margin-top:4px; }
 
-    .reader-hero-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .reader-hero-title {
-      font-size: 20px;
-      font-weight: 900;
-      color: #f4f4f4;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-
-    .reader-hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .reader-hero-note {
-      font-size: 13px;
-      color: #aaa;
-      line-height: 1.5;
-      border-left: 3px solid rgba(178,28,42,0.7);
-      padding-left: 10px;
-      margin-top: 4px;
-    }
-
-    /* ── CBZ file list ──────────────────────────────────── */
-    .cbz-section {
-      margin-bottom: 32px;
-    }
-
-    .cbz-section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .cbz-section-title {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #888;
-    }
+    /* CBZ list */
+    .cbz-section { margin-bottom:32px; }
+    .cbz-section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .cbz-section-title { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888; }
 
     .cbz-upload-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 9px 16px;
-      border-radius: 12px;
-      border: none;
-      background: linear-gradient(180deg, #b71f2e, #8b0f1f);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.12s, box-shadow 0.12s;
+      display:inline-flex; align-items:center; gap:7px;
+      padding:9px 16px; border-radius:12px; border:none;
+      background:linear-gradient(180deg,#b71f2e,#8b0f1f);
+      color:#fff; font-size:13px; font-weight:700; cursor:pointer;
+      transition:transform 0.12s, box-shadow 0.12s;
     }
+    .cbz-upload-btn:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(139,15,31,0.35); }
+    .cbz-upload-input { display:none; }
 
-    .cbz-upload-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(139, 15, 31, 0.35);
-    }
-
-    .cbz-upload-input {
-      display: none;
-    }
-
-    .cbz-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .cbz-list { display:flex; flex-direction:column; gap:10px; }
 
     .cbz-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
-      border: 1px solid #262626;
-      border-radius: 14px;
-      transition: border-color 0.15s, background 0.15s;
-      cursor: pointer;
+      display:flex; align-items:center; gap:14px;
+      padding:14px 16px;
+      background:linear-gradient(180deg,#111 0%,#0d0d0d 100%);
+      border:1px solid #262626; border-radius:14px;
+      transition:border-color 0.15s, background 0.15s;
     }
-
-    .cbz-item:hover {
-      border-color: rgba(178,28,42,0.4);
-      background: linear-gradient(180deg, #141414 0%, #111 100%);
-    }
-
-    .cbz-item.active {
-      border-color: rgba(178,28,42,0.75);
-      background: linear-gradient(180deg, #16080a 0%, #120608 100%);
-      box-shadow: 0 0 0 2px rgba(178,28,42,0.15);
-    }
+    .cbz-item:hover { border-color:rgba(178,28,42,0.4); background:linear-gradient(180deg,#141414 0%,#111 100%); }
 
     .cbz-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: rgba(178,28,42,0.12);
-      border: 1px solid rgba(178,28,42,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      width:38px; height:38px; border-radius:10px;
+      background:rgba(178,28,42,0.12); border:1px solid rgba(178,28,42,0.25);
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
     }
-
-    .cbz-icon svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .cbz-item-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .cbz-item-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #e8e8e8;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .cbz-item-size {
-      font-size: 11px;
-      color: #555;
-      margin-top: 2px;
-    }
-
-    .cbz-item-actions {
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
+    .cbz-icon svg { width:18px; height:18px; }
+    .cbz-item-info { flex:1; min-width:0; }
+    .cbz-item-name { font-size:14px; font-weight:700; color:#e8e8e8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .cbz-item-size { font-size:11px; color:#555; margin-top:2px; }
+    .cbz-item-actions { display:flex; gap:8px; flex-shrink:0; }
 
     .cbz-read-btn {
-      padding: 7px 14px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(180deg, #b71f2e, #8b0f1f);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.1s;
+      padding:7px 14px; border-radius:10px; border:none;
+      background:linear-gradient(180deg,#b71f2e,#8b0f1f);
+      color:#fff; font-size:12px; font-weight:700; cursor:pointer;
+      transition:transform 0.1s, box-shadow 0.1s;
     }
-
-    .cbz-read-btn:hover {
-      transform: scale(1.04);
-      box-shadow: 0 4px 14px rgba(139,15,31,0.4);
-    }
+    .cbz-read-btn:hover { transform:scale(1.04); box-shadow:0 4px 14px rgba(139,15,31,0.4); }
 
     .cbz-delete-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid #2e2e2e;
-      background: #141414;
-      color: #666;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      transition: border-color 0.12s, color 0.12s;
+      width:32px; height:32px; border-radius:999px;
+      border:1px solid #2e2e2e; background:#141414; color:#666;
+      cursor:pointer; display:flex; align-items:center; justify-content:center;
+      font-size:16px; transition:border-color 0.12s, color 0.12s;
     }
-
-    .cbz-delete-btn:hover {
-      border-color: #ef5350;
-      color: #ef5350;
-    }
+    .cbz-delete-btn:hover { border-color:#ef5350; color:#ef5350; }
 
     .cbz-empty {
-      padding: 24px;
-      border: 1px dashed #2f2f2f;
-      border-radius: 14px;
-      color: #555;
-      text-align: center;
-      background: #111;
-      font-size: 14px;
+      padding:24px; border:1px dashed #2f2f2f; border-radius:14px;
+      color:#555; text-align:center; background:#111; font-size:14px;
     }
 
-    .cbz-uploading {
-      font-size: 13px;
-      color: #888;
-      padding: 10px 0;
+    /* Upload progress */
+    .cbz-upload-progress {
+      display:none; flex-direction:column; gap:8px;
+      padding:14px 16px;
+      background:linear-gradient(180deg,#111 0%,#0d0d0d 100%);
+      border:1px solid #262626; border-radius:14px; margin-bottom:10px;
+    }
+    .cbz-upload-progress.visible { display:flex; }
+    .cbz-upload-progress-header { display:flex; align-items:center; justify-content:space-between; }
+    .cbz-upload-progress-label { font-size:13px; font-weight:700; color:#ccc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:70%; }
+    .cbz-upload-progress-pct { font-size:13px; font-weight:700; color:#b71f2e; flex-shrink:0; }
+    .cbz-upload-track { width:100%; height:6px; background:#1e1e1e; border-radius:999px; overflow:hidden; }
+    .cbz-upload-bar {
+      height:100%; width:0%; border-radius:999px;
+      background:linear-gradient(90deg,#8b0f1f,#d2414c);
+      transition:width 0.12s ease; position:relative;
+    }
+    .cbz-upload-bar::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.18) 50%,transparent 100%);
+      animation:bar-shimmer 1.2s linear infinite;
+    }
+    @keyframes bar-shimmer { from{transform:translateX(-100%)} to{transform:translateX(100%)} }
+    .cbz-upload-progress-sub { font-size:11px; color:#555; }
+
+    @media (max-width:600px) {
+      .reader-hero { flex-direction:column; }
+      .reader-hero-cover,.reader-hero-cover-empty { width:100%; height:160px; }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       FULLSCREEN READER OVERLAY
+       ══════════════════════════════════════════════════════ */
+    .fsr-overlay {
       display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: #0a0a0a;
+      flex-direction: column;
+      overflow: hidden;
     }
+    .fsr-overlay.open { display: flex; }
 
-    /* ── Reader / viewer ────────────────────────────────── */
-    .reader-panel {
-      display: none;
-    }
-
-    .reader-panel.open {
-      display: block;
-    }
-
-    .reader-toolbar {
+    /* Sticky top bar */
+    .fsr-topbar {
+      flex-shrink: 0;
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
-      border: 1px solid #262626;
-      border-radius: 14px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 16px;
+      height: 54px;
+      background: linear-gradient(180deg,#111 0%,#0d0d0d 100%);
+      border-bottom: 1px solid #1e1e1e;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.5);
     }
 
-    .reader-toolbar-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #e0e0e0;
-      flex: 1;
-      min-width: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .reader-page-info {
-      font-size: 12px;
-      color: #666;
-      white-space: nowrap;
-    }
-
-    .reader-mode-btn {
-      padding: 7px 12px;
+    .fsr-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
       border-radius: 10px;
       border: 1px solid #2a2a2a;
       background: rgba(255,255,255,0.04);
-      color: #bbb;
+      color: #ccc;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s, color 0.15s;
       white-space: nowrap;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .fsr-back-btn:hover {
+      border-color: rgba(178,28,42,0.6);
+      background: rgba(178,28,42,0.08);
+      color: #fff;
     }
 
-    .reader-mode-btn:hover,
-    .reader-mode-btn.active {
+    .fsr-title-block {
+      flex: 1;
+      min-width: 0;
+    }
+    .fsr-manga-name {
+      font-size: 13px;
+      font-weight: 900;
+      color: #f0f0f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: -0.02em;
+    }
+    .fsr-vol-name {
+      font-size: 11px;
+      color: #555;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+
+    .fsr-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .fsr-mode-btn {
+      padding: 6px 11px;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+      background: rgba(255,255,255,0.04);
+      color: #aaa;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+    .fsr-mode-btn.active, .fsr-mode-btn:hover {
       border-color: rgba(178,28,42,0.6);
       background: rgba(178,28,42,0.1);
       color: #fff;
     }
 
-    .reader-close-btn {
-      padding: 7px 12px;
+    /* Volume nav bar */
+    .fsr-vol-nav {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: #0d0d0d;
+      border-bottom: 1px solid #181818;
+      flex-wrap: wrap;
+    }
+
+    .fsr-vol-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
       border-radius: 10px;
-      border: 1px solid #2a2a2a;
-      background: rgba(255,255,255,0.04);
-      color: #bbb;
+      border: none;
+      background: linear-gradient(180deg,#b71f2e,#8b0f1f);
+      color: #fff;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+      transition: transform 0.1s, box-shadow 0.1s, opacity 0.1s;
       white-space: nowrap;
     }
-
-    .reader-close-btn:hover {
-      border-color: #ef5350;
-      color: #ef5350;
+    .fsr-vol-btn:disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+    }
+    .fsr-vol-btn:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(139,15,31,0.45);
     }
 
-    /* Long-strip mode (default) */
-    .reader-strip {
+    .fsr-vol-label {
+      font-size: 12px;
+      color: #555;
+      font-weight: 600;
+      min-width: 120px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Scrollable body */
+    .fsr-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .fsr-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      color: #444;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    /* Long strip */
+    .fsr-strip {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
     }
 
-    .reader-strip img {
+    .strip-page-wrap {
       width: 100%;
       max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      min-height: 300px;
+      contain: layout style;
+    }
+
+    .strip-placeholder {
+      width: 100%;
+      aspect-ratio: 11 / 16;
+      min-height: 300px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2a2a2a;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    .strip-placeholder-error { color:#7a2020; background:#160808; }
+
+    .strip-img {
+      width: 100%;
       display: block;
-      border-radius: 4px;
+      opacity: 1;
+      transition: opacity 0.18s ease;
+    }
+    .strip-img.loading {
+      opacity: 0;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    /* Bottom volume nav (end of strip and single mode) */
+    .fsr-bottom-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 28px 16px 36px;
+      flex-wrap: wrap;
+      border-top: 1px solid #181818;
+      margin-top: 8px;
+    }
+
+    .fsr-bottom-nav .fsr-vol-btn {
+      padding: 10px 22px;
+      font-size: 13px;
+      border-radius: 12px;
+    }
+
+    .fsr-bottom-label {
+      font-size: 12px;
+      color: #444;
+      font-weight: 600;
+      min-width: 120px;
+      text-align: center;
     }
 
     /* Single page mode */
-    .reader-single {
+    .fsr-single {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
     }
 
-    .reader-single-img-wrap {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    .reader-single img {
-      max-width: min(800px, 100%);
-      max-height: 90vh;
-      border-radius: 6px;
-      display: block;
-      object-fit: contain;
-    }
-
-    .reader-nav {
+    .fsr-page-nav {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 14px;
+      padding: 14px 16px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    .reader-nav-btn {
-      padding: 10px 22px;
-      border-radius: 12px;
+    .fsr-page-btn {
+      padding: 9px 20px;
+      border-radius: 10px;
       border: none;
-      background: linear-gradient(180deg, #b71f2e, #8b0f1f);
+      background: linear-gradient(180deg,#b71f2e,#8b0f1f);
       color: #fff;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       transition: transform 0.1s, box-shadow 0.1s, opacity 0.1s;
+      white-space: nowrap;
+    }
+    .fsr-page-btn:disabled { opacity:0.28; cursor:not-allowed; }
+    .fsr-page-btn:not(:disabled):hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(139,15,31,0.4); }
+
+    .fsr-page-counter {
+      font-size:13px; color:#555; min-width:80px;
+      text-align:center; font-weight:600; white-space:nowrap;
     }
 
-    .reader-nav-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
+    .fsr-single-img-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 0 12px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .fsr-single-img-wrap img {
+      max-width: min(800px, 100%);
+      max-height: calc(100vh - 200px);
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
     }
 
-    .reader-nav-btn:not(:disabled):hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(139,15,31,0.4);
-    }
-
-    .reader-page-counter {
-      font-size: 13px;
-      color: #888;
-      min-width: 80px;
-      text-align: center;
-    }
-
-    .reader-loading {
-      text-align: center;
-      padding: 40px;
-      color: #555;
-      font-size: 14px;
-    }
-
-    @media (max-width: 600px) {
-      .reader-hero {
-        flex-direction: column;
-      }
-
-      .reader-hero-cover,
-      .reader-hero-cover-empty {
-        width: 100%;
-        height: 160px;
-      }
-
-      .reader-toolbar {
-        gap: 8px;
-      }
+    @media (max-width:520px) {
+      .fsr-topbar { padding:0 10px; gap:6px; }
+      .fsr-mode-btn { padding:5px 8px; font-size:10px; }
+      .fsr-vol-label,.fsr-bottom-label { min-width:60px; font-size:10px; }
+      .fsr-vol-btn { padding:6px 10px; font-size:11px; }
+      .fsr-page-btn { padding:8px 12px; font-size:12px; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap" style="padding: 0 16px;">
-    <div class="reader-wrap" style="padding: 0;">
+  <!-- ── Volume list page ─────────────────────────────────────────────── -->
+  <div class="wrap" style="padding:0 16px;">
+    <div class="reader-wrap" style="padding:0;">
 
       <div class="reader-topbar">
         <a class="back-btn" href="/">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
         </a>
         <span class="reader-manga-title" id="reader-manga-title">Loading…</span>
       </div>
 
-      <!-- Hero info strip -->
       <div class="reader-hero" id="reader-hero">
         <div class="reader-hero-cover-empty" id="hero-cover-wrap">No Image</div>
         <div class="reader-hero-info">
@@ -501,12 +494,11 @@
         </div>
       </div>
 
-      <!-- CBZ file list -->
       <div class="cbz-section">
         <div class="cbz-section-header">
           <span class="cbz-section-title">CBZ Files</span>
           <button class="cbz-upload-btn" onclick="document.getElementById('cbz-file-input').click()">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M7 2V10M3 6l4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M2 12h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
@@ -514,153 +506,199 @@
           </button>
           <input type="file" id="cbz-file-input" class="cbz-upload-input" accept=".cbz" multiple onchange="uploadCbzFiles(this.files)">
         </div>
-        <div class="cbz-uploading" id="cbz-uploading">Uploading…</div>
+
+        <div class="cbz-upload-progress" id="cbz-upload-progress">
+          <div class="cbz-upload-progress-header">
+            <span class="cbz-upload-progress-label" id="cbz-progress-label">Uploading…</span>
+            <span class="cbz-upload-progress-pct" id="cbz-progress-pct">0%</span>
+          </div>
+          <div class="cbz-upload-track">
+            <div class="cbz-upload-bar" id="cbz-progress-bar"></div>
+          </div>
+          <div class="cbz-upload-progress-sub" id="cbz-progress-sub"></div>
+        </div>
+
         <div class="cbz-list" id="cbz-list">
           <div class="cbz-empty">No CBZ files yet. Upload one above.</div>
         </div>
       </div>
-
-      <!-- Reader panel (shown when a CBZ is selected) -->
-      <div class="reader-panel" id="reader-panel">
-        <div class="reader-toolbar">
-          <span class="reader-toolbar-title" id="reader-cbz-title">—</span>
-          <span class="reader-page-info" id="reader-page-info"></span>
-          <button class="reader-mode-btn active" id="mode-strip" onclick="setMode('strip')">Long Strip</button>
-          <button class="reader-mode-btn" id="mode-single" onclick="setMode('single')">Single Page</button>
-          <button class="reader-close-btn" onclick="closeReader()">✕ Close</button>
-        </div>
-
-        <div id="reader-loading" class="reader-loading">Loading pages…</div>
-
-        <!-- Long strip mode -->
-        <div class="reader-strip" id="reader-strip" style="display:none"></div>
-
-        <!-- Single page mode -->
-        <div class="reader-single" id="reader-single" style="display:none">
-          <div class="reader-single-img-wrap">
-            <img id="single-page-img" src="" alt="Page">
-          </div>
-          <div class="reader-nav">
-            <button class="reader-nav-btn" id="prev-btn" onclick="prevPage()">← Prev</button>
-            <span class="reader-page-counter" id="page-counter">1 / 1</span>
-            <button class="reader-nav-btn" id="next-btn" onclick="nextPage()">Next →</button>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
+  <!-- ── Fullscreen reader overlay ────────────────────────────────────── -->
+  <div class="fsr-overlay" id="fsr-overlay">
+
+    <!-- Sticky top bar -->
+    <div class="fsr-topbar">
+      <button class="fsr-back-btn" onclick="closeOverlay()">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volumes
+      </button>
+      <div class="fsr-title-block">
+        <div class="fsr-manga-name" id="fsr-manga-name">—</div>
+        <div class="fsr-vol-name" id="fsr-vol-name">—</div>
+      </div>
+      <div class="fsr-topbar-actions">
+        <button class="fsr-mode-btn active" id="fsr-mode-strip" onclick="setMode('strip')">Long Strip</button>
+        <button class="fsr-mode-btn" id="fsr-mode-single" onclick="setMode('single')">Single Page</button>
+      </div>
+    </div>
+
+    <!-- Volume prev/next (top) -->
+    <div class="fsr-vol-nav">
+      <button class="fsr-vol-btn" id="top-prev-vol" onclick="goVolume(-1)">
+        <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Prev Vol
+      </button>
+      <span class="fsr-vol-label" id="top-vol-label">—</span>
+      <button class="fsr-vol-btn" id="top-next-vol" onclick="goVolume(1)">
+        Next Vol
+        <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Scrollable content -->
+    <div class="fsr-body" id="fsr-body">
+
+      <div class="fsr-loading" id="fsr-loading">Loading pages…</div>
+
+      <!-- Long strip pages go here -->
+      <div class="fsr-strip" id="fsr-strip" style="display:none"></div>
+
+      <!-- Bottom vol nav for strip mode -->
+      <div class="fsr-bottom-nav" id="fsr-strip-bottom" style="display:none">
+        <button class="fsr-vol-btn" id="sbot-prev-vol" onclick="goVolume(-1)">
+          <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Prev Vol
+        </button>
+        <span class="fsr-bottom-label" id="sbot-vol-label">—</span>
+        <button class="fsr-vol-btn" id="sbot-next-vol" onclick="goVolume(1)">
+          Next Vol
+          <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Single page mode -->
+      <div class="fsr-single" id="fsr-single" style="display:none">
+
+        <!-- Top page nav -->
+        <div class="fsr-page-nav">
+          <button class="fsr-page-btn" id="tp-prev" onclick="prevPage()">← Prev</button>
+          <span class="fsr-page-counter" id="tp-counter">1 / 1</span>
+          <button class="fsr-page-btn" id="tp-next" onclick="nextPage()">Next →</button>
+        </div>
+
+        <div class="fsr-single-img-wrap">
+          <img id="fsr-single-img" src="" alt="Page">
+        </div>
+
+        <!-- Bottom page nav -->
+        <div class="fsr-page-nav">
+          <button class="fsr-page-btn" id="bp-prev" onclick="prevPage()">← Prev</button>
+          <span class="fsr-page-counter" id="bp-counter">1 / 1</span>
+          <button class="fsr-page-btn" id="bp-next" onclick="nextPage()">Next →</button>
+        </div>
+
+        <!-- Bottom vol nav for single mode -->
+        <div class="fsr-bottom-nav">
+          <button class="fsr-vol-btn" id="spbot-prev-vol" onclick="goVolume(-1)">
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Prev Vol
+          </button>
+          <span class="fsr-bottom-label" id="spbot-vol-label">—</span>
+          <button class="fsr-vol-btn" id="spbot-next-vol" onclick="goVolume(1)">
+            Next Vol
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /fsr-body -->
+  </div><!-- /fsr-overlay -->
+
   <script>
-    const params = new URLSearchParams(location.search);
+    const params  = new URLSearchParams(location.search);
     const mangaId = params.get("id");
 
-    let mangaEntry = null;
-    let currentPages = [];
-    let currentPage = 0;
-    let currentMode = "strip";
-    let activeCbzFilename = null;
+    let mangaEntry    = null;
+    let cbzFiles      = [];
+    let currentVolIdx = 0;
+    let currentPages  = [];
+    let currentPage   = 0;
+    let currentMode   = "strip";
 
+    // Virtual strip
+    const PRELOAD_AHEAD = 4;
+    const UNLOAD_BEHIND = 8;
+    let stripObserver = null;
+    let stripNodes    = [];
+
+    // ── Init ─────────────────────────────────────────────
     async function init() {
-      if (!mangaId) {
-        document.getElementById("reader-manga-title").textContent = "No manga selected";
-        return;
-      }
-
-      // Load manga data
+      if (!mangaId) { document.getElementById("reader-manga-title").textContent = "No manga selected"; return; }
       try {
         const res = await fetch("/api/manga");
         const all = await res.json();
         mangaEntry = all.find(e => String(e.id) === String(mangaId));
-      } catch (e) {
-        console.error(e);
-      }
-
-      if (!mangaEntry) {
-        document.getElementById("reader-manga-title").textContent = "Entry not found";
-        return;
-      }
-
+      } catch(e) { console.error(e); }
+      if (!mangaEntry) { document.getElementById("reader-manga-title").textContent = "Entry not found"; return; }
       renderHero(mangaEntry);
       await loadCbzList();
     }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+    function escapeHtml(s) {
+      return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
     }
 
-    function statusClass(status) {
-      const s = String(status || "").toLowerCase();
-      if (s === "ongoing") return "status-ongoing";
-      if (s === "finished") return "status-finished";
-      if (s === "hiatus") return "status-hiatus";
-      return "status-unknown";
+    function statusClass(s) {
+      s = String(s||"").toLowerCase();
+      return s==="ongoing"?"status-ongoing":s==="finished"?"status-finished":s==="hiatus"?"status-hiatus":"status-unknown";
     }
 
-    function renderHero(entry) {
-      document.getElementById("reader-manga-title").textContent = entry.title || "Untitled";
-      document.getElementById("hero-title").textContent = entry.title || "Untitled";
-
-      const coverWrap = document.getElementById("hero-cover-wrap");
-      if (entry.image) {
-        coverWrap.outerHTML = `<img class="reader-hero-cover" id="hero-cover-wrap" src="${escapeHtml(entry.image)}" alt="${escapeHtml(entry.title)}">`;
+    function renderHero(e) {
+      document.getElementById("reader-manga-title").textContent = e.title||"Untitled";
+      document.getElementById("hero-title").textContent         = e.title||"Untitled";
+      document.getElementById("fsr-manga-name").textContent     = e.title||"Untitled";
+      if (e.image) {
+        const cw = document.getElementById("hero-cover-wrap");
+        cw.outerHTML = `<img class="reader-hero-cover" id="hero-cover-wrap" src="${escapeHtml(e.image)}" alt="${escapeHtml(e.title)}">`;
       }
-
-      const metaEl = document.getElementById("hero-meta");
       const parts = [];
-      if (entry.status) parts.push(`<span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status)}</span>`);
-      if (entry.score) parts.push(`<span class="badge" style="background:rgba(178,28,42,0.12);border:1px solid rgba(178,28,42,0.3);color:#e06070;">${escapeHtml(entry.score)}</span>`);
-      if (entry.chapter) parts.push(`<span style="font-size:12px;color:#777;">Ch: <b style="color:#aaa">${escapeHtml(entry.chapter)}</b></span>`);
-      if (entry.year) parts.push(`<span style="font-size:12px;color:#777;">${entry.status === "Finished" ? "Read" : "Started"}: <b style="color:#aaa">${escapeHtml(entry.year)}</b></span>`);
-      metaEl.innerHTML = parts.join("");
-
-      if (entry.note) {
-        const noteEl = document.getElementById("hero-note");
-        noteEl.textContent = entry.note;
-        noteEl.style.display = "block";
-      }
+      if(e.status)  parts.push(`<span class="badge ${statusClass(e.status)}">${escapeHtml(e.status)}</span>`);
+      if(e.score)   parts.push(`<span class="badge" style="background:rgba(178,28,42,0.12);border:1px solid rgba(178,28,42,0.3);color:#e06070;">${escapeHtml(e.score)}</span>`);
+      if(e.chapter) parts.push(`<span style="font-size:12px;color:#777;">Ch: <b style="color:#aaa">${escapeHtml(e.chapter)}</b></span>`);
+      if(e.year)    parts.push(`<span style="font-size:12px;color:#777;">${e.status==="Finished"?"Read":"Started"}: <b style="color:#aaa">${escapeHtml(e.year)}</b></span>`);
+      document.getElementById("hero-meta").innerHTML = parts.join("");
+      if(e.note) { const n=document.getElementById("hero-note"); n.textContent=e.note; n.style.display="block"; }
     }
 
+    // ── CBZ list ──────────────────────────────────────────
     async function loadCbzList() {
       const listEl = document.getElementById("cbz-list");
       listEl.innerHTML = `<div class="cbz-empty" style="color:#555;">Loading…</div>`;
-
       try {
         const res = await fetch(`/api/manga/${mangaId}/cbz`);
-        const files = await res.json();
-        renderCbzList(files);
-      } catch (e) {
-        listEl.innerHTML = `<div class="cbz-empty">Failed to load CBZ files.</div>`;
-      }
+        cbzFiles = await res.json();
+        renderCbzList(cbzFiles);
+      } catch(e) { listEl.innerHTML = `<div class="cbz-empty">Failed to load CBZ files.</div>`; }
     }
 
-    function formatBytes(bytes) {
-      if (bytes < 1024) return `${bytes} B`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-      return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+    function formatBytes(b) {
+      if(b<1024) return `${b} B`;
+      if(b<1048576) return `${(b/1024).toFixed(1)} KB`;
+      return `${(b/1048576).toFixed(1)} MB`;
     }
 
     function renderCbzList(files) {
       const listEl = document.getElementById("cbz-list");
-
-      if (!files.length) {
-        listEl.innerHTML = `<div class="cbz-empty">No CBZ files yet. Upload one above.</div>`;
-        return;
-      }
-
+      if(!files.length) { listEl.innerHTML=`<div class="cbz-empty">No CBZ files yet. Upload one above.</div>`; return; }
       listEl.innerHTML = "";
-      files.forEach(f => {
+      files.forEach((f, idx) => {
         const item = document.createElement("div");
-        item.className = "cbz-item" + (activeCbzFilename === f.filename ? " active" : "");
-        item.dataset.filename = f.filename;
+        item.className = "cbz-item";
         item.innerHTML = `
           <div class="cbz-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 24 24" fill="none">
               <rect x="3" y="3" width="14" height="18" rx="2" stroke="rgba(210,65,76,0.8)" stroke-width="1.5"/>
               <path d="M7 8h6M7 12h8M7 16h4" stroke="rgba(210,65,76,0.6)" stroke-width="1.4" stroke-linecap="round"/>
               <rect x="13" y="1" width="8" height="8" rx="1.5" fill="#0d0d0d" stroke="rgba(210,65,76,0.5)" stroke-width="1.2"/>
@@ -672,139 +710,243 @@
             <div class="cbz-item-size">${formatBytes(f.size)}</div>
           </div>
           <div class="cbz-item-actions">
-            <button class="cbz-read-btn" onclick="openCbz(event, '${escapeHtml(f.filename)}')">Read</button>
-            <button class="cbz-delete-btn" onclick="deleteCbz(event, '${escapeHtml(f.filename)}')" title="Delete">&times;</button>
-          </div>
-        `;
+            <button class="cbz-read-btn" onclick="openOverlay(${idx})">Read</button>
+            <button class="cbz-delete-btn" onclick="deleteCbz(event,'${escapeHtml(f.filename)}')" title="Delete">&times;</button>
+          </div>`;
         listEl.appendChild(item);
       });
     }
 
-    async function uploadCbzFiles(fileList) {
-      if (!fileList || fileList.length === 0) return;
+    // ── Upload ────────────────────────────────────────────
+    function uploadCbzFiles(fileList) {
+      if(!fileList||!fileList.length) return;
+      const files = Array.from(fileList);
+      const total = files.reduce((s,f)=>s+f.size,0);
+      const wrap  = document.getElementById("cbz-upload-progress");
+      const label = document.getElementById("cbz-progress-label");
+      const pct   = document.getElementById("cbz-progress-pct");
+      const bar   = document.getElementById("cbz-progress-bar");
+      const sub   = document.getElementById("cbz-progress-sub");
 
-      const uploadingEl = document.getElementById("cbz-uploading");
-      uploadingEl.style.display = "block";
-
-      const formData = new FormData();
-      Array.from(fileList).forEach(f => formData.append("cbz", f));
-
-      try {
-        await fetch(`/api/manga/${mangaId}/cbz`, { method: "POST", body: formData });
-      } catch (e) {
-        alert("Upload failed.");
-      } finally {
-        uploadingEl.style.display = "none";
-        document.getElementById("cbz-file-input").value = "";
+      function setP(loaded,tot,lbl) {
+        const p = tot>0 ? Math.round(loaded/tot*100) : 0;
+        bar.style.width=p+"%"; pct.textContent=p+"%";
+        label.textContent=lbl;
+        sub.textContent=formatBytes(loaded)+" / "+formatBytes(tot);
       }
+      wrap.classList.add("visible");
+      setP(0,total,files.length===1?files[0].name:`${files.length} files`);
 
-      await loadCbzList();
+      const fd=new FormData();
+      files.forEach(f=>fd.append("cbz",f));
+      const xhr=new XMLHttpRequest();
+      xhr.upload.addEventListener("progress",e=>{ if(e.lengthComputable) setP(e.loaded,e.total,files.length===1?files[0].name:`${files.length} files`); });
+      xhr.addEventListener("load",async()=>{
+        setP(total,total,"Done!"); sub.textContent="";
+        await new Promise(r=>setTimeout(r,600));
+        wrap.classList.remove("visible"); bar.style.width="0%";
+        document.getElementById("cbz-file-input").value="";
+        await loadCbzList();
+      });
+      xhr.addEventListener("error",()=>{ wrap.classList.remove("visible"); alert("Upload failed."); });
+      xhr.open("POST",`/api/manga/${mangaId}/cbz`);
+      xhr.send(fd);
     }
 
     async function deleteCbz(event, filename) {
       event.stopPropagation();
-      if (!confirm(`Delete "${filename}"?`)) return;
-
-      await fetch(`/api/manga/${mangaId}/cbz/${encodeURIComponent(filename)}`, { method: "DELETE" });
-
-      if (activeCbzFilename === filename) closeReader();
+      if(!confirm(`Delete "${filename}"?`)) return;
+      await fetch(`/api/manga/${mangaId}/cbz/${encodeURIComponent(filename)}`,{method:"DELETE"});
       await loadCbzList();
     }
 
-    async function openCbz(event, filename) {
-      event.stopPropagation();
-      activeCbzFilename = filename;
+    // ── Overlay open/close ────────────────────────────────
+    function openOverlay(idx) {
+      document.getElementById("fsr-overlay").classList.add("open");
+      document.body.style.overflow = "hidden";
+      loadVolume(idx);
+    }
 
-      // Update active state in list
-      document.querySelectorAll(".cbz-item").forEach(el => {
-        el.classList.toggle("active", el.dataset.filename === filename);
+    function closeOverlay() {
+      destroyStrip();
+      document.getElementById("fsr-overlay").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    // ── Load a volume by index ────────────────────────────
+    async function loadVolume(idx) {
+      currentVolIdx = idx;
+      currentPages  = [];
+      currentPage   = 0;
+
+      const vol = cbzFiles[idx];
+      const hasPrev = idx > 0;
+      const hasNext = idx < cbzFiles.length - 1;
+
+      // Update all labels
+      const volName = vol.filename;
+      ["fsr-vol-name","top-vol-label","sbot-vol-label","spbot-vol-label"].forEach(id=>{
+        document.getElementById(id).textContent = volName;
       });
 
-      const panel = document.getElementById("reader-panel");
-      panel.classList.add("open");
-      document.getElementById("reader-cbz-title").textContent = filename;
-      document.getElementById("reader-loading").style.display = "block";
-      document.getElementById("reader-strip").style.display = "none";
-      document.getElementById("reader-single").style.display = "none";
+      // Prev/next disabled states — all four prev buttons, all four next buttons
+      ["top-prev-vol","sbot-prev-vol","spbot-prev-vol"].forEach(id=>document.getElementById(id).disabled=!hasPrev);
+      ["top-next-vol","sbot-next-vol","spbot-next-vol"].forEach(id=>document.getElementById(id).disabled=!hasNext);
 
-      // Scroll to reader
-      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Reset scroll
+      document.getElementById("fsr-body").scrollTop = 0;
+
+      // Show loading state
+      destroyStrip();
+      document.getElementById("fsr-loading").style.display    = "flex";
+      document.getElementById("fsr-strip").style.display      = "none";
+      document.getElementById("fsr-strip-bottom").style.display= "none";
+      document.getElementById("fsr-single").style.display     = "none";
 
       try {
-        const res = await fetch(`/api/manga/${mangaId}/cbz/${encodeURIComponent(filename)}/pages`);
+        const res = await fetch(`/api/manga/${mangaId}/cbz/${encodeURIComponent(vol.filename)}/pages`);
         currentPages = await res.json();
-      } catch (e) {
-        document.getElementById("reader-loading").textContent = "Failed to load pages.";
+      } catch(e) {
+        document.getElementById("fsr-loading").textContent = "Failed to load pages.";
         return;
       }
 
-      currentPage = 0;
-      document.getElementById("reader-loading").style.display = "none";
+      document.getElementById("fsr-loading").style.display = "none";
       setMode(currentMode);
     }
 
-    function closeReader() {
-      activeCbzFilename = null;
-      currentPages = [];
-      currentPage = 0;
-      document.getElementById("reader-panel").classList.remove("open");
-      document.querySelectorAll(".cbz-item").forEach(el => el.classList.remove("active"));
+    function goVolume(delta) {
+      const next = currentVolIdx + delta;
+      if(next < 0 || next >= cbzFiles.length) return;
+      loadVolume(next);
     }
 
+    // ── Mode toggle ───────────────────────────────────────
     function setMode(mode) {
       currentMode = mode;
-      document.getElementById("mode-strip").classList.toggle("active", mode === "strip");
-      document.getElementById("mode-single").classList.toggle("active", mode === "single");
-
-      if (mode === "strip") {
+      document.getElementById("fsr-mode-strip").classList.toggle("active", mode==="strip");
+      document.getElementById("fsr-mode-single").classList.toggle("active", mode==="single");
+      if(mode==="strip") {
+        document.getElementById("fsr-single").style.display = "none";
         renderStrip();
       } else {
-        renderSingle();
+        destroyStrip();
+        document.getElementById("fsr-strip").style.display        = "none";
+        document.getElementById("fsr-strip-bottom").style.display = "none";
+        document.getElementById("fsr-single").style.display       = "flex";
+        showPage(currentPage);
       }
     }
 
+    // ── Virtual strip ─────────────────────────────────────
+    function destroyStrip() {
+      if(stripObserver){ stripObserver.disconnect(); stripObserver=null; }
+      stripNodes = [];
+      document.getElementById("fsr-strip").innerHTML = "";
+    }
+
     function renderStrip() {
-      const strip = document.getElementById("reader-strip");
-      strip.innerHTML = "";
-      currentPages.forEach((p, i) => {
-        const img = document.createElement("img");
-        img.src = p.url;
-        img.alt = `Page ${i + 1}`;
-        img.loading = "lazy";
-        strip.appendChild(img);
-      });
+      destroyStrip();
+      const strip = document.getElementById("fsr-strip");
       strip.style.display = "flex";
-      document.getElementById("reader-single").style.display = "none";
-      document.getElementById("reader-page-info").textContent = `${currentPages.length} pages`;
+
+      const frag = document.createDocumentFragment();
+      currentPages.forEach((p,i) => {
+        const wrap = document.createElement("div");
+        wrap.className   = "strip-page-wrap";
+        wrap.dataset.idx = i;
+        const ph = document.createElement("div");
+        ph.className = "strip-placeholder";
+        ph.textContent = `Page ${i+1}`;
+        wrap.appendChild(ph);
+        frag.appendChild(wrap);
+        stripNodes.push(wrap);
+      });
+      strip.appendChild(frag);
+
+      // Use fsr-body as the scroll root for IntersectionObserver
+      const scrollRoot = document.getElementById("fsr-body");
+      stripObserver = new IntersectionObserver(onStripIntersect, {
+        root: scrollRoot,
+        rootMargin: "150% 0px",
+        threshold: 0
+      });
+      stripNodes.forEach(n => stripObserver.observe(n));
+      loadStripRange(0, PRELOAD_AHEAD);
+
+      // Show bottom nav after paint
+      requestAnimationFrame(() => {
+        document.getElementById("fsr-strip-bottom").style.display = "flex";
+      });
     }
 
-    function renderSingle() {
-      document.getElementById("reader-strip").style.display = "none";
-      const single = document.getElementById("reader-single");
-      single.style.display = "flex";
-      showPage(currentPage);
+    function onStripIntersect(entries) {
+      entries.forEach(e => {
+        if(!e.isIntersecting) return;
+        const idx = Number(e.target.dataset.idx);
+        loadStripRange(idx, idx + PRELOAD_AHEAD);
+        unloadStripBefore(idx - UNLOAD_BEHIND);
+      });
     }
 
-    function showPage(index) {
-      if (!currentPages.length) return;
-      index = Math.max(0, Math.min(index, currentPages.length - 1));
-      currentPage = index;
-
-      document.getElementById("single-page-img").src = currentPages[index].url;
-      document.getElementById("page-counter").textContent = `${index + 1} / ${currentPages.length}`;
-      document.getElementById("reader-page-info").textContent = `Page ${index + 1} of ${currentPages.length}`;
-      document.getElementById("prev-btn").disabled = index === 0;
-      document.getElementById("next-btn").disabled = index === currentPages.length - 1;
+    function loadStripRange(from, to) {
+      for(let i=Math.max(0,from); i<=Math.min(currentPages.length-1,to); i++) ensureStripImage(i);
     }
 
-    function prevPage() { showPage(currentPage - 1); }
-    function nextPage() { showPage(currentPage + 1); }
+    function ensureStripImage(i) {
+      const wrap = stripNodes[i];
+      if(!wrap || wrap.dataset.loaded==="1") return;
+      wrap.dataset.loaded = "1";
+      const img = new Image();
+      img.alt      = `Page ${i+1}`;
+      img.decoding = "async";
+      img.className = "strip-img loading";
+      img.onload  = () => { img.classList.remove("loading"); const ph=wrap.querySelector(".strip-placeholder"); if(ph)ph.remove(); };
+      img.onerror = () => { img.classList.remove("loading"); const ph=wrap.querySelector(".strip-placeholder"); if(ph){ph.textContent=`Error page ${i+1}`;ph.classList.add("strip-placeholder-error");} };
+      img.src = currentPages[i].url;
+      wrap.appendChild(img);
+    }
 
-    // Keyboard navigation in single mode
+    function unloadStripBefore(threshold) {
+      for(let i=0; i<Math.min(threshold,stripNodes.length); i++){
+        const wrap=stripNodes[i];
+        if(!wrap||wrap.dataset.loaded!=="1") continue;
+        wrap.dataset.loaded="0";
+        const img=wrap.querySelector("img"); if(img)img.remove();
+        if(!wrap.querySelector(".strip-placeholder")){
+          const ph=document.createElement("div");
+          ph.className="strip-placeholder"; ph.textContent=`Page ${i+1}`;
+          wrap.appendChild(ph);
+        }
+      }
+    }
+
+    // ── Single page ───────────────────────────────────────
+    function showPage(idx) {
+      if(!currentPages.length) return;
+      idx = Math.max(0, Math.min(idx, currentPages.length-1));
+      currentPage = idx;
+      document.getElementById("fsr-single-img").src = currentPages[idx].url;
+      const label   = `${idx+1} / ${currentPages.length}`;
+      const atFirst = idx===0;
+      const atLast  = idx===currentPages.length-1;
+      ["tp-counter","bp-counter"].forEach(id=>document.getElementById(id).textContent=label);
+      ["tp-prev","bp-prev"].forEach(id=>document.getElementById(id).disabled=atFirst);
+      ["tp-next","bp-next"].forEach(id=>document.getElementById(id).disabled=atLast);
+      document.getElementById("fsr-body").scrollTop = 0;
+    }
+
+    function prevPage() { showPage(currentPage-1); }
+    function nextPage() { showPage(currentPage+1); }
+
+    // Keyboard nav
     document.addEventListener("keydown", e => {
-      if (currentMode !== "single" || !document.getElementById("reader-panel").classList.contains("open")) return;
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") nextPage();
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") prevPage();
+      if(!document.getElementById("fsr-overlay").classList.contains("open")) return;
+      if(e.key==="Escape") { closeOverlay(); return; }
+      if(currentMode==="single"){
+        if(e.key==="ArrowRight"||e.key==="ArrowDown") nextPage();
+        if(e.key==="ArrowLeft" ||e.key==="ArrowUp")   prevPage();
+      }
     });
 
     init();
