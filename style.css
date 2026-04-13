@@ -537,6 +537,38 @@ body::before {
   color: #ef5350;
 }
 
+/* ── Read button on card ── */
+.card-read-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 0;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg, #b71f2e, #8b0f1f);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.card-read-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(139, 15, 31, 0.45);
+  filter: brightness(1.08);
+}
+
+.card-read-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
 .empty-state {
   padding: 18px;
   border: 1px dashed #2f2f2f;

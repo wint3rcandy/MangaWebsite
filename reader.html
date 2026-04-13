@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reader — Manga</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Reader page ─────────────────────────────────────── */
+    .reader-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    /* Back bar */
+    .reader-topbar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0 18px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 12px;
+      border: 1px solid #2a2a2a;
+      background: rgba(255,255,255,0.04);
+      color: #ccc;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.18s, background 0.18s, color 0.18s;
+      flex-shrink: 0;
+    }
+
+    .back-btn:hover {
+      border-color: rgba(178,28,42,0.6);
+      background: rgba(178,28,42,0.08);
+      color: #fff;
+    }
+
+    .reader-manga-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #f4f4f4;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Hero info strip ────────────────────────────────── */
+    .reader-hero {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: linear-gradient(135deg, #111 0%, #0d0d0d 60%, #120608 100%);
+      border: 1px solid #1e1e1e;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 28px;
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.04) inset,
+        0 20px 50px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(178,28,42,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reader-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(178,28,42,0.6), transparent);
+    }
+
+    .reader-hero-cover {
+      width: 90px;
+      height: 120px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid #2d2d2d;
+    }
+
+    .reader-hero-cover-empty {
+      width: 90px;
+      height: 120px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      border: 1px dashed #333;
+      background: #141414;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444;
+      font-size: 11px;
+    }
+
+    .reader-hero-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .reader-hero-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: #f4f4f4;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .reader-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .reader-hero-note {
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.5;
+      border-left: 3px solid rgba(178,28,42,0.7);
+      padding-left: 10px;
+      margin-top: 4px;
+    }
+
+    /* ── CBZ file list ──────────────────────────────────── */
+    .cbz-section {
+      margin-bottom: 32px;
+    }
+
+    .cbz-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .cbz-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .cbz-upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(180deg, #b71f2e, #8b0f1f);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+
+    .cbz-upload-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(139, 15, 31, 0.35);
+    }
+
+    .cbz-upload-input {
+      display: none;
+    }
+
+    .cbz-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cbz-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+      border: 1px solid #262626;
+      border-radius: 14px;
+      transition: border-color 0.15s, background 0.15s;
+      cursor: pointer;
+    }
+
+    .cbz-item:hover {
+      border-color: rgba(178,28,42,0.4);
+      background: linear-gradient(180deg, #141414 0%, #111 100%);
+    }
+
+    .cbz-item.active {
+      border-color: rgba(178,28,42,0.75);
+      background: linear-gradient(180deg, #16080a 0%, #120608 100%);
+      box-shadow: 0 0 0 2px rgba(178,28,42,0.15);
+    }
+
+    .cbz-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(178,28,42,0.12);
+      border: 1px solid rgba(178,28,42,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .cbz-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .cbz-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cbz-item-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e8e8e8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cbz-item-size {
+      font-size: 11px;
+      color: #555;
+      margin-top: 2px;
+    }
+
+    .cbz-item-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .cbz-read-btn {
+      padding: 7px 14px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(180deg, #b71f2e, #8b0f1f);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .cbz-read-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 4px 14px rgba(139,15,31,0.4);
+    }
+
+    .cbz-delete-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid #2e2e2e;
+      background: #141414;
+      color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: border-color 0.12s, color 0.12s;
+    }
+
+    .cbz-delete-btn:hover {
+      border-color: #ef5350;
+      color: #ef5350;
+    }
+
+    .cbz-empty {
+      padding: 24px;
+      border: 1px dashed #2f2f2f;
+      border-radius: 14px;
+      color: #555;
+      text-align: center;
+      background: #111;
+      font-size: 14px;
+    }
+
+    .cbz-uploading {
+      font-size: 13px;
+      color: #888;
+      padding: 10px 0;
+      display: none;
+    }
+
+    /* ── Reader / viewer ────────────────────────────────── */
+    .reader-panel {
+      display: none;
+    }
+
+    .reader-panel.open {
+      display: block;
+    }
+
+    .reader-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+      border: 1px solid #262626;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .reader-toolbar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e0e0e0;
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .reader-page-info {
+      font-size: 12px;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .reader-mode-btn {
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      background: rgba(255,255,255,0.04);
+      color: #bbb;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .reader-mode-btn:hover,
+    .reader-mode-btn.active {
+      border-color: rgba(178,28,42,0.6);
+      background: rgba(178,28,42,0.1);
+      color: #fff;
+    }
+
+    .reader-close-btn {
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      background: rgba(255,255,255,0.04);
+      color: #bbb;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+
+    .reader-close-btn:hover {
+      border-color: #ef5350;
+      color: #ef5350;
+    }
+
+    /* Long-strip mode (default) */
+    .reader-strip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .reader-strip img {
+      width: 100%;
+      max-width: 800px;
+      display: block;
+      border-radius: 4px;
+    }
+
+    /* Single page mode */
+    .reader-single {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .reader-single-img-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .reader-single img {
+      max-width: min(800px, 100%);
+      max-height: 90vh;
+      border-radius: 6px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .reader-nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .reader-nav-btn {
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(180deg, #b71f2e, #8b0f1f);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, opacity 0.1s;
+    }
+
+    .reader-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .reader-nav-btn:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(139,15,31,0.4);
+    }
+
+    .reader-page-counter {
+      font-size: 13px;
+      color: #888;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .reader-loading {
+      text-align: center;
+      padding: 40px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .reader-hero {
+        flex-direction: column;
+      }
+
+      .reader-hero-cover,
+      .reader-hero-cover-empty {
+        width: 100%;
+        height: 160px;
+      }
+
+      .reader-toolbar {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" style="padding: 0 16px;">
+    <div class="reader-wrap" style="padding: 0;">
+
+      <div class="reader-topbar">
+        <a class="back-btn" href="/">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+        </a>
+        <span class="reader-manga-title" id="reader-manga-title">Loading…</span>
+      </div>
+
+      <!-- Hero info strip -->
+      <div class="reader-hero" id="reader-hero">
+        <div class="reader-hero-cover-empty" id="hero-cover-wrap">No Image</div>
+        <div class="reader-hero-info">
+          <div class="reader-hero-title" id="hero-title">—</div>
+          <div class="reader-hero-meta" id="hero-meta"></div>
+          <div class="reader-hero-note" id="hero-note" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- CBZ file list -->
+      <div class="cbz-section">
+        <div class="cbz-section-header">
+          <span class="cbz-section-title">CBZ Files</span>
+          <button class="cbz-upload-btn" onclick="document.getElementById('cbz-file-input').click()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 2V10M3 6l4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            Upload CBZ
+          </button>
+          <input type="file" id="cbz-file-input" class="cbz-upload-input" accept=".cbz" multiple onchange="uploadCbzFiles(this.files)">
+        </div>
+        <div class="cbz-uploading" id="cbz-uploading">Uploading…</div>
+        <div class="cbz-list" id="cbz-list">
+          <div class="cbz-empty">No CBZ files yet. Upload one above.</div>
+        </div>
+      </div>
+
+      <!-- Reader panel (shown when a CBZ is selected) -->
+      <div class="reader-panel" id="reader-panel">
+        <div class="reader-toolbar">
+          <span class="reader-toolbar-title" id="reader-cbz-title">—</span>
+          <span class="reader-page-info" id="reader-page-info"></span>
+          <button class="reader-mode-btn active" id="mode-strip" onclick="setMode('strip')">Long Strip</button>
+          <button class="reader-mode-btn" id="mode-single" onclick="setMode('single')">Single Page</button>
+          <button class="reader-close-btn" onclick="closeReader()">✕ Close</button>
+        </div>
+
+        <div id="reader-loading" class="reader-loading">Loading pages…</div>
+
+        <!-- Long strip mode -->
+        <div class="reader-strip" id="reader-strip" style="display:none"></div>
+
+        <!-- Single page mode -->
+        <div class="reader-single" id="reader-single" style="display:none">
+          <div class="reader-single-img-wrap">
+            <img id="single-page-img" src="" alt="Page">
+          </div>
+          <div class="reader-nav">
+            <button class="reader-nav-btn" id="prev-btn" onclick="prevPage()">← Prev</button>
+            <span class="reader-page-counter" id="page-counter">1 / 1</span>
+            <button class="reader-nav-btn" id="next-btn" onclick="nextPage()">Next →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const mangaId = params.get("id");
+
+    let mangaEntry = null;
+    let currentPages = [];
+    let currentPage = 0;
+    let currentMode = "strip";
+    let activeCbzFilename = null;
+
+    async function init() {
+      if (!mangaId) {
+        document.getElementById("reader-manga-title").textContent = "No manga selected";
+        return;
+      }
+
+      // Load manga data
+      try {
+        const res = await fetch("/api/manga");
+        const all = await res.json();
+        mangaEntry = all.find(e => String(e.id) === String(mangaId));
+      } catch (e) {
+        console.error(e);
+      }
+
+      if (!mangaEntry) {
+        document.getElementById("reader-manga-title").textContent = "Entry not found";
+        return;
+      }
+
+      renderHero(mangaEntry);
+      await loadCbzList();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function statusClass(status) {
+      const s = String(status || "").toLowerCase();
+      if (s === "ongoing") return "status-ongoing";
+      if (s === "finished") return "status-finished";
+      if (s === "hiatus") return "status-hiatus";
+      return "status-unknown";
+    }
+
+    function renderHero(entry) {
+      document.getElementById("reader-manga-title").textContent = entry.title || "Untitled";
+      document.getElementById("hero-title").textContent = entry.title || "Untitled";
+
+      const coverWrap = document.getElementById("hero-cover-wrap");
+      if (entry.image) {
+        coverWrap.outerHTML = `<img class="reader-hero-cover" id="hero-cover-wrap" src="${escapeHtml(entry.image)}" alt="${escapeHtml(entry.title)}">`;
+      }
+
+      const metaEl = document.getElementById("hero-meta");
+      const parts = [];
+      if (entry.status) parts.push(`<span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status)}</span>`);
+      if (entry.score) parts.push(`<span class="badge" style="background:rgba(178,28,42,0.12);border:1px solid rgba(178,28,42,0.3);color:#e06070;">${escapeHtml(entry.score)}</span>`);
+      if (entry.chapter) parts.push(`<span style="font-size:12px;color:#777;">Ch: <b style="color:#aaa">${escapeHtml(entry.chapter)}</b></span>`);
+      if (entry.year) parts.push(`<span style="font-size:12px;color:#777;">${entry.status === "Finished" ? "Read" : "Started"}: <b style="color:#aaa">${escapeHtml(entry.year)}</b></span>`);
+      metaEl.innerHTML = parts.join("");
+
+      if (entry.note) {
+        const noteEl = document.getElementById("hero-note");
+        noteEl.textContent = entry.note;
+        noteEl.style.display = "block";
+      }
+    }
+
+    async function loadCbzList() {
+      const listEl = document.getElementById("cbz-list");
+      listEl.innerHTML = `<div class="cbz-empty" style="color:#555;">Loading…</div>`;
+
+      try {
+        const res = await fetch(`/api/manga/${mangaId}/cbz`);
+        const files = await res.json();
+        renderCbzList(files);
+      } catch (e) {
+        listEl.innerHTML = `<div class="cbz-empty">Failed to load CBZ files.</div>`;
+      }
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+    }
+
+    function renderCbzList(files) {
+      const listEl = document.getElementById("cbz-list");
+
+      if (!files.length) {
+        listEl.innerHTML = `<div class="cbz-empty">No CBZ files yet. Upload one above.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = "";
+      files.forEach(f => {
+        const item = document.createElement("div");
+        item.className = "cbz-item" + (activeCbzFilename === f.filename ? " active" : "");
+        item.dataset.filename = f.filename;
+        item.innerHTML = `
+          <div class="cbz-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="14" height="18" rx="2" stroke="rgba(210,65,76,0.8)" stroke-width="1.5"/>
+              <path d="M7 8h6M7 12h8M7 16h4" stroke="rgba(210,65,76,0.6)" stroke-width="1.4" stroke-linecap="round"/>
+              <rect x="13" y="1" width="8" height="8" rx="1.5" fill="#0d0d0d" stroke="rgba(210,65,76,0.5)" stroke-width="1.2"/>
+              <path d="M15 5l1.5-2 1.5 2" stroke="rgba(210,65,76,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="cbz-item-info">
+            <div class="cbz-item-name">${escapeHtml(f.filename)}</div>
+            <div class="cbz-item-size">${formatBytes(f.size)}</div>
+          </div>
+          <div class="cbz-item-actions">
+            <button class="cbz-read-btn" onclick="openCbz(event, '${escapeHtml(f.filename)}')">Read</button>
+            <button class="cbz-delete-btn" onclick="deleteCbz(event, '${escapeHtml(f.filename)}')" title="Delete">&times;</button>
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    async function uploadCbzFiles(fileList) {
+      if (!fileList || fileList.length === 0) return;
+
+      const uploadingEl = document.getElementById("cbz-uploading");
+      uploadingEl.style.display = "block";
+
+      const formData = new FormData();
+      Array.from(fileList).forEach(f => formData.append("cbz", f));
+
+      try {
+        await fetch(`/api/manga/${mangaId}/cbz`, { method: "POST", body: formData });
+      } catch (e) {
+        alert("Upload failed.");
+      } finally {
+        uploadingEl.style.display = "none";
+        document.getElementById("cbz-file-input").value = "";
+      }
+
+      await loadCbzList();
+    }
+
+    async function deleteCbz(event, filename) {
+      event.stopPropagation();
+      if (!confirm(`Delete "${filename}"?`)) return;
+
+      await fetch(`/api/manga/${mangaId}/cbz/${encodeURIComponent(filename)}`, { method: "DELETE" });
+
+      if (activeCbzFilename === filename) closeReader();
+      await loadCbzList();
+    }
+
+    async function openCbz(event, filename) {
+      event.stopPropagation();
+      activeCbzFilename = filename;
+
+      // Update active state in list
+      document.querySelectorAll(".cbz-item").forEach(el => {
+        el.classList.toggle("active", el.dataset.filename === filename);
+      });
+
+      const panel = document.getElementById("reader-panel");
+      panel.classList.add("open");
+      document.getElementById("reader-cbz-title").textContent = filename;
+      document.getElementById("reader-loading").style.display = "block";
+      document.getElementById("reader-strip").style.display = "none";
+      document.getElementById("reader-single").style.display = "none";
+
+      // Scroll to reader
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      try {
+        const res = await fetch(`/api/manga/${mangaId}/cbz/${encodeURIComponent(filename)}/pages`);
+        currentPages = await res.json();
+      } catch (e) {
+        document.getElementById("reader-loading").textContent = "Failed to load pages.";
+        return;
+      }
+
+      currentPage = 0;
+      document.getElementById("reader-loading").style.display = "none";
+      setMode(currentMode);
+    }
+
+    function closeReader() {
+      activeCbzFilename = null;
+      currentPages = [];
+      currentPage = 0;
+      document.getElementById("reader-panel").classList.remove("open");
+      document.querySelectorAll(".cbz-item").forEach(el => el.classList.remove("active"));
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById("mode-strip").classList.toggle("active", mode === "strip");
+      document.getElementById("mode-single").classList.toggle("active", mode === "single");
+
+      if (mode === "strip") {
+        renderStrip();
+      } else {
+        renderSingle();
+      }
+    }
+
+    function renderStrip() {
+      const strip = document.getElementById("reader-strip");
+      strip.innerHTML = "";
+      currentPages.forEach((p, i) => {
+        const img = document.createElement("img");
+        img.src = p.url;
+        img.alt = `Page ${i + 1}`;
+        img.loading = "lazy";
+        strip.appendChild(img);
+      });
+      strip.style.display = "flex";
+      document.getElementById("reader-single").style.display = "none";
+      document.getElementById("reader-page-info").textContent = `${currentPages.length} pages`;
+    }
+
+    function renderSingle() {
+      document.getElementById("reader-strip").style.display = "none";
+      const single = document.getElementById("reader-single");
+      single.style.display = "flex";
+      showPage(currentPage);
+    }
+
+    function showPage(index) {
+      if (!currentPages.length) return;
+      index = Math.max(0, Math.min(index, currentPages.length - 1));
+      currentPage = index;
+
+      document.getElementById("single-page-img").src = currentPages[index].url;
+      document.getElementById("page-counter").textContent = `${index + 1} / ${currentPages.length}`;
+      document.getElementById("reader-page-info").textContent = `Page ${index + 1} of ${currentPages.length}`;
+      document.getElementById("prev-btn").disabled = index === 0;
+      document.getElementById("next-btn").disabled = index === currentPages.length - 1;
+    }
+
+    function prevPage() { showPage(currentPage - 1); }
+    function nextPage() { showPage(currentPage + 1); }
+
+    // Keyboard navigation in single mode
+    document.addEventListener("keydown", e => {
+      if (currentMode !== "single" || !document.getElementById("reader-panel").classList.contains("open")) return;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") nextPage();
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") prevPage();
+    });
+
+    init();
+  </script>
+</body>
+</html>

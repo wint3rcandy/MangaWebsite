@@ -681,6 +681,13 @@ async function loadEntries() {
           <button class="card-btn edit" onclick="openEditModal(${entry.id})" aria-label="Edit entry">&#9998;</button>
           <button class="card-btn delete" onclick="deleteEntry(${entry.id})" aria-label="Delete entry">&times;</button>
         </div>
+        <a class="card-read-btn" href="/reader?id=${entry.id}" aria-label="Read ${escapeHtml(entry.title)}">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.5 1C3.46 1 1 3.46 1 6.5S3.46 12 6.5 12 12 9.54 12 6.5 9.54 1 6.5 1Z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M5.5 4.5l3 2-3 2V4.5Z" fill="currentColor"/>
+          </svg>
+          Read
+        </a>
       </div>
       ${rankBadgeHtml}
     `;

@@ -3,20 +3,25 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
+const AdmZip = require("adm-zip");
 
 const app = express();
 const PORT = 3000;
 
 const DATA_FILE = path.join(__dirname, "data.json");
 const UPLOADS_DIR = path.join(__dirname, "uploads");
+const CBZ_DIR = path.join(__dirname, "cbz");
+const CBZ_PAGES_DIR = path.join(__dirname, "cbz-pages");
 
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+for (const dir of [UPLOADS_DIR, CBZ_DIR, CBZ_PAGES_DIR]) {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(UPLOADS_DIR));
+app.use("/cbz", express.static(CBZ_DIR));
+app.use("/cbz-pages", express.static(CBZ_PAGES_DIR));
 app.use(express.static(__dirname));
 
 function loadData() {
@@ -70,8 +75,39 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// CBZ-specific storage — stored under cbz/<mangaId>/
+const cbzStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const mangaId = req.params.id;
+    const dir = path.join(CBZ_DIR, mangaId);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    // Keep original filename but sanitise it
+    const ext = path.extname(file.originalname).toLowerCase();
+    const base = path.basename(file.originalname, ext)
+      .replace(/[^a-zA-Z0-9._-]/g, "_")
+      .slice(0, 120);
+    cb(null, `${base}${ext}`);
+  }
+});
+
+const cbzUpload = multer({
+  storage: cbzStorage,
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (ext === ".cbz") return cb(null, true);
+    cb(new Error("Only .cbz files are allowed"));
+  }
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "original.html"));
+});
+
+app.get("/reader", (req, res) => {
+  res.sendFile(path.join(__dirname, "reader.html"));
 });
 
 app.get("/api/manga", (req, res) => {
@@ -199,6 +235,115 @@ app.delete("/api/manga/:id", (req, res) => {
 
   res.json({ success: true });
 });
+
+// ── CBZ routes ─────────────────────────────────────────────────────────────
+
+// List CBZ files for a manga entry
+app.get("/api/manga/:id/cbz", (req, res) => {
+  const mangaId = req.params.id;
+  const dir = path.join(CBZ_DIR, mangaId);
+
+  if (!fs.existsSync(dir)) return res.json([]);
+
+  const files = fs.readdirSync(dir)
+    .filter(f => f.toLowerCase().endsWith(".cbz"))
+    .sort()
+    .map(f => ({
+      filename: f,
+      url: `/cbz/${mangaId}/${encodeURIComponent(f)}`,
+      size: fs.statSync(path.join(dir, f)).size
+    }));
+
+  res.json(files);
+});
+
+// Upload one or more CBZ files for a manga entry
+app.post("/api/manga/:id/cbz", cbzUpload.array("cbz", 50), (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: "No CBZ files uploaded" });
+  }
+
+  const mangaId = req.params.id;
+  const uploaded = req.files.map(f => ({
+    filename: f.filename,
+    url: `/cbz/${mangaId}/${encodeURIComponent(f.filename)}`,
+    size: f.size
+  }));
+
+  res.json({ success: true, files: uploaded });
+});
+
+// Delete a specific CBZ file
+app.delete("/api/manga/:id/cbz/:filename", (req, res) => {
+  const mangaId = req.params.id;
+  const filename = req.params.filename;
+  const filePath = path.join(CBZ_DIR, mangaId, filename);
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: "File not found" });
+  }
+
+  fs.unlinkSync(filePath);
+
+  // Also remove extracted pages if they exist
+  const pagesDir = path.join(CBZ_PAGES_DIR, mangaId, path.basename(filename, ".cbz"));
+  if (fs.existsSync(pagesDir)) {
+    fs.rmSync(pagesDir, { recursive: true, force: true });
+  }
+
+  res.json({ success: true });
+});
+
+// Extract and serve pages from a CBZ — returns ordered list of image URLs
+app.get("/api/manga/:id/cbz/:filename/pages", (req, res) => {
+  const mangaId = req.params.id;
+  const filename = req.params.filename;
+  const cbzPath = path.join(CBZ_DIR, mangaId, filename);
+
+  if (!fs.existsSync(cbzPath)) {
+    return res.status(404).json({ error: "CBZ file not found" });
+  }
+
+  const baseName = path.basename(filename, ".cbz");
+  const pagesDir = path.join(CBZ_PAGES_DIR, mangaId, baseName);
+
+  // Re-use already-extracted pages
+  if (fs.existsSync(pagesDir)) {
+    const pages = getPageUrls(pagesDir, mangaId, baseName);
+    return res.json(pages);
+  }
+
+  // Extract the CBZ (which is just a ZIP)
+  try {
+    fs.mkdirSync(pagesDir, { recursive: true });
+    const zip = new AdmZip(cbzPath);
+    const entries = zip.getEntries()
+      .filter(e => !e.isDirectory && /\.(jpe?g|png|gif|webp|avif)$/i.test(e.entryName))
+      .sort((a, b) => a.entryName.localeCompare(b.entryName, undefined, { numeric: true, sensitivity: "base" }));
+
+    entries.forEach(entry => {
+      const safeName = path.basename(entry.entryName).replace(/[^a-zA-Z0-9._-]/g, "_");
+      const outPath = path.join(pagesDir, safeName);
+      fs.writeFileSync(outPath, entry.getData());
+    });
+
+    const pages = getPageUrls(pagesDir, mangaId, baseName);
+    res.json(pages);
+  } catch (err) {
+    console.error("CBZ extraction error:", err);
+    res.status(500).json({ error: "Failed to extract CBZ" });
+  }
+});
+
+function getPageUrls(pagesDir, mangaId, baseName) {
+  return fs.readdirSync(pagesDir)
+    .filter(f => /\.(jpe?g|png|gif|webp|avif)$/i.test(f))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+    .map(f => ({
+      filename: f,
+      url: `/cbz-pages/${mangaId}/${encodeURIComponent(baseName)}/${encodeURIComponent(f)}`
+    }));
+}
 
 app.listen(PORT, () => {
   console.log(`API running on port ${PORT}`);
