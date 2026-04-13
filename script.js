@@ -577,6 +577,17 @@ async function loadEntries() {
   const res = await fetch(API);
   const data = await res.json();
 
+  // Fetch CBZ file counts for all entries in parallel
+  const cbzCounts = new Map();
+  await Promise.all(
+    data.map(entry =>
+      fetch(`/api/manga/${entry.id}/cbz`)
+        .then(r => r.json())
+        .then(files => { if (files.length > 0) cbzCounts.set(entry.id, files.length); })
+        .catch(() => {})
+    )
+  );
+
   entryCache = {};
 
   const filtered = data
@@ -642,7 +653,7 @@ async function loadEntries() {
   }
   const useTierGroups = sortValue === "default" || sortValue === "score-desc" || sortValue === "score-asc";
 
-  function buildCard(entry, index, canDragRank) {
+  function buildCard(entry, index, canDragRank, hasCbz) {
     const score = entry.score || null;
     const chapter = entry.chapter || "-";
     const year = entry.year || "-";
@@ -681,13 +692,13 @@ async function loadEntries() {
           <button class="card-btn edit" onclick="openEditModal(${entry.id})" aria-label="Edit entry">&#9998;</button>
           <button class="card-btn delete" onclick="deleteEntry(${entry.id})" aria-label="Delete entry">&times;</button>
         </div>
-        <a class="card-read-btn" href="/reader?id=${entry.id}" aria-label="Read ${escapeHtml(entry.title)}">
+        ${hasCbz ? `<a class="card-read-btn" href="/reader?id=${entry.id}" aria-label="Read ${escapeHtml(entry.title)}">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6.5 1C3.46 1 1 3.46 1 6.5S3.46 12 6.5 12 12 9.54 12 6.5 9.54 1 6.5 1Z" stroke="currentColor" stroke-width="1.2"/>
             <path d="M5.5 4.5l3 2-3 2V4.5Z" fill="currentColor"/>
           </svg>
           Read
-        </a>
+        </a>` : ""}
       </div>
       ${rankBadgeHtml}
     `;
@@ -740,7 +751,7 @@ async function loadEntries() {
 
       entries.forEach((entry) => {
         const canDrag = canDragThisTier;
-        const card = buildCard(entry, globalIndex, canDrag);
+        const card = buildCard(entry, globalIndex, canDrag, cbzCounts.has(entry.id));
         tierGrid.appendChild(card);
         globalIndex++;
       });
@@ -758,7 +769,7 @@ async function loadEntries() {
       entryCache[entry.id] = entry;
       const numericScore = getNumericScore(entry);
       const canDragRank = canReorderTies && numericScore !== Number.NEGATIVE_INFINITY && (scoreCounts.get(numericScore) || 0) > 1;
-      const card = buildCard(entry, index, canDragRank);
+      const card = buildCard(entry, index, canDragRank, cbzCounts.has(entry.id));
       grid.appendChild(card);
     });
 
