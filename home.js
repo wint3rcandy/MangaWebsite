@@ -1,6 +1,6 @@
 const LIBRARY_API = "/api/library";
-const CHAPTER_FILE_PATTERN = /(?:^|[^a-z0-9])(?:ch(?:apter)?\s*|c)0*\d+(?=[^a-z0-9]|$)/i;
-const VOLUME_FILE_PATTERN = /(?:^|[^a-z0-9])(?:vol(?:ume)?\s*|v)0*\d+(?=[^a-z0-9]|$)/i;
+const CHAPTER_FILE_PATTERN = /(?:^|[^a-z0-9])(?:ch(?:apter)?|c)[\s._-]*0*\d+(?=[^a-z0-9]|$)/i;
+const VOLUME_FILE_PATTERN = /(?:^|[^a-z0-9])(?:vol(?:ume)?|v)[\s._-]*0*\d+(?=[^a-z0-9]|$)/i;
 
 let allLibraryEntries = [];
 let hideHomeNsfw = false;
