@@ -26,11 +26,13 @@
   {
     "id": 3,
     "title": "Goblin Slayer year one",
-    "score": null,
+    "score": "A",
     "status": "Ongoing",
     "chapter": "66",
     "year": "2019",
-    "image": "/uploads/poster-3-goblin-slayer-year-one.jpg"
+    "image": "/uploads/poster-3-goblin-slayer-year-one.jpg",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 4,
@@ -82,19 +84,19 @@
   {
     "id": 8,
     "title": "Kuzu no honkai decor",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775694821573-563845714.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": 0
+    "manualOrder": null
   },
   {
     "id": 9,
     "title": "Domestic Na Kanojo",
-    "score": null,
+    "score": "C",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -111,7 +113,7 @@
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-10-kengan-asura.jpg",
-    "manualOrder": 4
+    "manualOrder": 5
   },
   {
     "id": 11,
@@ -201,7 +203,7 @@
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-18-one-punch-man.jpg",
-    "manualOrder": 3
+    "manualOrder": 4
   },
   {
     "id": 19,
@@ -212,7 +214,7 @@
     "year": "2020",
     "image": "/uploads/1775598862000-742706362.jpg",
     "note": "",
-    "manualOrder": 5
+    "manualOrder": 6
   },
   {
     "id": 20,
@@ -229,7 +231,7 @@
   {
     "id": 21,
     "title": "Ane Naru Mono",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -265,7 +267,7 @@
   {
     "id": 24,
     "title": "Haite Kudasai, Takamine San",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -277,7 +279,7 @@
   {
     "id": 25,
     "title": "Daughters friend",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "",
     "year": "2020",
@@ -346,7 +348,7 @@
   {
     "id": 31,
     "title": "Initial D",
-    "score": null,
+    "score": "B",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
@@ -358,7 +360,7 @@
   {
     "id": 32,
     "title": "Hells Paradise",
-    "score": null,
+    "score": "C",
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -388,13 +390,13 @@
     "year": "2021",
     "image": "/uploads/1775691811116-71650226.jpg",
     "note": "",
-    "manualOrder": 6,
+    "manualOrder": 7,
     "nsfw": false
   },
   {
     "id": 35,
     "title": "Monster",
-    "score": null,
+    "score": "C",
     "status": "Finished",
     "chapter": "",
     "year": "2021",
@@ -442,14 +444,14 @@
   {
     "id": 39,
     "title": "Arms Dealer",
-    "score": null,
+    "score": "D",
     "status": "Hiatus",
     "chapter": "58",
     "year": "2021",
     "image": "/uploads/1775694984563-283495918.png",
     "note": "",
     "nsfw": false,
-    "manualOrder": 0
+    "manualOrder": null
   },
   {
     "id": 40,
@@ -472,7 +474,7 @@
     "year": "2021",
     "image": "/uploads/1775602441131-572071380.jpg",
     "note": "",
-    "manualOrder": 7,
+    "manualOrder": 8,
     "nsfw": false
   },
   {
@@ -507,7 +509,7 @@
     "chapter": "175",
     "year": "2021",
     "image": "/uploads/poster-44-solo-leveling.jpg",
-    "manualOrder": 8,
+    "manualOrder": 9,
     "note": "",
     "nsfw": false
   },
@@ -526,7 +528,7 @@
   {
     "id": 46,
     "title": "Dress up darling",
-    "score": "C",
+    "score": "D",
     "status": "Ongoing",
     "chapter": "70",
     "year": "2022",
@@ -554,7 +556,7 @@
     "chapter": "",
     "year": "2022",
     "image": "/uploads/poster-48-three-days-of-happiness.jpg",
-    "manualOrder": 9,
+    "manualOrder": 10,
     "note": "",
     "nsfw": false
   },
@@ -650,7 +652,7 @@
   {
     "id": 57,
     "title": "I want to see you embarrassed",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "10",
     "year": "2022",
@@ -662,11 +664,13 @@
   {
     "id": 58,
     "title": "Kubo San doesn’t leave me be",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "110",
     "year": "2022",
-    "image": "/uploads/poster-58-kubo-san-doesn-t-leave-me-be.jpg"
+    "image": "/uploads/poster-58-kubo-san-doesn-t-leave-me-be.jpg",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 59,
@@ -689,29 +693,35 @@
   {
     "id": 61,
     "title": "Boy’s Abyss",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "94",
     "year": "2022",
-    "image": "/uploads/poster-61-boy-s-abyss.png"
+    "image": "/uploads/poster-61-boy-s-abyss.png",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 62,
     "title": "That girl is cute… but dangerous?",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "21",
     "year": "2022",
-    "image": "/uploads/poster-62-that-girl-is-cute-but-dangerous.jpg"
+    "image": "/uploads/poster-62-that-girl-is-cute-but-dangerous.jpg",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 63,
     "title": "Please go home, akutsu-San!",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "108",
     "year": "2022",
-    "image": "/uploads/poster-63-please-go-home-akutsu-san.jpg"
+    "image": "/uploads/poster-63-please-go-home-akutsu-san.jpg",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 64,
@@ -811,14 +821,14 @@
   {
     "id": 73,
     "title": "Tokyo Revengers",
-    "score": null,
+    "score": "D",
     "status": "Finished",
     "chapter": "197",
     "year": "2022",
     "note": "- good but should of ended where I stopped reading but they continue it for some reason",
     "image": "/uploads/poster-73-tokyo-revengers.jpg",
     "nsfw": false,
-    "manualOrder": 2
+    "manualOrder": null
   },
   {
     "id": 74,
@@ -889,23 +899,25 @@
     "id": 80,
     "title": "Silent War",
     "score": "S",
-    "status": "",
+    "status": "Finished",
     "chapter": "",
     "year": "2022",
     "image": "/uploads/1775691863191-9401288.webp",
-    "manualOrder": 10,
+    "manualOrder": 3,
     "note": "",
     "nsfw": true
   },
   {
     "id": 81,
     "title": "Ayashimon",
-    "score": null,
-    "status": "Unknown",
+    "score": "D",
+    "status": "Finished",
     "chapter": "",
     "year": "2022",
     "note": "sad it got cancelled",
-    "image": "/uploads/poster-81-ayashimon.jpg"
+    "image": "/uploads/poster-81-ayashimon.jpg",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 82,
@@ -955,7 +967,7 @@
   {
     "id": 86,
     "title": "I'm A Former Slave, But I Tried To Buy An Oni Slave Who I Later Found To Have Too Much Energy So I Want To Throw Him Away...",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "23",
     "year": "2023",
@@ -1027,7 +1039,7 @@
   {
     "id": 93,
     "title": "Hero Manager",
-    "score": null,
+    "score": "D",
     "status": "Ongoing",
     "chapter": "26",
     "year": "2023",
@@ -1146,7 +1158,7 @@
     "id": 104,
     "title": "An outsider’s way in",
     "score": "S",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "97",
     "year": "2024",
     "image": "/uploads/poster-104-an-outsider-s-way-in.jpg",
@@ -1223,12 +1235,14 @@
   {
     "id": 111,
     "title": "Kagurabachi",
-    "score": null,
+    "score": "B",
     "status": "Ongoing",
     "chapter": "61",
     "year": "2024",
     "note": "12/17/2024:",
-    "image": "/uploads/poster-111-kagurabachi.jpg"
+    "image": "/uploads/poster-111-kagurabachi.jpg",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 112,
@@ -1429,7 +1443,7 @@
   {
     "id": 132,
     "title": "Okaeri, papa",
-    "score": null,
+    "score": "A",
     "status": "Ongoing",
     "chapter": "25",
     "year": "2025",
@@ -1524,7 +1538,7 @@
   {
     "id": 141,
     "title": "Goblin’s Ascent",
-    "score": null,
+    "score": "C",
     "status": "Ongoing",
     "chapter": "16",
     "year": "2025",
@@ -1536,7 +1550,7 @@
   {
     "id": 142,
     "title": "Teachers Efforts",
-    "score": null,
+    "score": "B",
     "status": "Ongoing",
     "chapter": "55",
     "year": "2025",
@@ -1572,7 +1586,7 @@
   {
     "id": 145,
     "title": "Record of Highserk War",
-    "score": null,
+    "score": "A",
     "status": "Ongoing",
     "chapter": "26",
     "year": "12/08/2025",
@@ -1664,12 +1678,13 @@
     "id": 153,
     "title": "Legend of the Northern Blade",
     "score": "B",
-    "status": "Unknown",
+    "status": "Finished",
     "chapter": "",
     "year": "2026",
     "image": "/uploads/poster-153-legend-of-the-northern-blade.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "note": ""
   },
   {
     "id": 1775696307780,
@@ -1746,14 +1761,14 @@
   {
     "id": 1775699402565,
     "title": "The Extra’s Academy Survival Guide",
-    "score": null,
+    "score": "A",
     "status": "Ongoing",
     "chapter": "97",
     "year": "2026",
     "image": "/uploads/1775699402515-554658425.webp",
     "note": "",
     "nsfw": false,
-    "manualOrder": 0
+    "manualOrder": null
   },
   {
     "id": 1775699682509,
