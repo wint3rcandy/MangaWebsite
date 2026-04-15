@@ -125,6 +125,7 @@
     .cbz-icon svg { width:18px; height:18px; }
     .cbz-item-info { flex:1; min-width:0; }
     .cbz-item-name { font-size:14px; font-weight:700; color:#e8e8e8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .cbz-item-name.is-read { color:#c53a47; }
     .cbz-item-size { font-size:11px; color:#555; margin-top:2px; }
     .cbz-item-actions { display:flex; gap:8px; flex-shrink:0; }
 
@@ -670,6 +671,40 @@
       return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
     }
 
+    function getReadFilesStorageKey() {
+      return `reader-read-files:${mangaId}`;
+    }
+
+    function getReadFiles() {
+      try {
+        const raw = localStorage.getItem(getReadFilesStorageKey());
+        const parsed = raw ? JSON.parse(raw) : [];
+        return new Set(Array.isArray(parsed) ? parsed : []);
+      } catch {
+        return new Set();
+      }
+    }
+
+    function isFileRead(filename) {
+      return getReadFiles().has(String(filename));
+    }
+
+    function markFileRead(filename) {
+      if (!filename) return;
+
+      const readFiles = getReadFiles();
+      const normalizedFilename = String(filename);
+      if (readFiles.has(normalizedFilename)) return;
+
+      readFiles.add(normalizedFilename);
+
+      try {
+        localStorage.setItem(getReadFilesStorageKey(), JSON.stringify([...readFiles]));
+      } catch {}
+
+      renderCbzList(cbzFiles);
+    }
+
     function inferCollectionUnit(files) {
       let chapterMatches = 0;
       let volumeMatches = 0;
@@ -773,6 +808,7 @@
       listEl.innerHTML = "";
       files.forEach((f, idx) => {
         const item = document.createElement("div");
+        const hasBeenRead = isFileRead(f.filename);
         item.className = "cbz-item";
         item.innerHTML = `
           <div class="cbz-icon">
@@ -784,7 +820,7 @@
             </svg>
           </div>
           <div class="cbz-item-info">
-            <div class="cbz-item-name">${escapeHtml(f.filename)}</div>
+            <div class="cbz-item-name${hasBeenRead ? " is-read" : ""}">${escapeHtml(f.filename)}</div>
             <div class="cbz-item-size">${formatBytes(f.size)}</div>
           </div>
           <div class="cbz-item-actions">
@@ -889,6 +925,7 @@
         return;
       }
 
+      markFileRead(vol.filename);
       document.getElementById("fsr-loading").style.display = "none";
       setMode(currentMode);
     }
