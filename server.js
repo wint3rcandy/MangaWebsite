@@ -37,6 +37,9 @@ function saveData(data) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
+const CHAPTER_FILE_PATTERN = /(?:^|[^a-z0-9])(?:ch(?:apter)?\s*|c)0*\d+(?=[^a-z0-9]|$)/i;
+const VOLUME_FILE_PATTERN = /(?:^|[^a-z0-9])(?:vol(?:ume)?\s*|v)0*\d+(?=[^a-z0-9]|$)/i;
+
 function listCbzFiles(mangaId) {
   const dir = path.join(CBZ_DIR, String(mangaId));
 
@@ -52,12 +55,36 @@ function listCbzFiles(mangaId) {
     }));
 }
 
+function inferCbzUnit(cbzFiles) {
+  let chapterMatches = 0;
+  let volumeMatches = 0;
+
+  cbzFiles.forEach(file => {
+    const filename = typeof file === "string" ? file : file?.filename || "";
+    const basename = path.basename(filename, path.extname(filename));
+
+    if (CHAPTER_FILE_PATTERN.test(basename)) {
+      chapterMatches++;
+      return;
+    }
+
+    if (VOLUME_FILE_PATTERN.test(basename)) {
+      volumeMatches++;
+    }
+  });
+
+  if (chapterMatches > volumeMatches && chapterMatches > 0) return "chapter";
+  if (volumeMatches > chapterMatches && volumeMatches > 0) return "volume";
+  return "file";
+}
+
 function withLibraryMeta(entry) {
   const cbzFiles = listCbzFiles(entry.id);
   return {
     ...entry,
     cbzCount: cbzFiles.length,
-    hasCbz: cbzFiles.length > 0
+    hasCbz: cbzFiles.length > 0,
+    cbzUnit: inferCbzUnit(cbzFiles)
   };
 }
 

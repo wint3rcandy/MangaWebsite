@@ -1,4 +1,6 @@
 const LIBRARY_API = "/api/library";
+const CHAPTER_FILE_PATTERN = /(?:^|[^a-z0-9])(?:ch(?:apter)?\s*|c)0*\d+(?=[^a-z0-9]|$)/i;
+const VOLUME_FILE_PATTERN = /(?:^|[^a-z0-9])(?:vol(?:ume)?\s*|v)0*\d+(?=[^a-z0-9]|$)/i;
 
 let allLibraryEntries = [];
 let hideHomeNsfw = false;
@@ -53,9 +55,60 @@ function getSortTime(value) {
   return Number.isNaN(parsed) ? Number.NEGATIVE_INFINITY : parsed;
 }
 
-function formatVolumeCount(count) {
+function getEntryCollectionUnit(entry) {
+  if (entry?.cbzUnit === "chapter") return "chapter";
+  if (entry?.cbzUnit === "volume") return "volume";
+  return "file";
+}
+
+function inferCollectionUnitFromFiles(files) {
+  let chapterMatches = 0;
+  let volumeMatches = 0;
+
+  files.forEach(file => {
+    const basename = String(file?.filename || "").replace(/\.cbz$/i, "");
+
+    if (CHAPTER_FILE_PATTERN.test(basename)) {
+      chapterMatches++;
+      return;
+    }
+
+    if (VOLUME_FILE_PATTERN.test(basename)) {
+      volumeMatches++;
+    }
+  });
+
+  if (chapterMatches > volumeMatches && chapterMatches > 0) return "chapter";
+  if (volumeMatches > chapterMatches && volumeMatches > 0) return "volume";
+  return "file";
+}
+
+async function hydrateCollectionUnits(entries) {
+  const readableEntries = entries.filter(entry => entry.hasCbz);
+
+  await Promise.all(readableEntries.map(async entry => {
+    if (entry.cbzUnit === "chapter" || entry.cbzUnit === "volume") return;
+
+    try {
+      const response = await fetch(`/api/manga/${entry.id}/cbz`);
+      if (!response.ok) return;
+
+      const files = await response.json();
+      entry.cbzUnit = inferCollectionUnitFromFiles(files);
+    } catch (error) {
+      console.error(`Failed to inspect CBZ files for ${entry.title || entry.id}`, error);
+    }
+  }));
+}
+
+function formatCollectionCount(count, unit = "file") {
   const total = Number(count) || 0;
-  return `${total} ${total === 1 ? "volume" : "volumes"}`;
+  const label = unit === "chapter"
+    ? (total === 1 ? "chapter" : "chapters")
+    : unit === "volume"
+      ? (total === 1 ? "volume" : "volumes")
+      : (total === 1 ? "file" : "files");
+  return `${total} ${label}`;
 }
 
 function getReadableEntries() {
@@ -162,7 +215,7 @@ function renderSpotlight(entries) {
       <div class="home-spotlight-body">
         <div class="home-spotlight-title">${escapeHtml(entry.title || "Untitled")}</div>
         <div class="home-spotlight-meta">
-          ${formatVolumeCount(entry.cbzCount)}${entry.status ? ` | ${escapeHtml(entry.status)}` : ""}
+          ${formatCollectionCount(entry.cbzCount, getEntryCollectionUnit(entry))}${entry.status ? ` | ${escapeHtml(entry.status)}` : ""}
         </div>
       </div>
       <a class="home-spotlight-link" href="/reader?id=${entry.id}">Read</a>
@@ -187,7 +240,7 @@ function buildHomeCard(entry) {
         : `<div class="poster-empty">No Image</div>`
       }
       ${note ? `<div class="note-tooltip">${escapeHtml(note)}</div><div class="note-indicator" aria-label="Has note">&#9998;</div>` : ""}
-      <span class="home-volume-badge">${escapeHtml(formatVolumeCount(entry.cbzCount))}</span>
+      <span class="home-volume-badge">${escapeHtml(formatCollectionCount(entry.cbzCount, getEntryCollectionUnit(entry)))}</span>
     </div>
     <div class="entry-content">
       <h2 class="entry-title">${escapeHtml(entry.title || "Untitled")}</h2>
@@ -200,7 +253,7 @@ function buildHomeCard(entry) {
       </div>
       <div class="card-actions home-card-actions">
         <a class="card-read-btn" href="/reader?id=${entry.id}" aria-label="Open reader for ${escapeHtml(entry.title)}">Open Reader</a>
-        <span class="home-files-pill">${escapeHtml(formatVolumeCount(entry.cbzCount))}</span>
+        <span class="home-files-pill">${escapeHtml(formatCollectionCount(entry.cbzCount, getEntryCollectionUnit(entry)))}</span>
       </div>
     </div>
   `;
@@ -209,8 +262,8 @@ function buildHomeCard(entry) {
 }
 
 function updateSummary(allowedEntries, visibleEntries) {
-  const totalVolumes = allowedEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
-  const visibleVolumes = visibleEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
+  const totalFiles = allowedEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
+  const visibleFiles = visibleEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
 
   const entryCount = document.getElementById("home-entry-count");
   if (entryCount) {
@@ -227,7 +280,7 @@ function updateSummary(allowedEntries, visibleEntries) {
   if (visibleCount) visibleCount.textContent = String(visibleEntries.length);
 
   const volumeCount = document.getElementById("home-volume-count");
-  if (volumeCount) volumeCount.textContent = formatVolumeCount(totalVolumes);
+  if (volumeCount) volumeCount.textContent = formatCollectionCount(totalFiles, "file");
 
   const resultsCopy = document.getElementById("home-results-copy");
   if (!resultsCopy) return;
@@ -242,7 +295,7 @@ function updateSummary(allowedEntries, visibleEntries) {
     return;
   }
 
-  resultsCopy.textContent = `Showing ${visibleEntries.length} readable series with ${formatVolumeCount(visibleVolumes)} loaded.`;
+  resultsCopy.textContent = `Showing ${visibleEntries.length} readable series with ${formatCollectionCount(visibleFiles, "file")} loaded.`;
 }
 
 function renderGrid(allowedEntries, visibleEntries) {
@@ -295,6 +348,7 @@ async function loadHomePage() {
     const response = await fetch(LIBRARY_API);
     if (!response.ok) throw new Error(`Library request failed: ${response.status}`);
     allLibraryEntries = await response.json();
+    await hydrateCollectionUnits(allLibraryEntries);
     renderHome();
   } catch (error) {
     const grid = document.getElementById("home-library-grid");

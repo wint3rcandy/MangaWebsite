@@ -496,7 +496,7 @@
 
       <div class="cbz-section">
         <div class="cbz-section-header">
-          <span class="cbz-section-title">CBZ Files</span>
+          <span class="cbz-section-title" id="cbz-section-title">CBZ Files</span>
           <button class="cbz-upload-btn" onclick="document.getElementById('cbz-file-input').click()">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M7 2V10M3 6l4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -532,7 +532,7 @@
     <div class="fsr-topbar">
       <button class="fsr-back-btn" onclick="closeOverlay()">
         <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Volumes
+        <span id="fsr-back-label">Volumes</span>
       </button>
       <div class="fsr-title-block">
         <div class="fsr-manga-name" id="fsr-manga-name">—</div>
@@ -548,11 +548,11 @@
     <div class="fsr-vol-nav">
       <button class="fsr-vol-btn" id="top-prev-vol" onclick="goVolume(-1)">
         <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Prev Vol
+        <span id="top-prev-label">Prev Vol</span>
       </button>
       <span class="fsr-vol-label" id="top-vol-label">—</span>
       <button class="fsr-vol-btn" id="top-next-vol" onclick="goVolume(1)">
-        Next Vol
+        <span id="top-next-label">Next Vol</span>
         <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
@@ -569,11 +569,11 @@
       <div class="fsr-bottom-nav" id="fsr-strip-bottom" style="display:none">
         <button class="fsr-vol-btn" id="sbot-prev-vol" onclick="goVolume(-1)">
           <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Prev Vol
+          <span id="sbot-prev-label">Prev Vol</span>
         </button>
         <span class="fsr-bottom-label" id="sbot-vol-label">—</span>
         <button class="fsr-vol-btn" id="sbot-next-vol" onclick="goVolume(1)">
-          Next Vol
+          <span id="sbot-next-label">Next Vol</span>
           <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -603,11 +603,11 @@
         <div class="fsr-bottom-nav">
           <button class="fsr-vol-btn" id="spbot-prev-vol" onclick="goVolume(-1)">
             <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Prev Vol
+            <span id="spbot-prev-label">Prev Vol</span>
           </button>
           <span class="fsr-bottom-label" id="spbot-vol-label">—</span>
           <button class="fsr-vol-btn" id="spbot-next-vol" onclick="goVolume(1)">
-            Next Vol
+            <span id="spbot-next-label">Next Vol</span>
             <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
@@ -626,12 +626,16 @@
     let currentPages  = [];
     let currentPage   = 0;
     let currentMode   = "strip";
+    let currentCollectionUnit = "file";
 
     // Virtual strip
     const PRELOAD_AHEAD = 4;
     const UNLOAD_BEHIND = 8;
     let stripObserver = null;
     let stripNodes    = [];
+
+    const CHAPTER_FILE_PATTERN = /(?:^|[^a-z0-9])(?:ch(?:apter)?\s*|c)0*\d+(?=[^a-z0-9]|$)/i;
+    const VOLUME_FILE_PATTERN = /(?:^|[^a-z0-9])(?:vol(?:ume)?\s*|v)0*\d+(?=[^a-z0-9]|$)/i;
 
     function goBackToLibrary() {
       try {
@@ -666,6 +670,63 @@
       return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
     }
 
+    function inferCollectionUnit(files) {
+      let chapterMatches = 0;
+      let volumeMatches = 0;
+
+      files.forEach(file => {
+        const basename = String(file?.filename || "").replace(/\.cbz$/i, "");
+
+        if (CHAPTER_FILE_PATTERN.test(basename)) {
+          chapterMatches++;
+          return;
+        }
+
+        if (VOLUME_FILE_PATTERN.test(basename)) {
+          volumeMatches++;
+        }
+      });
+
+      if (chapterMatches > volumeMatches && chapterMatches > 0) return "chapter";
+      if (volumeMatches > chapterMatches && volumeMatches > 0) return "volume";
+      return "file";
+    }
+
+    function getCollectionLabel(unit) {
+      if (unit === "chapter") return "Chapters";
+      if (unit === "volume") return "Volumes";
+      return "CBZ Files";
+    }
+
+    function getItemLabel(unit) {
+      if (unit === "chapter") return "Chapter";
+      if (unit === "volume") return "Volume";
+      return "File";
+    }
+
+    function updateCollectionLabels() {
+      currentCollectionUnit = inferCollectionUnit(cbzFiles);
+
+      const collectionLabel = getCollectionLabel(currentCollectionUnit);
+      const itemLabel = getItemLabel(currentCollectionUnit);
+
+      const sectionTitle = document.getElementById("cbz-section-title");
+      if (sectionTitle) sectionTitle.textContent = collectionLabel;
+
+      const backLabel = document.getElementById("fsr-back-label");
+      if (backLabel) backLabel.textContent = collectionLabel === "CBZ Files" ? "Files" : collectionLabel;
+
+      ["top-prev-label", "sbot-prev-label", "spbot-prev-label"].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = `Prev ${itemLabel}`;
+      });
+
+      ["top-next-label", "sbot-next-label", "spbot-next-label"].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = `Next ${itemLabel}`;
+      });
+    }
+
     function statusClass(s) {
       s = String(s||"").toLowerCase();
       return s==="ongoing"?"status-ongoing":s==="finished"?"status-finished":s==="hiatus"?"status-hiatus":"status-unknown";
@@ -695,6 +756,7 @@
       try {
         const res = await fetch(`/api/manga/${mangaId}/cbz`);
         cbzFiles = await res.json();
+        updateCollectionLabels();
         renderCbzList(cbzFiles);
       } catch(e) { listEl.innerHTML = `<div class="cbz-empty">Failed to load CBZ files.</div>`; }
     }
