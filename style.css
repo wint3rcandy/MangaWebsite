@@ -505,9 +505,9 @@ body::before {
 }
 
 .card-actions {
-  margin-top: auto; /* ß”å «ey line */
+  margin-top: auto;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
   gap: 8px;
 }
 
@@ -543,9 +543,10 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: 100%;
-  margin-top: 10px;
-  padding: 8px 0;
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
   border-radius: 10px;
   border: none;
   background: linear-gradient(180deg, #b71f2e, #8b0f1f);
@@ -790,16 +791,17 @@ body::before {
 }
 .rank-badge {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  top: 8px;
+  left: 8px;
   background: rgba(0, 0, 0, 0.75);
   color: #fff;
   font-weight: 800;
   font-size: 13px;
-  padding: 6px 10px;
-  border-radius: 10px;
-  border: 1px solid #333;
+  padding: 4px 9px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
   backdrop-filter: blur(4px);
+  z-index: 2;
 }
 #sortSelect {
   margin-left: 10px;
@@ -1219,9 +1221,9 @@ body::before {
   }
 
   .rank-badge {
-    left: 8px;
-    bottom: 8px;
-    padding: 4px 7px;
+    top: 6px;
+    left: 6px;
+    padding: 3px 6px;
     font-size: 11px;
   }
 }
