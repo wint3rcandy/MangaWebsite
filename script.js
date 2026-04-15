@@ -697,8 +697,10 @@ async function loadEntries() {
             </svg>
             Read
           </a>` : ""}
-          <button class="card-btn edit" onclick="openEditModal(${entry.id})" aria-label="Edit entry">&#9998;</button>
-          <button class="card-btn delete" onclick="deleteEntry(${entry.id})" aria-label="Delete entry">&times;</button>
+          <div class="card-action-right">
+            <button class="card-btn edit" onclick="openEditModal(${entry.id})" aria-label="Edit entry">&#9998;</button>
+            <button class="card-btn delete" onclick="deleteEntry(${entry.id})" aria-label="Delete entry">&times;</button>
+          </div>
         </div>
       </div>
     `;
