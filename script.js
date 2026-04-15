@@ -574,19 +574,15 @@ function openQuickTierEdit(event, badge) {
 async function loadEntries() {
   updateSearchClear();
   const search = document.getElementById("search").value.trim().toLowerCase();
-  const res = await fetch(API);
+  const res = await fetch("/api/library");
   const data = await res.json();
 
-  // Fetch CBZ file counts for all entries in parallel
   const cbzCounts = new Map();
-  await Promise.all(
-    data.map(entry =>
-      fetch(`/api/manga/${entry.id}/cbz`)
-        .then(r => r.json())
-        .then(files => { if (files.length > 0) cbzCounts.set(entry.id, files.length); })
-        .catch(() => {})
-    )
-  );
+  data.forEach(entry => {
+    if (Number(entry.cbzCount) > 0) {
+      cbzCounts.set(entry.id, Number(entry.cbzCount));
+    }
+  });
 
   entryCache = {};
 

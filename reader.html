@@ -478,10 +478,10 @@
     <div class="reader-wrap" style="padding:0;">
 
       <div class="reader-topbar">
-        <a class="back-btn" href="/">
+        <button class="back-btn" type="button" onclick="goBackToLibrary()">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Back
-        </a>
+        </button>
         <span class="reader-manga-title" id="reader-manga-title">Loading…</span>
       </div>
 
@@ -632,6 +632,22 @@
     const UNLOAD_BEHIND = 8;
     let stripObserver = null;
     let stripNodes    = [];
+
+    function goBackToLibrary() {
+      try {
+        if (document.referrer) {
+          const previousUrl = new URL(document.referrer);
+          if (previousUrl.origin === window.location.origin) {
+            window.history.back();
+            return;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      window.location.href = "/";
+    }
 
     // ── Init ─────────────────────────────────────────────
     async function init() {

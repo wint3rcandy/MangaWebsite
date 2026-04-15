@@ -37,6 +37,30 @@ function saveData(data) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
+function listCbzFiles(mangaId) {
+  const dir = path.join(CBZ_DIR, String(mangaId));
+
+  if (!fs.existsSync(dir)) return [];
+
+  return fs.readdirSync(dir)
+    .filter(file => file.toLowerCase().endsWith(".cbz"))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+    .map(file => ({
+      filename: file,
+      url: `/cbz/${mangaId}/${encodeURIComponent(file)}`,
+      size: fs.statSync(path.join(dir, file)).size
+    }));
+}
+
+function withLibraryMeta(entry) {
+  const cbzFiles = listCbzFiles(entry.id);
+  return {
+    ...entry,
+    cbzCount: cbzFiles.length,
+    hasCbz: cbzFiles.length > 0
+  };
+}
+
 function parseBoolean(value) {
   return value === true || value === "true" || value === 1 || value === "1" || value === "on";
 }
@@ -103,6 +127,10 @@ const cbzUpload = multer({
 });
 
 app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/rankings", (req, res) => {
   res.sendFile(path.join(__dirname, "original.html"));
 });
 
@@ -112,6 +140,10 @@ app.get("/reader", (req, res) => {
 
 app.get("/api/manga", (req, res) => {
   res.json(loadData());
+});
+
+app.get("/api/library", (req, res) => {
+  res.json(loadData().map(withLibraryMeta));
 });
 
 app.post("/api/manga", upload.single("image"), (req, res) => {
@@ -240,21 +272,7 @@ app.delete("/api/manga/:id", (req, res) => {
 
 // List CBZ files for a manga entry
 app.get("/api/manga/:id/cbz", (req, res) => {
-  const mangaId = req.params.id;
-  const dir = path.join(CBZ_DIR, mangaId);
-
-  if (!fs.existsSync(dir)) return res.json([]);
-
-  const files = fs.readdirSync(dir)
-    .filter(f => f.toLowerCase().endsWith(".cbz"))
-    .sort()
-    .map(f => ({
-      filename: f,
-      url: `/cbz/${mangaId}/${encodeURIComponent(f)}`,
-      size: fs.statSync(path.join(dir, f)).size
-    }));
-
-  res.json(files);
+  res.json(listCbzFiles(req.params.id));
 });
 
 // Upload one or more CBZ files for a manga entry

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manga</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+  <div class="wrap home-wrap">
+    <div class="top-bar home-top-bar">
+      <div class="top-bar-left">
+        <a class="top-logo-link" href="/" aria-label="Go to manga home">
+          <div class="top-logo">
+            <span class="top-logo-icon" aria-hidden="true">&#127884;</span>
+            <div class="top-logo-text">
+              <span class="top-title">Manga</span>
+              <span class="top-subtitle">Reader Library</span>
+            </div>
+            <span class="stat top-entry-count" id="home-entry-count">0 ready</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="top-bar-center">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8.5" cy="8.5" r="5.5" stroke="#555" stroke-width="1.5"/>
+            <path d="M13 13L17 17" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <input class="search-box" type="text" placeholder="Search readable manga..." id="home-search" oninput="handleHomeSearch()" autocomplete="off">
+          <button class="search-clear" id="home-search-clear" type="button" onclick="clearHomeSearch()" aria-label="Clear search" hidden>&times;</button>
+        </div>
+      </div>
+
+      <div class="top-bar-right">
+        <button class="nsfw-toggle" type="button" id="home-nsfw-toggle" onclick="toggleHomeNsfw()" aria-pressed="false">
+          Hide NSFW
+        </button>
+        <a class="nav-link-btn nav-link-btn-primary" href="/rankings">Open Rankings</a>
+      </div>
+    </div>
+
+    <section class="home-hero">
+      <div class="home-hero-copy">
+        <span class="home-kicker">Welcome back</span>
+        <h1 class="home-hero-title">Jump straight into the manga you can read right now.</h1>
+        <p class="home-hero-text">
+          This page is your reading front door. Anything with uploaded CBZ files shows up here,
+          and the full rankings are still one click away whenever you want to organize the whole list.
+        </p>
+        <div class="home-hero-actions">
+          <a class="hero-btn hero-btn-primary" href="#reader-library">Browse Library</a>
+          <a class="hero-btn hero-btn-secondary" href="/rankings">Manage Rankings</a>
+        </div>
+      </div>
+
+      <div class="home-hero-panel">
+        <div class="home-panel-head">
+          <span class="home-panel-kicker">Library Snapshot</span>
+          <span class="home-panel-count" id="home-volume-count">0 volumes</span>
+        </div>
+
+        <div class="home-stat-grid">
+          <div class="home-stat-card">
+            <span class="home-stat-value" id="home-ready-count">0</span>
+            <span class="home-stat-label">Readable series</span>
+          </div>
+          <div class="home-stat-card">
+            <span class="home-stat-value" id="home-total-count">0</span>
+            <span class="home-stat-label">Ranked titles</span>
+          </div>
+          <div class="home-stat-card">
+            <span class="home-stat-value" id="home-visible-count">0</span>
+            <span class="home-stat-label">Visible now</span>
+          </div>
+        </div>
+
+        <div class="home-spotlight" id="home-spotlight">
+          <div class="home-spotlight-empty">Loading your spotlight shelf...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section" id="reader-library">
+      <div class="home-section-head">
+        <div>
+          <span class="home-section-kicker">Reader Library</span>
+          <h2 class="home-section-title">Ready To Read</h2>
+          <p class="home-section-copy" id="home-results-copy">Loading your manga library...</p>
+        </div>
+        <a class="nav-link-btn" href="/rankings">Open full rankings</a>
+      </div>
+
+      <div class="entry-grid home-library-grid" id="home-library-grid">
+        <div class="empty-state">Loading your reader library...</div>
+      </div>
+    </section>
+  </div>
+
+  <script src="home.js"></script>
+</body>
+</html>
