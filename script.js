@@ -810,7 +810,6 @@ async function loadEntries() {
     const score = entry.score || null;
     const chapter = entry.chapter || "-";
     const year = entry.year || "-";
-    const note = entry.note || "";
     const nsfw = isNsfwEntry(entry);
     const numericScore = getNumericScore(entry);
     const rankBadgeHtml = canDragRank
@@ -822,14 +821,13 @@ async function loadEntries() {
     card.dataset.entryId = String(entry.id);
     card.dataset.scoreValue = String(numericScore);
     card.innerHTML = `
-      <div class="entry-poster">
+      <a class="entry-poster entry-poster-link" href="/reader?id=${entry.id}" aria-label="Open reader for ${escapeHtml(entry.title)}">
         ${entry.image
           ? `<img class="poster-img" src="${entry.image}" alt="${escapeHtml(entry.title)}">`
           : `<div class="poster-empty">No Image</div>`
         }
         ${rankBadgeHtml}
-        ${note ? `<div class="note-tooltip">${escapeHtml(note)}</div><div class="note-indicator" aria-label="Has note">✎</div>` : ""}
-      </div>
+      </a>
       <div class="entry-content">
         <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
         <div class="entry-meta">

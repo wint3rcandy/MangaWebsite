@@ -413,20 +413,18 @@ function buildHomeCard(entry) {
   const score = entry.score || null;
   const chapter = entry.chapter || "-";
   const year = entry.year || "-";
-  const note = entry.note || "";
   const nsfw = isNsfwEntry(entry);
 
   const card = document.createElement("article");
   card.className = "entry-card home-entry-card";
   card.innerHTML = `
-    <div class="entry-poster">
+    <a class="entry-poster entry-poster-link" href="/reader?id=${entry.id}" aria-label="Open reader for ${escapeHtml(entry.title || "Untitled")}">
       ${entry.image
         ? `<img class="poster-img" src="${entry.image}" alt="${escapeHtml(entry.title)}">`
         : `<div class="poster-empty">No Image</div>`
       }
-      ${note ? `<div class="note-tooltip">${escapeHtml(note)}</div><div class="note-indicator" aria-label="Has note">&#9998;</div>` : ""}
       <span class="home-volume-badge">${escapeHtml(formatCollectionCount(entry.cbzCount, getEntryCollectionUnit(entry)))}</span>
-    </div>
+    </a>
     <div class="entry-content">
       <h2 class="entry-title">${escapeHtml(entry.title || "Untitled")}</h2>
       <div class="entry-meta">
@@ -447,20 +445,18 @@ function buildHomeCard(entry) {
 }
 
 function buildUnreadCard(entry) {
-  const note = entry.note || "";
   const nsfw = isNsfwEntry(entry);
   const safeTitle = escapeHtml(entry.title || "Untitled");
 
   const card = document.createElement("article");
   card.className = "entry-card home-entry-card home-unread-card";
   card.innerHTML = `
-    <div class="entry-poster">
+    <a class="entry-poster entry-poster-link" href="/reader?id=${entry.id}" aria-label="Open reader for ${safeTitle}">
       ${entry.image
         ? `<img class="poster-img" src="${entry.image}" alt="${safeTitle}">`
         : `<div class="poster-empty">No Image</div>`
       }
-      ${note ? `<div class="note-tooltip">${escapeHtml(note)}</div><div class="note-indicator" aria-label="Has note">&#9998;</div>` : ""}
-    </div>
+    </a>
     <div class="entry-content">
       <h2 class="entry-title">${safeTitle}</h2>
       <div class="entry-meta">

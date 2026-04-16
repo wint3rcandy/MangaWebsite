@@ -89,7 +89,8 @@
     .reader-hero-info { flex:1; min-width:0; }
     .reader-hero-title { font-size:20px; font-weight:900; color:#f4f4f4; letter-spacing:-0.03em; margin-bottom:8px; }
     .reader-hero-meta { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
-    .reader-hero-note { font-size:13px; color:#aaa; line-height:1.5; border-left:3px solid rgba(178,28,42,0.7); padding-left:10px; margin-top:4px; }
+    .reader-hero-note { font-size:13px; color:#aaa; line-height:1.6; white-space:pre-wrap; border-left:3px solid rgba(178,28,42,0.7); padding-left:12px; margin-top:4px; }
+    .reader-hero-note::before { content:"Note"; display:block; margin-bottom:6px; font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:#d66d77; }
 
     /* CBZ list */
     .cbz-section { margin-bottom:32px; }
@@ -781,7 +782,14 @@
       if(e.chapter) parts.push(`<span style="font-size:12px;color:#777;">Ch: <b style="color:#aaa">${escapeHtml(e.chapter)}</b></span>`);
       if(e.year)    parts.push(`<span style="font-size:12px;color:#777;">${e.status==="Finished"?"Read":"Started"}: <b style="color:#aaa">${escapeHtml(e.year)}</b></span>`);
       document.getElementById("hero-meta").innerHTML = parts.join("");
-      if(e.note) { const n=document.getElementById("hero-note"); n.textContent=e.note; n.style.display="block"; }
+      const noteEl = document.getElementById("hero-note");
+      if (e.note) {
+        noteEl.textContent = e.note;
+        noteEl.style.display = "block";
+      } else {
+        noteEl.textContent = "";
+        noteEl.style.display = "none";
+      }
     }
 
     // ── CBZ list ──────────────────────────────────────────

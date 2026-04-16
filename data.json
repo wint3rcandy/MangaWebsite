@@ -291,7 +291,7 @@
   },
   {
     "id": 26,
-    "title": "Please donâ€™t bully me nagatoro",
+    "title": "Please don't bully me nagatoro",
     "score": "D",
     "status": "Finished",
     "chapter": "",
@@ -694,14 +694,15 @@
   },
   {
     "id": 61,
-    "title": "Boyâ€™s Abyss",
+    "title": "Boy's Abyss",
     "score": "D",
     "status": "Finished",
     "chapter": "94",
     "year": "2022",
     "image": "/uploads/poster-61-boy-s-abyss.png",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "note": ""
   },
   {
     "id": 62,
@@ -867,9 +868,9 @@
   {
     "id": 77,
     "title": "Gyaru Jk Onee x Shota",
-    "score": null,
-    "status": "",
-    "chapter": "",
+    "score": "A",
+    "status": "Cancelled",
+    "chapter": "3",
     "year": "2022",
     "image": "/uploads/1775695144398-906619289.webp",
     "note": "",
@@ -1766,7 +1767,7 @@
   },
   {
     "id": 1775699402565,
-    "title": "The Extraâ€™s Academy Survival Guide",
+    "title": "The Extra's Academy Survival Guide",
     "score": "A",
     "status": "Ongoing",
     "chapter": "97",
