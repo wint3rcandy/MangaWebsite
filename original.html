@@ -62,6 +62,26 @@
               <span>Tier</span>
               <span class="sort-option-arrow" aria-hidden="true"></span>
             </button>
+            <button class="sort-option" type="button" data-sort-key="status-finished" onclick="selectSortOption('status-finished')">
+              <span>Finished</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+            <button class="sort-option" type="button" data-sort-key="status-ongoing" onclick="selectSortOption('status-ongoing')">
+              <span>Ongoing</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+            <button class="sort-option" type="button" data-sort-key="status-hiatus" onclick="selectSortOption('status-hiatus')">
+              <span>Hiatus</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+            <button class="sort-option" type="button" data-sort-key="status-cancelled" onclick="selectSortOption('status-cancelled')">
+              <span>Cancelled</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+            <button class="sort-option" type="button" data-sort-key="nsfw" onclick="selectSortOption('nsfw')">
+              <span>NSFW</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
           </div>
         </div>
         <button class="nsfw-toggle" type="button" id="nsfw-toggle" onclick="toggleNsfwFilter()" aria-pressed="false">

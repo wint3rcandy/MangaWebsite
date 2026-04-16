@@ -85,7 +85,7 @@
     "id": 8,
     "title": "Kuzu no honkai decor",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775694821573-563845714.jpg",
@@ -188,7 +188,7 @@
     "id": 17,
     "title": "wotaku koi wa muzukashii",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-17-wotaku-koi-wa-muzukashii.jpg",
@@ -208,13 +208,14 @@
   {
     "id": 19,
     "title": "Chainsaw Man",
-    "score": "S",
+    "score": "A",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775598862000-742706362.jpg",
     "note": "",
-    "manualOrder": 6
+    "manualOrder": null,
+    "nsfw": false
   },
   {
     "id": 20,
@@ -255,8 +256,8 @@
   {
     "id": 23,
     "title": "We may be an inexperienced couple but",
-    "score": "C",
-    "status": "Ongoing",
+    "score": "D",
+    "status": "Finished",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-23-we-may-be-an-inexperienced-couple-but.jpg",
@@ -280,7 +281,7 @@
     "id": 25,
     "title": "Daughters friend",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-25-daughters-friend.jpg",
@@ -290,9 +291,9 @@
   },
   {
     "id": 26,
-    "title": "Please don’t bully me nagatoro",
-    "score": "C",
-    "status": "Ongoing",
+    "title": "Please donâ€™t bully me nagatoro",
+    "score": "D",
+    "status": "Finished",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-26-please-don-t-bully-me-nagatoro.png",
@@ -390,7 +391,7 @@
     "year": "2021",
     "image": "/uploads/1775691811116-71650226.jpg",
     "note": "",
-    "manualOrder": 7,
+    "manualOrder": 6,
     "nsfw": false
   },
   {
@@ -409,7 +410,7 @@
     "id": 36,
     "title": "Jagaaan",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "",
     "year": "2021",
     "image": "/uploads/poster-36-jagaaan.jpg",
@@ -468,13 +469,13 @@
   {
     "id": 41,
     "title": "Great Teacher Onizuka",
-    "score": "S",
+    "score": "A",
     "status": "Finished",
     "chapter": "",
     "year": "2021",
     "image": "/uploads/1775602441131-572071380.jpg",
     "note": "",
-    "manualOrder": 8,
+    "manualOrder": null,
     "nsfw": false
   },
   {
@@ -509,7 +510,7 @@
     "chapter": "175",
     "year": "2021",
     "image": "/uploads/poster-44-solo-leveling.jpg",
-    "manualOrder": 9,
+    "manualOrder": 7,
     "note": "",
     "nsfw": false
   },
@@ -529,7 +530,7 @@
     "id": 46,
     "title": "Dress up darling",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "70",
     "year": "2022",
     "image": "/uploads/1775695990427-479138359.webp",
@@ -556,7 +557,7 @@
     "chapter": "",
     "year": "2022",
     "image": "/uploads/poster-48-three-days-of-happiness.jpg",
-    "manualOrder": 10,
+    "manualOrder": 8,
     "note": "",
     "nsfw": false
   },
@@ -621,16 +622,17 @@
     "id": 54,
     "title": "Memorize",
     "score": "S+",
-    "status": "Hiatus",
+    "status": "Cancelled",
     "chapter": "101",
     "year": "2022",
     "image": "/uploads/1775613633501-2189199.jpg",
     "note": "",
-    "manualOrder": 6
+    "manualOrder": 6,
+    "nsfw": false
   },
   {
     "id": 55,
-    "title": "A Returner’s Magic Should Be Special",
+    "title": "A Returnerâ€™s Magic Should Be Special",
     "score": "C",
     "status": "Finished",
     "chapter": "182",
@@ -663,9 +665,9 @@
   },
   {
     "id": 58,
-    "title": "Kubo San doesn’t leave me be",
+    "title": "Kubo San doesnâ€™t leave me be",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "110",
     "year": "2022",
     "image": "/uploads/poster-58-kubo-san-doesn-t-leave-me-be.jpg",
@@ -676,7 +678,7 @@
     "id": 59,
     "title": "Juujika no rokun",
     "score": null,
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "82",
     "year": "2022",
     "image": "/uploads/poster-59-juujika-no-rokun.jpg"
@@ -692,9 +694,9 @@
   },
   {
     "id": 61,
-    "title": "Boy’s Abyss",
+    "title": "Boyâ€™s Abyss",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "94",
     "year": "2022",
     "image": "/uploads/poster-61-boy-s-abyss.png",
@@ -703,7 +705,7 @@
   },
   {
     "id": 62,
-    "title": "That girl is cute… but dangerous?",
+    "title": "That girl is cuteâ€¦ but dangerous?",
     "score": "D",
     "status": "Ongoing",
     "chapter": "21",
@@ -727,7 +729,7 @@
     "id": 64,
     "title": "Blood and butterflies",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "44",
     "year": "2022",
     "image": "/uploads/poster-64-blood-and-butterflies.jpg",
@@ -748,7 +750,7 @@
     "id": 66,
     "title": "Match made in heaven by chance",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "22",
     "year": "2022",
     "image": "/uploads/poster-66-match-made-in-heaven-by-chance.jpg",
@@ -757,7 +759,7 @@
   },
   {
     "id": 67,
-    "title": "I’m not the hero",
+    "title": "Iâ€™m not the hero",
     "score": null,
     "status": "Ongoing",
     "chapter": "7",
@@ -832,9 +834,9 @@
   },
   {
     "id": 74,
-    "title": "Yugami doesn’t have any friends",
+    "title": "Yugami doesnâ€™t have any friends",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "26",
     "year": "2022",
     "note": "- it can be good and funny but has a lot of boring parts",
@@ -923,7 +925,7 @@
     "id": 82,
     "title": "I Want To Eat Your Pancreas",
     "score": null,
-    "status": "Unknown",
+    "status": "Finished",
     "chapter": "",
     "year": "2022",
     "note": "weird and abrupt but still kinda good",
@@ -933,7 +935,7 @@
     "id": 83,
     "title": "Sex And Dungeon",
     "score": null,
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "35",
     "year": "2022",
     "image": "/uploads/poster-83-sex-and-dungeon.jpg",
@@ -980,7 +982,7 @@
     "id": 87,
     "title": "Mizuki-Senpai No Koi Uranai",
     "score": null,
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "17",
     "year": "2023",
     "image": "/uploads/poster-87-mizuki-senpai-no-koi-uranai.jpg",
@@ -1040,7 +1042,7 @@
     "id": 93,
     "title": "Hero Manager",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "26",
     "year": "2023",
     "image": "/uploads/poster-93-hero-manager.jpg",
@@ -1118,7 +1120,7 @@
   },
   {
     "id": 100,
-    "title": "Eden, it’s a endless world",
+    "title": "Eden, itâ€™s a endless world",
     "score": "C",
     "status": "Finished",
     "chapter": "",
@@ -1160,7 +1162,7 @@
   },
   {
     "id": 104,
-    "title": "An outsider’s way in",
+    "title": "An outsider's way in",
     "score": "S",
     "status": "Finished",
     "chapter": "97",
@@ -1168,7 +1170,7 @@
     "image": "/uploads/poster-104-an-outsider-s-way-in.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": 2
+    "manualOrder": 1
   },
   {
     "id": 105,
@@ -1179,11 +1181,11 @@
     "year": "2024",
     "image": "/uploads/1775620553265-358644665.jpg",
     "note": "",
-    "manualOrder": 11
+    "manualOrder": 9
   },
   {
     "id": 106,
-    "title": "Heavenly Grand Archive’s young master",
+    "title": "Heavenly Grand Archiveâ€™s young master",
     "score": "D",
     "status": "Ongoing",
     "chapter": "82",
@@ -1196,7 +1198,7 @@
     "id": 107,
     "title": "Boku wa kimitachi wo shihai suru",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Finished",
     "chapter": "42",
     "year": "2024",
     "image": "/uploads/poster-107-boku-wa-kimitachi-wo-shihai-suru.jpg",
@@ -1512,7 +1514,7 @@
     "chapter": "46",
     "year": "2025",
     "image": "/uploads/1775691915054-736496291.jpg",
-    "manualOrder": 12,
+    "manualOrder": 10,
     "note": "",
     "nsfw": false
   },
@@ -1541,7 +1543,7 @@
   },
   {
     "id": 141,
-    "title": "Goblin’s Ascent",
+    "title": "Goblinâ€™s Ascent",
     "score": "C",
     "status": "Ongoing",
     "chapter": "16",
@@ -1613,7 +1615,7 @@
   },
   {
     "id": 147,
-    "title": "Yuusha Party wo Tsuihosareta ore daga, ore Kara sudattekureta you de ureshii. …… nanode Dai Seijo, omae ni ottekoraete wa komaru no daga?",
+    "title": "Yuusha Party wo Tsuihosareta ore daga, ore Kara sudattekureta you de ureshii. â€¦â€¦ nanode Dai Seijo, omae ni ottekoraete wa komaru no daga?",
     "score": null,
     "status": "Ongoing",
     "chapter": "",
@@ -1628,7 +1630,7 @@
     "status": "Ongoing",
     "chapter": "68",
     "year": "2025",
-    "note": "didn’t finish",
+    "note": "didnâ€™t finish",
     "image": "/uploads/1775601956488-655289674.jpg",
     "nsfw": false,
     "manualOrder": null
@@ -1642,7 +1644,7 @@
     "year": "2026",
     "image": "/uploads/1775601800379-727437996.jpg",
     "note": "",
-    "manualOrder": 1
+    "manualOrder": 2
   },
   {
     "id": 150,
@@ -1764,7 +1766,7 @@
   },
   {
     "id": 1775699402565,
-    "title": "The Extra’s Academy Survival Guide",
+    "title": "The Extraâ€™s Academy Survival Guide",
     "score": "A",
     "status": "Ongoing",
     "chapter": "97",

@@ -9,9 +9,14 @@ let draggedScoreValue = null;
 let isSavingManualOrder = false;
 const SORT_CONFIG = {
   default: { label: "Default", defaultDirection: "desc" },
-  year: { label: "Year", defaultDirection: "desc" },
-  created: { label: "Added", defaultDirection: "desc" },
-  score: { label: "Tier", defaultDirection: "desc" }
+  year: { label: "Year", defaultDirection: "desc", allowsDirection: true },
+  created: { label: "Added", defaultDirection: "desc", allowsDirection: true },
+  score: { label: "Tier", defaultDirection: "desc", allowsDirection: true },
+  "status-finished": { label: "Finished", defaultDirection: "desc", filterType: "status", filterValue: "finished" },
+  "status-ongoing": { label: "Ongoing", defaultDirection: "desc", filterType: "status", filterValue: "ongoing" },
+  "status-hiatus": { label: "Hiatus", defaultDirection: "desc", filterType: "status", filterValue: "hiatus" },
+  "status-cancelled": { label: "Cancelled", defaultDirection: "desc", filterType: "status", filterValue: "cancelled" },
+  nsfw: { label: "NSFW", defaultDirection: "desc", filterType: "nsfw", filterValue: true }
 };
 let currentSort = { key: "default", direction: "desc" };
 
@@ -23,6 +28,11 @@ function getSortDirectionGlyph(direction) {
   return direction === "asc" ? "^" : "v";
 }
 
+function getSortFilterLabel(config) {
+  const label = String(config?.label || "entries").toLowerCase();
+  return `${label} entries`;
+}
+
 function getSortDirectionSymbol(direction) {
   return direction === "asc" ? "↑" : "↓";
 }
@@ -31,13 +41,14 @@ function updateSortUI() {
   const trigger = document.getElementById("sort-trigger");
   const label = document.getElementById("sort-current-label");
   const icon = document.getElementById("sort-current-icon");
+  const currentConfig = SORT_CONFIG[currentSort.key] || SORT_CONFIG.default;
 
   if (label) {
-    label.textContent = SORT_CONFIG[currentSort.key]?.label || "Default";
+    label.textContent = currentConfig.label || "Default";
   }
 
   if (icon) {
-    if (currentSort.key === "default") {
+    if (!currentConfig.allowsDirection) {
       icon.textContent = "";
       icon.hidden = true;
     } else {
@@ -47,9 +58,12 @@ function updateSortUI() {
   }
 
   if (trigger) {
-    trigger.setAttribute("aria-label", currentSort.key === "default"
-      ? "Sort: Default"
-      : `Sort: ${SORT_CONFIG[currentSort.key]?.label || "Default"} ${currentSort.direction === "asc" ? "ascending" : "descending"}`);
+    trigger.setAttribute(
+      "aria-label",
+      currentConfig.allowsDirection
+        ? `Sort: ${currentConfig.label || "Default"} ${currentSort.direction === "asc" ? "ascending" : "descending"}`
+        : `Sort: ${currentConfig.label || "Default"}`
+    );
   }
 
   document.querySelectorAll(".sort-option").forEach(option => {
@@ -60,7 +74,7 @@ function updateSortUI() {
 
     const arrow = option.querySelector(".sort-option-arrow");
     if (arrow) {
-      arrow.textContent = active && optionKey !== "default" ? getSortDirectionGlyph(currentSort.direction) : "";
+      arrow.textContent = active && SORT_CONFIG[optionKey]?.allowsDirection ? getSortDirectionGlyph(currentSort.direction) : "";
     }
   });
 }
@@ -99,16 +113,17 @@ function toggleSortMenu() {
 }
 
 function selectSortOption(sortKey) {
-  if (!SORT_CONFIG[sortKey]) return;
+  const config = SORT_CONFIG[sortKey];
+  if (!config) return;
 
   if (sortKey === "default") {
     currentSort = { key: "default", direction: "desc" };
-  } else if (currentSort.key === sortKey) {
+  } else if (config.allowsDirection && currentSort.key === sortKey) {
     currentSort.direction = currentSort.direction === "desc" ? "asc" : "desc";
   } else {
     currentSort = {
       key: sortKey,
-      direction: SORT_CONFIG[sortKey].defaultDirection
+      direction: config.defaultDirection || "desc"
     };
   }
 
@@ -139,7 +154,7 @@ function escapeHtml(str) {
 }
 
 function statusClass(status) {
-  const s = String(status || "").toLowerCase();
+  const s = normalizeStatus(status);
   if (s === "ongoing") return "status-ongoing";
   if (s === "finished") return "status-finished";
   if (s === "hiatus") return "status-hiatus";
@@ -435,6 +450,15 @@ const getYear = (val) => {
 
 const TIER_ORDER = { "S+": 0, "S": 1, "A": 2, "B": 3, "C": 4, "D": 5, "F": 6 };
 
+function normalizeStatus(status) {
+  const normalized = String(status || "").trim().toLowerCase();
+  if (normalized === "canceled") return "cancelled";
+  if (normalized === "ongoing" || normalized === "finished" || normalized === "hiatus" || normalized === "cancelled") {
+    return normalized;
+  }
+  return "unknown";
+}
+
 function getTierOrder(entry) {
   const score = entry?.score;
   if (score && TIER_ORDER.hasOwnProperty(score)) return TIER_ORDER[score];
@@ -464,16 +488,18 @@ function getManualOrder(entry) {
   return Number.isFinite(manualOrder) ? manualOrder : Number.POSITIVE_INFINITY;
 }
 
+function compareDefaultEntries(a, b) {
+  const tierDiff = getTierOrder(a) - getTierOrder(b);
+  if (tierDiff !== 0) return tierDiff;
+
+  const orderDiff = getManualOrder(a) - getManualOrder(b);
+  if (orderDiff !== 0) return orderDiff;
+
+  return String(a.title || "").localeCompare(String(b.title || ""));
+}
+
 function sortDefaultEntries(entries) {
-  entries.sort((a, b) => {
-    const tierDiff = getTierOrder(a) - getTierOrder(b);
-    if (tierDiff !== 0) return tierDiff;
-
-    const orderDiff = getManualOrder(a) - getManualOrder(b);
-    if (orderDiff !== 0) return orderDiff;
-
-    return String(a.title || "").localeCompare(String(b.title || ""));
-  });
+  entries.sort(compareDefaultEntries);
 }
 
 function clearRankDropIndicators(scope = document) {
@@ -695,6 +721,9 @@ async function loadEntries() {
   const search = document.getElementById("search").value.trim().toLowerCase();
   const res = await fetch("/api/library");
   const data = await res.json();
+  const sortValue = currentSort.key || "default";
+  const sortDirection = currentSort.direction || "desc";
+  const sortConfig = SORT_CONFIG[sortValue] || SORT_CONFIG.default;
 
   const cbzCounts = new Map();
   data.forEach(entry => {
@@ -711,7 +740,18 @@ async function loadEntries() {
     .filter(entry => {
       const title = String(entry.title || "").toLowerCase();
       if (!title.includes(search)) return false;
-      if (hideNsfw && isNsfwEntry(entry)) return false;
+      if (hideNsfw && sortConfig.filterType !== "nsfw" && isNsfwEntry(entry)) return false;
+      return true;
+    })
+    .filter(entry => {
+      if (sortConfig.filterType === "status") {
+        return normalizeStatus(entry.status) === sortConfig.filterValue;
+      }
+
+      if (sortConfig.filterType === "nsfw") {
+        return isNsfwEntry(entry);
+      }
+
       return true;
     });
 
@@ -726,14 +766,14 @@ async function loadEntries() {
 
   if (!filtered.length) {
     const emptyMessage = startedEntries.length
-      ? "No started entries match your current filters."
+      ? (sortConfig.filterType
+          ? `No ${getSortFilterLabel(sortConfig)} match your current filters.`
+          : "No started entries match your current filters.")
       : "No started manga yet. Unread titles stay on the home page until you begin them.";
     grid.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
     container.appendChild(grid);
     return;
   }
-  const sortValue = currentSort.key || "default";
-  const sortDirection = currentSort.direction || "desc";
   const canReorderTies = sortValue === "default" && search === "" && !hideNsfw;
   const scoreCounts = new Map();
 
@@ -745,7 +785,7 @@ async function loadEntries() {
     });
   }
 
- if (sortValue === "year") {
+  if (sortValue === "year") {
     filtered.sort((a, b) => {
       const diff = sortDirection === "asc"
         ? getSortTime(a.year) - getSortTime(b.year)
@@ -764,7 +804,7 @@ async function loadEntries() {
   } else {
     sortDefaultEntries(filtered);
   }
-  const useTierGroups = sortValue === "default" || sortValue === "score";
+  const useTierGroups = sortValue === "default" || sortValue === "score" || sortConfig.filterType === "status" || sortConfig.filterType === "nsfw";
 
   function buildCard(entry, index, canDragRank, hasCbz) {
     const score = entry.score || null;
