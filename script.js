@@ -7,10 +7,115 @@ let searchClearFocused = false;
 let draggedRankId = null;
 let draggedScoreValue = null;
 let isSavingManualOrder = false;
+const SORT_CONFIG = {
+  default: { label: "Default", defaultDirection: "desc" },
+  year: { label: "Year", defaultDirection: "desc" },
+  created: { label: "Added", defaultDirection: "desc" },
+  score: { label: "Tier", defaultDirection: "desc" }
+};
+let currentSort = { key: "default", direction: "desc" };
 
 try {
   hideNsfw = localStorage.getItem("hide-nsfw") === "true";
 } catch {}
+
+function getSortDirectionGlyph(direction) {
+  return direction === "asc" ? "^" : "v";
+}
+
+function getSortDirectionSymbol(direction) {
+  return direction === "asc" ? "↑" : "↓";
+}
+
+function updateSortUI() {
+  const trigger = document.getElementById("sort-trigger");
+  const label = document.getElementById("sort-current-label");
+  const icon = document.getElementById("sort-current-icon");
+
+  if (label) {
+    label.textContent = SORT_CONFIG[currentSort.key]?.label || "Default";
+  }
+
+  if (icon) {
+    if (currentSort.key === "default") {
+      icon.textContent = "";
+      icon.hidden = true;
+    } else {
+      icon.hidden = false;
+      icon.textContent = getSortDirectionGlyph(currentSort.direction);
+    }
+  }
+
+  if (trigger) {
+    trigger.setAttribute("aria-label", currentSort.key === "default"
+      ? "Sort: Default"
+      : `Sort: ${SORT_CONFIG[currentSort.key]?.label || "Default"} ${currentSort.direction === "asc" ? "ascending" : "descending"}`);
+  }
+
+  document.querySelectorAll(".sort-option").forEach(option => {
+    const optionKey = option.dataset.sortKey || "default";
+    const active = optionKey === currentSort.key;
+    option.classList.toggle("active", active);
+    option.setAttribute("aria-pressed", String(active));
+
+    const arrow = option.querySelector(".sort-option-arrow");
+    if (arrow) {
+      arrow.textContent = active && optionKey !== "default" ? getSortDirectionGlyph(currentSort.direction) : "";
+    }
+  });
+}
+
+function openSortMenu() {
+  const wrap = document.getElementById("sort-wrap");
+  const menu = document.getElementById("sort-menu");
+  const trigger = document.getElementById("sort-trigger");
+  if (!wrap || !menu || !trigger) return;
+
+  wrap.classList.add("open");
+  menu.hidden = false;
+  trigger.setAttribute("aria-expanded", "true");
+}
+
+function closeSortMenu() {
+  const wrap = document.getElementById("sort-wrap");
+  const menu = document.getElementById("sort-menu");
+  const trigger = document.getElementById("sort-trigger");
+  if (!wrap || !menu || !trigger) return;
+
+  wrap.classList.remove("open");
+  menu.hidden = true;
+  trigger.setAttribute("aria-expanded", "false");
+}
+
+function toggleSortMenu() {
+  const menu = document.getElementById("sort-menu");
+  if (!menu) return;
+
+  if (menu.hidden) {
+    openSortMenu();
+  } else {
+    closeSortMenu();
+  }
+}
+
+function selectSortOption(sortKey) {
+  if (!SORT_CONFIG[sortKey]) return;
+
+  if (sortKey === "default") {
+    currentSort = { key: "default", direction: "desc" };
+  } else if (currentSort.key === sortKey) {
+    currentSort.direction = currentSort.direction === "desc" ? "asc" : "desc";
+  } else {
+    currentSort = {
+      key: sortKey,
+      direction: SORT_CONFIG[sortKey].defaultDirection
+    };
+  }
+
+  updateSortUI();
+  closeSortMenu();
+  loadEntries();
+}
 
 function toggleForm() {
   const form = document.getElementById("add-form");
@@ -38,6 +143,7 @@ function statusClass(status) {
   if (s === "ongoing") return "status-ongoing";
   if (s === "finished") return "status-finished";
   if (s === "hiatus") return "status-hiatus";
+  if (s === "cancelled") return "status-cancelled";
   return "status-unknown";
 }
 
@@ -106,6 +212,7 @@ function ensureEditModal() {
             <option>Ongoing</option>
             <option>Finished</option>
             <option>Hiatus</option>
+            <option>Cancelled</option>
           </select>
         </div>
 
@@ -625,7 +732,8 @@ async function loadEntries() {
     container.appendChild(grid);
     return;
   }
-  const sortValue = document.getElementById("sortSelect")?.value || "default";
+  const sortValue = currentSort.key || "default";
+  const sortDirection = currentSort.direction || "desc";
   const canReorderTies = sortValue === "default" && search === "" && !hideNsfw;
   const scoreCounts = new Map();
 
@@ -637,34 +745,26 @@ async function loadEntries() {
     });
   }
 
- if (sortValue === "year-desc") {
-  filtered.sort((a, b) => {
-    const diff = getSortTime(b.year) - getSortTime(a.year);
-    if (diff !== 0) return diff;
-    const sd = getTierOrder(a) - getTierOrder(b);
-    if (sd !== 0) return sd;
-    return String(a.title || "").localeCompare(String(b.title || ""));
-  });
-  } else if (sortValue === "year-asc") {
+ if (sortValue === "year") {
     filtered.sort((a, b) => {
-      const diff = getSortTime(a.year) - getSortTime(b.year);
+      const diff = sortDirection === "asc"
+        ? getSortTime(a.year) - getSortTime(b.year)
+        : getSortTime(b.year) - getSortTime(a.year);
       if (diff !== 0) return diff;
       const sd = getTierOrder(a) - getTierOrder(b);
       if (sd !== 0) return sd;
       return String(a.title || "").localeCompare(String(b.title || ""));
     });
-  } else if (sortValue === "created-desc") {
-    filtered.sort((a, b) => b.id - a.id);
-  } else if (sortValue === "created-asc") {
-    filtered.sort((a, b) => a.id - b.id);
-  } else if (sortValue === "score-desc") {
-    filtered.sort((a, b) => getTierOrder(a) - getTierOrder(b));
-  } else if (sortValue === "score-asc") {
-    filtered.sort((a, b) => getTierOrder(b) - getTierOrder(a));
-    } else {
+  } else if (sortValue === "created") {
+    filtered.sort((a, b) => sortDirection === "asc" ? a.id - b.id : b.id - a.id);
+  } else if (sortValue === "score") {
+    filtered.sort((a, b) => sortDirection === "asc"
+      ? getTierOrder(b) - getTierOrder(a)
+      : getTierOrder(a) - getTierOrder(b));
+  } else {
     sortDefaultEntries(filtered);
   }
-  const useTierGroups = sortValue === "default" || sortValue === "score-desc" || sortValue === "score-asc";
+  const useTierGroups = sortValue === "default" || sortValue === "score";
 
   function buildCard(entry, index, canDragRank, hasCbz) {
     const score = entry.score || null;
@@ -732,11 +832,14 @@ async function loadEntries() {
     });
 
     // Render each tier group in order
-    const tierKeys = [...groups.keys()].sort((a, b) => {
-      const ao = a === "__ungraded__" ? 99 : (TIER_ORDER[a] ?? 98);
-      const bo = b === "__ungraded__" ? 99 : (TIER_ORDER[b] ?? 98);
-      return ao - bo;
-    });
+      const tierKeys = [...groups.keys()].sort((a, b) => {
+        const ao = a === "__ungraded__" ? 99 : (TIER_ORDER[a] ?? 98);
+        const bo = b === "__ungraded__" ? 99 : (TIER_ORDER[b] ?? 98);
+        if (sortValue === "score" && sortDirection === "asc") {
+          return bo - ao;
+        }
+        return ao - bo;
+      });
 
     let globalIndex = 0;
     tierKeys.forEach((key, groupIdx) => {
@@ -797,7 +900,20 @@ async function loadEntries() {
 }
 // scoreStyle removed — tiers are styled via CSS classes
 
-document.getElementById("sortSelect")?.addEventListener("change", loadEntries);
+document.addEventListener("click", event => {
+  const sortWrap = document.getElementById("sort-wrap");
+  if (sortWrap && !sortWrap.contains(event.target)) {
+    closeSortMenu();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeSortMenu();
+  }
+});
+
+updateSortUI();
 updateNsfwToggle();
 ensureEditModal();
 loadEntries();

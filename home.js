@@ -31,6 +31,7 @@ function statusClass(status) {
   if (value === "ongoing") return "status-ongoing";
   if (value === "finished") return "status-finished";
   if (value === "hiatus") return "status-hiatus";
+  if (value === "cancelled") return "status-cancelled";
   return "status-unknown";
 }
 
@@ -266,6 +267,7 @@ function ensureEditModal() {
             <option>Ongoing</option>
             <option>Finished</option>
             <option>Hiatus</option>
+            <option>Cancelled</option>
           </select>
         </div>
 

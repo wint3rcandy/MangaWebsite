@@ -764,7 +764,7 @@
 
     function statusClass(s) {
       s = String(s||"").toLowerCase();
-      return s==="ongoing"?"status-ongoing":s==="finished"?"status-finished":s==="hiatus"?"status-hiatus":"status-unknown";
+      return s==="ongoing"?"status-ongoing":s==="finished"?"status-finished":s==="hiatus"?"status-hiatus":s==="cancelled"?"status-cancelled":"status-unknown";
     }
 
     function renderHero(e) {

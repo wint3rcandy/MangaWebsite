@@ -37,92 +37,36 @@
 
       <div class="top-bar-right">
         <a class="nav-link-btn" href="/">Home</a>
-        <div class="sort-wrap">
-          <svg class="sort-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 4h12M4 8h8M6 12h4" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
-          </svg>
-          <select id="sortSelect">
-            <option value="default">Default</option>
-            <option value="year-desc">Year (Newest)</option>
-            <option value="year-asc">Year (Oldest)</option>
-            <option value="created-desc">Added (Newest)</option>
-            <option value="created-asc">Added (Oldest)</option>
-            <option value="score-desc">Tier (Best)</option>
-            <option value="score-asc">Tier (Worst)</option>
-          </select>
+        <div class="sort-wrap" id="sort-wrap">
+          <button class="sort-trigger" id="sort-trigger" type="button" onclick="toggleSortMenu()" aria-haspopup="true" aria-expanded="false" aria-controls="sort-menu">
+            <svg class="sort-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 4h12M4 8h8M6 12h4" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <span id="sort-current-label">Default</span>
+            <span class="sort-current-icon" id="sort-current-icon" aria-hidden="true"></span>
+          </button>
+          <div class="sort-menu" id="sort-menu" hidden>
+            <button class="sort-option" type="button" data-sort-key="default" onclick="selectSortOption('default')">
+              <span>Default</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+            <button class="sort-option" type="button" data-sort-key="year" onclick="selectSortOption('year')">
+              <span>Year</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+            <button class="sort-option" type="button" data-sort-key="created" onclick="selectSortOption('created')">
+              <span>Added</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+            <button class="sort-option" type="button" data-sort-key="score" onclick="selectSortOption('score')">
+              <span>Tier</span>
+              <span class="sort-option-arrow" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
         <button class="nsfw-toggle" type="button" id="nsfw-toggle" onclick="toggleNsfwFilter()" aria-pressed="false">
           Hide NSFW
         </button>
-        <button class="add-toggle" type="button" onclick="toggleForm()" aria-expanded="false" aria-controls="add-form">
-          <span>Add new entry</span>
-          <span class="toggle-btn" id="toggle-btn">+</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="add-panel" id="add-panel">
-      <div class="add-form" id="add-form">
-
-        <div class="field field-title">
-          <label>TITLE</label>
-          <input type="text" id="f-title">
-        </div>
-
-        <div class="field field-score">
-          <label>TIER</label>
-          <select id="f-score">
-            <option value="">-- Ungraded --</option>
-            <option value="S+">S+</option>
-            <option value="S">S</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="F">F</option>
-          </select>
-        </div>
-
-        <div class="field field-status">
-          <label>STATUS</label>
-          <select id="f-status">
-            <option>Ongoing</option>
-            <option>Finished</option>
-            <option>Hiatus</option>
-          </select>
-        </div>
-
-        <div class="field field-ch">
-          <label>CHAPTER</label>
-          <input type="number" id="f-ch">
-        </div>
-
-        <div class="field field-year">
-          <label>STARTED READING</label>
-          <input type="text" id="f-year" placeholder="e.g. 2019 or 02/22/2024">
-        </div>
-
-        <!-- ðŸ”¥ IMAGE UPLOAD -->
-        <div class="field field-image">
-          <label>IMAGE</label>
-          <input type="file" id="f-image" accept="image/*">
-        </div>
-
-        <div class="field field-note">
-          <label>NOTE / REVIEW</label>
-          <input type="text" id="f-note" placeholder="Optional review...">
-        </div>
-
-        <div class="field field-flag">
-          <label>CONTENT FLAG</label>
-          <label class="check-chip" for="f-nsfw">
-            <input type="checkbox" id="f-nsfw">
-            <span>NSFW</span>
-          </label>
-        </div>
-        
-
-        <button class="add-btn" onclick="addEntry()">Add â†’</button>
       </div>
     </div>
 
