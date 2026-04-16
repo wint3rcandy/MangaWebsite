@@ -340,6 +340,18 @@ function getNumericScore(entry) {
   return order === 99 ? Number.NEGATIVE_INFINITY : -order; // higher = better
 }
 
+function getReadProgress(entry) {
+  const raw = String(entry?.chapter ?? "").trim();
+  if (!raw) return 0;
+
+  const parsed = Number.parseFloat(raw.replace(",", "."));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function isUnreadEntry(entry) {
+  return getTierOrder(entry) === 99 && getReadProgress(entry) <= 0;
+}
+
 function getManualOrder(entry) {
   const manualOrder = Number(entry?.manualOrder);
   return Number.isFinite(manualOrder) ? manualOrder : Number.POSITIVE_INFINITY;
@@ -586,7 +598,9 @@ async function loadEntries() {
 
   entryCache = {};
 
-  const filtered = data
+  const startedEntries = data.filter(entry => !isUnreadEntry(entry));
+
+  const filtered = startedEntries
     .filter(entry => {
       const title = String(entry.title || "").toLowerCase();
       if (!title.includes(search)) return false;
@@ -604,7 +618,10 @@ async function loadEntries() {
   grid.className = "entry-grid";
 
   if (!filtered.length) {
-    grid.innerHTML = `<div class="empty-state">No entries match your search.</div>`;
+    const emptyMessage = startedEntries.length
+      ? "No started entries match your current filters."
+      : "No started manga yet. Unread titles stay on the home page until you begin them.";
+    grid.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
     container.appendChild(grid);
     return;
   }

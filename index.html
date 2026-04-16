@@ -29,7 +29,7 @@
             <circle cx="8.5" cy="8.5" r="5.5" stroke="#555" stroke-width="1.5"/>
             <path d="M13 13L17 17" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <input class="search-box" type="text" placeholder="Search readable manga..." id="home-search" oninput="handleHomeSearch()" autocomplete="off">
+          <input class="search-box" type="text" placeholder="Search library and backlog..." id="home-search" oninput="handleHomeSearch()" autocomplete="off">
           <button class="search-clear" id="home-search-clear" type="button" onclick="clearHomeSearch()" aria-label="Clear search" hidden>&times;</button>
         </div>
       </div>
@@ -69,11 +69,15 @@
           </div>
           <div class="home-stat-card">
             <span class="home-stat-value" id="home-total-count">0</span>
-            <span class="home-stat-label">Ranked titles</span>
+            <span class="home-stat-label">Started</span>
           </div>
           <div class="home-stat-card">
             <span class="home-stat-value" id="home-visible-count">0</span>
             <span class="home-stat-label">Visible now</span>
+          </div>
+          <div class="home-stat-card">
+            <span class="home-stat-value" id="home-unread-count">0</span>
+            <span class="home-stat-label">To read</span>
           </div>
         </div>
 
@@ -95,6 +99,20 @@
 
       <div class="entry-grid home-library-grid" id="home-library-grid">
         <div class="empty-state">Loading your reader library...</div>
+      </div>
+    </section>
+
+    <section class="home-section home-unread-section" id="unread-library">
+      <div class="home-section-head">
+        <div>
+          <span class="home-section-kicker">Backlog</span>
+          <h2 class="home-section-title">Haven't Read Yet</h2>
+          <p class="home-section-copy" id="home-unread-copy">Loading your unread manga...</p>
+        </div>
+      </div>
+
+      <div class="entry-grid home-unread-grid" id="home-unread-grid">
+        <div class="empty-state home-empty-state">Loading your unread manga...</div>
       </div>
     </section>
   </div>

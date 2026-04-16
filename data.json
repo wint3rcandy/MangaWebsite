@@ -1063,14 +1063,14 @@
   {
     "id": 95,
     "title": "Chiisana Kanojo No Meswitch",
-    "score": null,
+    "score": "",
     "status": "Ongoing",
     "chapter": "9",
     "year": "2023",
-    "image": "",
+    "image": "/uploads/1776300693071-530230134.webp",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": 0
   },
   {
     "id": 96,
@@ -1131,10 +1131,14 @@
   {
     "id": 101,
     "title": "A hero trained by the most evil demon king is unrivaled in the academy of returnees from another world",
-    "score": null,
+    "score": "",
     "status": "Ongoing",
     "chapter": "21",
-    "year": "2024"
+    "year": "2024",
+    "image": "/uploads/1776300741778-612063075.webp",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 102,

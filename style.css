@@ -1515,7 +1515,7 @@ body::before {
 
 .home-stat-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -1663,6 +1663,26 @@ body::before {
   gap: 14px;
 }
 
+.home-unread-section {
+  margin-top: 28px;
+}
+
+.home-unread-grid {
+  gap: 14px;
+}
+
+.home-unread-card {
+  background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+}
+
+.home-unread-card .entry-poster {
+  margin-bottom: 12px;
+}
+
+.home-unread-edit {
+  flex-shrink: 0;
+}
+
 .home-entry-card {
   background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
 }
@@ -1764,6 +1784,11 @@ body::before {
   }
 
   .home-library-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .home-unread-grid {
     grid-template-columns: 1fr;
     gap: 12px;
   }

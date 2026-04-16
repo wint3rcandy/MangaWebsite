@@ -1,8 +1,11 @@
+const API = "/api/manga";
 const LIBRARY_API = "/api/library";
 const CHAPTER_FILE_PATTERN = /(?:^|[^a-z0-9])(?:ch(?:apter)?|c)[\s._-]*0*\d+(?=[^a-z0-9]|$)/i;
 const VOLUME_FILE_PATTERN = /(?:^|[^a-z0-9])(?:vol(?:ume)?|v)[\s._-]*0*\d+(?=[^a-z0-9]|$)/i;
 
 let allLibraryEntries = [];
+let entryCache = {};
+let editingId = null;
 let hideHomeNsfw = false;
 
 try {
@@ -43,6 +46,18 @@ function getTierOrder(entry) {
   return 99;
 }
 
+function getReadProgress(entry) {
+  const raw = String(entry?.chapter ?? "").trim();
+  if (!raw) return 0;
+
+  const parsed = Number.parseFloat(raw.replace(",", "."));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function isUnreadEntry(entry) {
+  return getTierOrder(entry) === 99 && getReadProgress(entry) <= 0;
+}
+
 function getSortTime(value) {
   if (typeof value !== "string" || value.trim() === "") return Number.NEGATIVE_INFINITY;
   const raw = value.trim();
@@ -53,6 +68,11 @@ function getSortTime(value) {
 
   const parsed = Date.parse(raw);
   return Number.isNaN(parsed) ? Number.NEGATIVE_INFINITY : parsed;
+}
+
+function matchesSearch(entry, search) {
+  if (!search) return true;
+  return String(entry?.title || "").toLowerCase().includes(search);
 }
 
 function getEntryCollectionUnit(entry) {
@@ -112,11 +132,23 @@ function formatCollectionCount(count, unit = "file") {
 }
 
 function getReadableEntries() {
-  return allLibraryEntries.filter(entry => entry.hasCbz);
+  return allLibraryEntries.filter(entry => entry.hasCbz && !isUnreadEntry(entry));
 }
 
-function getAllowedEntries() {
+function getUnreadEntries() {
+  return allLibraryEntries.filter(isUnreadEntry);
+}
+
+function getAllowedReadableEntries() {
   return getReadableEntries().filter(entry => !(hideHomeNsfw && isNsfwEntry(entry)));
+}
+
+function getAllowedUnreadEntries() {
+  return getUnreadEntries().filter(entry => !(hideHomeNsfw && isNsfwEntry(entry)));
+}
+
+function getAllowedStartedEntries() {
+  return allLibraryEntries.filter(entry => !isUnreadEntry(entry) && !(hideHomeNsfw && isNsfwEntry(entry)));
 }
 
 function sortReadableEntries(entries) {
@@ -144,6 +176,10 @@ function sortSpotlightEntries(entries) {
 
     return String(a.title || "").localeCompare(String(b.title || ""));
   });
+}
+
+function sortUnreadEntries(entries) {
+  return entries.sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")));
 }
 
 function getSearchValue() {
@@ -188,6 +224,153 @@ function clearHomeSearch() {
   updateSearchClear();
   renderHome();
   input.focus();
+}
+
+function ensureEditModal() {
+  if (document.getElementById("edit-modal")) return;
+
+  const modal = document.createElement("div");
+  modal.id = "edit-modal";
+  modal.className = "edit-modal";
+  modal.innerHTML = `
+    <div class="edit-backdrop" onclick="closeEditModal()"></div>
+    <div class="edit-card">
+      <div class="edit-head">
+        <h3>Edit entry</h3>
+        <button class="modal-x" onclick="closeEditModal()" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="edit-grid">
+        <div class="field full">
+          <label>TITLE</label>
+          <input type="text" id="edit-title">
+        </div>
+
+        <div class="field">
+          <label>TIER</label>
+          <select id="edit-score">
+            <option value="">-- Ungraded --</option>
+            <option value="S+">S+</option>
+            <option value="S">S</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>STATUS</label>
+          <select id="edit-status">
+            <option>Ongoing</option>
+            <option>Finished</option>
+            <option>Hiatus</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>CHAPTER</label>
+          <input type="number" id="edit-chapter">
+        </div>
+
+        <div class="field">
+          <label>STARTED READING</label>
+          <input type="text" id="edit-year" placeholder="e.g. 2019 or 02/22/2024">
+        </div>
+
+        <div class="field">
+          <label>CONTENT FLAG</label>
+          <label class="check-chip" for="edit-nsfw">
+            <input type="checkbox" id="edit-nsfw">
+            <span>NSFW</span>
+          </label>
+        </div>
+
+        <div class="field full">
+          <label>REPLACE IMAGE (optional)</label>
+          <input type="file" id="edit-image" accept="image/*">
+        </div>
+
+        <div class="field full">
+          <label>NOTE / REVIEW</label>
+          <input type="text" id="edit-note">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn ghost" onclick="closeEditModal()">Cancel</button>
+        <button class="modal-btn primary" onclick="saveEditEntry()">Save</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+function openEditModal(id) {
+  const entry = entryCache[String(id)];
+  if (!entry) return;
+
+  ensureEditModal();
+  editingId = id;
+
+  document.getElementById("edit-title").value = entry.title || "";
+  document.getElementById("edit-score").value = entry.score || "";
+  document.getElementById("edit-status").value = entry.status || "Ongoing";
+  document.getElementById("edit-chapter").value = entry.chapter || "";
+  document.getElementById("edit-year").value = entry.year || "";
+  document.getElementById("edit-nsfw").checked = isNsfwEntry(entry);
+  document.getElementById("edit-image").value = "";
+  document.getElementById("edit-note").value = entry.note || "";
+
+  document.getElementById("edit-modal").classList.add("open");
+}
+
+function closeEditModal() {
+  const modal = document.getElementById("edit-modal");
+  if (modal) modal.classList.remove("open");
+  editingId = null;
+}
+
+async function saveEditEntry() {
+  if (!editingId) return;
+
+  const formData = new FormData();
+  const yearInput = document.getElementById("edit-year").value.trim();
+
+  if (
+    yearInput &&
+    !/^\d{4}$/.test(yearInput) &&
+    !/^\d{2}\/\d{2}\/\d{4}$/.test(yearInput)
+  ) {
+    alert("Enter either YYYY or MM/DD/YYYY");
+    return;
+  }
+
+  formData.append("title", document.getElementById("edit-title").value.trim());
+  formData.append("score", document.getElementById("edit-score").value);
+  formData.append("status", document.getElementById("edit-status").value);
+  formData.append("chapter", document.getElementById("edit-chapter").value);
+  formData.append("year", yearInput);
+  formData.append("note", document.getElementById("edit-note").value.trim());
+  formData.append("nsfw", document.getElementById("edit-nsfw").checked ? "true" : "false");
+
+  const file = document.getElementById("edit-image").files[0];
+  if (file) formData.append("image", file);
+
+  const response = await fetch(`${API}/${editingId}`, {
+    method: "PUT",
+    body: formData
+  });
+
+  if (!response.ok) {
+    alert("Failed to save the entry.");
+    return;
+  }
+
+  closeEditModal();
+  await loadHomePage();
 }
 
 function renderSpotlight(entries) {
@@ -261,23 +444,60 @@ function buildHomeCard(entry) {
   return card;
 }
 
-function updateSummary(allowedEntries, visibleEntries) {
-  const totalFiles = allowedEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
-  const visibleFiles = visibleEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
+function buildUnreadCard(entry) {
+  const note = entry.note || "";
+  const nsfw = isNsfwEntry(entry);
+  const safeTitle = escapeHtml(entry.title || "Untitled");
+
+  const card = document.createElement("article");
+  card.className = "entry-card home-entry-card home-unread-card";
+  card.innerHTML = `
+    <div class="entry-poster">
+      ${entry.image
+        ? `<img class="poster-img" src="${entry.image}" alt="${safeTitle}">`
+        : `<div class="poster-empty">No Image</div>`
+      }
+      ${note ? `<div class="note-tooltip">${escapeHtml(note)}</div><div class="note-indicator" aria-label="Has note">&#9998;</div>` : ""}
+    </div>
+    <div class="entry-content">
+      <h2 class="entry-title">${safeTitle}</h2>
+      <div class="entry-meta">
+        <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
+        ${nsfw ? `<span class="badge badge-nsfw">NSFW</span>` : ""}
+        <span class="tier-badge tier-ungraded">Unread</span>
+      </div>
+      <div class="card-actions home-card-actions">
+        <div class="card-action-right">
+          <button class="card-btn edit home-unread-edit" type="button" onclick="openEditModal(${entry.id})" aria-label="Edit ${safeTitle}">&#9998;</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return card;
+}
+
+function updateSummary(allowedReadableEntries, visibleReadableEntries, allowedUnreadEntries, visibleUnreadEntries) {
+  const totalFiles = allowedReadableEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
+  const visibleFiles = visibleReadableEntries.reduce((sum, entry) => sum + (Number(entry.cbzCount) || 0), 0);
+  const startedEntries = getAllowedStartedEntries();
 
   const entryCount = document.getElementById("home-entry-count");
   if (entryCount) {
-    entryCount.textContent = `${allowedEntries.length} ready`;
+    entryCount.textContent = `${allowedReadableEntries.length} ready`;
   }
 
   const readyCount = document.getElementById("home-ready-count");
-  if (readyCount) readyCount.textContent = String(allowedEntries.length);
+  if (readyCount) readyCount.textContent = String(allowedReadableEntries.length);
 
   const totalCount = document.getElementById("home-total-count");
-  if (totalCount) totalCount.textContent = String(allLibraryEntries.length);
+  if (totalCount) totalCount.textContent = String(startedEntries.length);
 
   const visibleCount = document.getElementById("home-visible-count");
-  if (visibleCount) visibleCount.textContent = String(visibleEntries.length);
+  if (visibleCount) visibleCount.textContent = String(visibleReadableEntries.length + visibleUnreadEntries.length);
+
+  const unreadCount = document.getElementById("home-unread-count");
+  if (unreadCount) unreadCount.textContent = String(allowedUnreadEntries.length);
 
   const volumeCount = document.getElementById("home-volume-count");
   if (volumeCount) volumeCount.textContent = formatCollectionCount(totalFiles, "file");
@@ -285,35 +505,35 @@ function updateSummary(allowedEntries, visibleEntries) {
   const resultsCopy = document.getElementById("home-results-copy");
   if (!resultsCopy) return;
 
-  if (!allowedEntries.length) {
-    resultsCopy.textContent = "No reader-ready manga match the current NSFW filter yet.";
+  if (!allowedReadableEntries.length) {
+    resultsCopy.textContent = "No started readable manga match the current NSFW filter yet.";
     return;
   }
 
-  if (!visibleEntries.length) {
+  if (!visibleReadableEntries.length) {
     resultsCopy.textContent = "No readable manga match your current search.";
     return;
   }
 
-  resultsCopy.textContent = `Showing ${visibleEntries.length} readable series with ${formatCollectionCount(visibleFiles, "file")} loaded.`;
+  resultsCopy.textContent = `Showing ${visibleReadableEntries.length} readable series with ${formatCollectionCount(visibleFiles, "file")} loaded.`;
 }
 
-function renderGrid(allowedEntries, visibleEntries) {
+function renderGrid(allowedReadableEntries, visibleReadableEntries) {
   const grid = document.getElementById("home-library-grid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  if (!allowedEntries.length) {
+  if (!allowedReadableEntries.length) {
     grid.innerHTML = `
       <div class="empty-state home-empty-state">
-        No readable manga are available yet. Upload CBZ files from the <a href="/rankings">rankings page</a> to build your library.
+        No started readable manga are available yet.
       </div>
     `;
     return;
   }
 
-  if (!visibleEntries.length) {
+  if (!visibleReadableEntries.length) {
     grid.innerHTML = `
       <div class="empty-state home-empty-state">
         No readable manga match your search right now.
@@ -322,22 +542,63 @@ function renderGrid(allowedEntries, visibleEntries) {
     return;
   }
 
-  visibleEntries.forEach(entry => {
+  visibleReadableEntries.forEach(entry => {
     grid.appendChild(buildHomeCard(entry));
   });
 }
 
-function renderHome() {
-  const allowedEntries = sortReadableEntries([...getAllowedEntries()]);
-  const search = getSearchValue();
-  const visibleEntries = allowedEntries.filter(entry => {
-    if (!search) return true;
-    return String(entry.title || "").toLowerCase().includes(search);
-  });
+function renderUnread(allowedUnreadEntries, visibleUnreadEntries) {
+  const grid = document.getElementById("home-unread-grid");
+  const copy = document.getElementById("home-unread-copy");
+  if (!grid) return;
 
-  updateSummary(allowedEntries, visibleEntries);
-  renderSpotlight(allowedEntries);
-  renderGrid(allowedEntries, visibleEntries);
+  grid.innerHTML = "";
+
+  if (copy) {
+    if (!allowedUnreadEntries.length) {
+      copy.textContent = "Nothing is waiting in your unread backlog right now.";
+    } else if (!visibleUnreadEntries.length) {
+      copy.textContent = "No unread entries match your current search.";
+    } else {
+      const label = visibleUnreadEntries.length === 1 ? "title" : "titles";
+      copy.textContent = `${visibleUnreadEntries.length} unread ${label} waiting in your backlog.`;
+    }
+  }
+
+  if (!allowedUnreadEntries.length) {
+    grid.innerHTML = `
+      <div class="empty-state home-empty-state">
+        Everything you are tracking has already been started.
+      </div>
+    `;
+    return;
+  }
+
+  if (!visibleUnreadEntries.length) {
+    grid.innerHTML = `
+      <div class="empty-state home-empty-state">
+        No unread entries match your search right now.
+      </div>
+    `;
+    return;
+  }
+
+  visibleUnreadEntries.forEach(entry => {
+    grid.appendChild(buildUnreadCard(entry));
+  });
+}
+
+function renderHome() {
+  const search = getSearchValue();
+  const allowedReadableEntries = sortReadableEntries([...getAllowedReadableEntries()]);
+  const allowedUnreadEntries = sortUnreadEntries([...getAllowedUnreadEntries()]);
+  const visibleReadableEntries = allowedReadableEntries.filter(entry => matchesSearch(entry, search));
+  const visibleUnreadEntries = allowedUnreadEntries.filter(entry => matchesSearch(entry, search));
+
+  updateSummary(allowedReadableEntries, visibleReadableEntries, allowedUnreadEntries, visibleUnreadEntries);
+  renderSpotlight(allowedReadableEntries);
+  renderGrid(allowedReadableEntries, visibleReadableEntries);
+  renderUnread(allowedUnreadEntries, visibleUnreadEntries);
 }
 
 async function loadHomePage() {
@@ -348,15 +609,25 @@ async function loadHomePage() {
     const response = await fetch(LIBRARY_API);
     if (!response.ok) throw new Error(`Library request failed: ${response.status}`);
     allLibraryEntries = await response.json();
+    entryCache = {};
+    allLibraryEntries.forEach(entry => {
+      entryCache[String(entry.id)] = entry;
+    });
     await hydrateCollectionUnits(allLibraryEntries);
     renderHome();
   } catch (error) {
     const grid = document.getElementById("home-library-grid");
+    const unreadGrid = document.getElementById("home-unread-grid");
     const resultsCopy = document.getElementById("home-results-copy");
+    const unreadCopy = document.getElementById("home-unread-copy");
     const spotlight = document.getElementById("home-spotlight");
 
     if (resultsCopy) {
       resultsCopy.textContent = "Failed to load your manga library.";
+    }
+
+    if (unreadCopy) {
+      unreadCopy.textContent = "Failed to load your unread backlog.";
     }
 
     if (spotlight) {
@@ -365,6 +636,10 @@ async function loadHomePage() {
 
     if (grid) {
       grid.innerHTML = `<div class="empty-state home-empty-state">Failed to load your manga library.</div>`;
+    }
+
+    if (unreadGrid) {
+      unreadGrid.innerHTML = `<div class="empty-state home-empty-state">Failed to load your unread backlog.</div>`;
     }
 
     console.error(error);
