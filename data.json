@@ -2,20 +2,21 @@
   {
     "id": 1,
     "title": "Vagabond",
-    "score": "B",
+    "score": "C",
     "status": "Hiatus",
     "chapter": "",
     "year": "2019",
     "image": "/uploads/1775595924003-944725784.png",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775595924003-944725784-thumb.jpg"
   },
   {
     "id": 2,
     "title": "Goblin Slayer",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "71",
     "year": "2019",
     "image": "/uploads/1775614357119-294267545.webp",
@@ -27,35 +28,38 @@
     "id": 3,
     "title": "Goblin Slayer year one",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "66",
     "year": "2019",
     "image": "/uploads/poster-3-goblin-slayer-year-one.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-3-goblin-slayer-year-one-thumb.jpg"
   },
   {
     "id": 4,
     "title": "Black lagoon",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2019",
     "image": "/uploads/1775692066429-635877005.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775692066429-635877005-thumb.jpg"
   },
   {
     "id": 5,
     "title": "Berserk",
     "score": "S+",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2019",
     "image": "/uploads/1775595907184-371356668.jpg",
     "note": "",
-    "manualOrder": 1
+    "manualOrder": 1,
+    "thumbnail": "/uploads/thumbs/1775595907184-371356668-thumb.jpg"
   },
   {
     "id": 6,
@@ -67,7 +71,8 @@
     "image": "/uploads/poster-6-gangsta.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-6-gangsta-thumb.jpg"
   },
   {
     "id": 7,
@@ -79,7 +84,8 @@
     "image": "/uploads/1775602371455-86433554.jpg",
     "note": "",
     "manualOrder": null,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775602371455-86433554-thumb.jpg"
   },
   {
     "id": 8,
@@ -91,7 +97,8 @@
     "image": "/uploads/1775694821573-563845714.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775694821573-563845714-thumb.jpg"
   },
   {
     "id": 9,
@@ -103,7 +110,8 @@
     "image": "/uploads/1775695502102-364555067.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775695502102-364555067-thumb.jpg"
   },
   {
     "id": 10,
@@ -113,18 +121,20 @@
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-10-kengan-asura.jpg",
-    "manualOrder": 5
+    "manualOrder": 5,
+    "thumbnail": "/uploads/thumbs/poster-10-kengan-asura-thumb.jpg"
   },
   {
     "id": 11,
     "title": "Kingdom",
     "score": "S+",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775598911635-572474004.jpg",
     "note": "",
-    "manualOrder": 4
+    "manualOrder": 4,
+    "thumbnail": "/uploads/thumbs/1775598911635-572474004-thumb.jpg"
   },
   {
     "id": 12,
@@ -136,19 +146,21 @@
     "image": "/uploads/poster-12-attack-on-titan.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-12-attack-on-titan-thumb.jpg"
   },
   {
     "id": 13,
     "title": "Vinland Saga",
-    "score": "B",
+    "score": "C",
     "status": "Finished",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775602630449-806555311.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775602630449-806555311-thumb.jpg"
   },
   {
     "id": 14,
@@ -159,24 +171,26 @@
     "year": "2020",
     "image": "/uploads/poster-14-666-satan.png",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-14-666-satan-thumb.jpg"
   },
   {
     "id": 15,
     "title": "Spy x Family",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-15-spy-x-family.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-15-spy-x-family-thumb.jpg"
   },
   {
     "id": 16,
     "title": "Tono No Kanri O Shite Miyou",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775695551021-328904412.webp",
@@ -193,17 +207,19 @@
     "year": "2020",
     "image": "/uploads/poster-17-wotaku-koi-wa-muzukashii.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-17-wotaku-koi-wa-muzukashii-thumb.jpg"
   },
   {
     "id": 18,
     "title": "One Punch Man",
     "score": "S",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-18-one-punch-man.jpg",
-    "manualOrder": 4
+    "manualOrder": 4,
+    "thumbnail": "/uploads/thumbs/poster-18-one-punch-man-thumb.jpg"
   },
   {
     "id": 19,
@@ -215,7 +231,8 @@
     "image": "/uploads/1775598862000-742706362.jpg",
     "note": "",
     "manualOrder": null,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775598862000-742706362-thumb.jpg"
   },
   {
     "id": 20,
@@ -233,13 +250,14 @@
     "id": 21,
     "title": "Ane Naru Mono",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/poster-21-ane-naru-mono.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-21-ane-naru-mono-thumb.jpg"
   },
   {
     "id": 22,
@@ -251,7 +269,8 @@
     "image": "/uploads/poster-22-jujutsu-kaisan.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-22-jujutsu-kaisan-thumb.jpg"
   },
   {
     "id": 23,
@@ -263,19 +282,21 @@
     "image": "/uploads/poster-23-we-may-be-an-inexperienced-couple-but.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-23-we-may-be-an-inexperienced-couple-but-thumb.jpg"
   },
   {
     "id": 24,
     "title": "Haite Kudasai, Takamine San",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775614173641-797136785.png",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775614173641-797136785-thumb.jpg"
   },
   {
     "id": 25,
@@ -287,7 +308,8 @@
     "image": "/uploads/poster-25-daughters-friend.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-25-daughters-friend-thumb.jpg"
   },
   {
     "id": 26,
@@ -299,7 +321,8 @@
     "image": "/uploads/poster-26-please-don-t-bully-me-nagatoro.png",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-26-please-don-t-bully-me-nagatoro-thumb.jpg"
   },
   {
     "id": 27,
@@ -311,19 +334,21 @@
     "image": "/uploads/poster-27-pansuto.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-27-pansuto-thumb.jpg"
   },
   {
     "id": 28,
     "title": "One Piece",
     "score": "S+",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2020",
     "image": "/uploads/1775601843710-257561275.jpg",
     "note": "",
     "manualOrder": 5,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775601843710-257561275-thumb.jpg"
   },
   {
     "id": 29,
@@ -335,16 +360,21 @@
     "image": "/uploads/1775602036889-159902138.jpg",
     "note": "Mangaka also did art for Shadows of the Damned video game",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775602036889-159902138-thumb.jpg"
   },
   {
     "id": 30,
     "title": "Perowan!",
-    "score": null,
-    "status": "Unknown",
+    "score": "D",
+    "status": "Finished",
     "chapter": "",
     "year": "2020",
-    "image": "/uploads/poster-30-perowan.jpg"
+    "image": "/uploads/poster-30-perowan.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-30-perowan-thumb.jpg"
   },
   {
     "id": 31,
@@ -356,7 +386,8 @@
     "image": "/uploads/1775694870524-234138255.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775694870524-234138255-thumb.jpg"
   },
   {
     "id": 32,
@@ -368,19 +399,21 @@
     "image": "/uploads/1775602513959-3962579.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775602513959-3962579-thumb.jpg"
   },
   {
     "id": 33,
     "title": "Black clover",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "2021",
     "image": "/uploads/1775694910394-424678776.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775694910394-424678776-thumb.jpg"
   },
   {
     "id": 34,
@@ -392,7 +425,8 @@
     "image": "/uploads/1775691811116-71650226.jpg",
     "note": "",
     "manualOrder": 6,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775691811116-71650226-thumb.jpg"
   },
   {
     "id": 35,
@@ -404,7 +438,8 @@
     "image": "/uploads/1775695627809-64546359.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775695627809-64546359-thumb.jpg"
   },
   {
     "id": 36,
@@ -416,7 +451,8 @@
     "image": "/uploads/poster-36-jagaaan.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-36-jagaaan-thumb.jpg"
   },
   {
     "id": 37,
@@ -428,7 +464,8 @@
     "image": "/uploads/poster-37-all-you-need-is-kill.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-37-all-you-need-is-kill-thumb.jpg"
   },
   {
     "id": 38,
@@ -440,7 +477,8 @@
     "image": "/uploads/poster-38-fire-force.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-38-fire-force-thumb.jpg"
   },
   {
     "id": 39,
@@ -452,7 +490,8 @@
     "image": "/uploads/1775694984563-283495918.png",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775694984563-283495918-thumb.jpg"
   },
   {
     "id": 40,
@@ -464,7 +503,8 @@
     "image": "/uploads/1775669247574-664423433.jpg",
     "note": "",
     "manualOrder": null,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775669247574-664423433-thumb.jpg"
   },
   {
     "id": 41,
@@ -476,7 +516,8 @@
     "image": "/uploads/1775602441131-572071380.jpg",
     "note": "",
     "manualOrder": null,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775602441131-572071380-thumb.jpg"
   },
   {
     "id": 42,
@@ -488,7 +529,8 @@
     "image": "/uploads/1775695038712-268541858.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775695038712-268541858-thumb.jpg"
   },
   {
     "id": 43,
@@ -500,7 +542,8 @@
     "image": "/uploads/poster-43-tokyo-ghoul-re.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-43-tokyo-ghoul-re-thumb.jpg"
   },
   {
     "id": 44,
@@ -512,7 +555,8 @@
     "image": "/uploads/poster-44-solo-leveling.jpg",
     "manualOrder": 7,
     "note": "",
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/poster-44-solo-leveling-thumb.jpg"
   },
   {
     "id": 45,
@@ -524,7 +568,8 @@
     "image": "/uploads/1775601746820-414627266.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775601746820-414627266-thumb.jpg"
   },
   {
     "id": 46,
@@ -542,12 +587,13 @@
     "id": 47,
     "title": "Blue Lock",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "157",
     "year": "2022",
     "image": "/uploads/poster-47-blue-lock.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-47-blue-lock-thumb.jpg"
   },
   {
     "id": 48,
@@ -559,13 +605,14 @@
     "image": "/uploads/poster-48-three-days-of-happiness.jpg",
     "manualOrder": 8,
     "note": "",
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/poster-48-three-days-of-happiness-thumb.jpg"
   },
   {
     "id": 49,
     "title": "Neighbors sisters",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "49",
     "year": "2022",
     "image": "/uploads/1775696026809-371814936.webp",
@@ -577,13 +624,14 @@
     "id": 50,
     "title": "Mousou Shoujo",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "16",
     "year": "2022",
     "image": "/uploads/poster-50-mousou-shoujo.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-50-mousou-shoujo-thumb.jpg"
   },
   {
     "id": 51,
@@ -595,28 +643,31 @@
     "image": "/uploads/1775695692875-774321498.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775695692875-774321498-thumb.jpg"
   },
   {
     "id": 52,
     "title": "Kiss De Fusaide, Bare Naide",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "15",
     "year": "2022",
-    "image": "/uploads/poster-52-kiss-de-fusaide-bare-naide.jpg"
+    "image": "/uploads/poster-52-kiss-de-fusaide-bare-naide.jpg",
+    "thumbnail": "/uploads/thumbs/poster-52-kiss-de-fusaide-bare-naide-thumb.jpg"
   },
   {
     "id": 53,
     "title": "Kedamonotachi No Jikan",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "25",
     "year": "2022",
     "image": "/uploads/poster-53-kedamonotachi-no-jikan.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-53-kedamonotachi-no-jikan-thumb.jpg"
   },
   {
     "id": 54,
@@ -628,11 +679,12 @@
     "image": "/uploads/1775613633501-2189199.jpg",
     "note": "",
     "manualOrder": 6,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775613633501-2189199-thumb.jpg"
   },
   {
     "id": 55,
-    "title": "A Returnerâ€™s Magic Should Be Special",
+    "title": "A Returner's Magic Should Be Special",
     "score": "C",
     "status": "Finished",
     "chapter": "182",
@@ -640,39 +692,46 @@
     "image": "/uploads/poster-55-a-returner-s-magic-should-be-special.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-55-a-returner-s-magic-should-be-special-thumb.jpg"
   },
   {
     "id": 56,
     "title": "My guardian Angel",
-    "score": null,
+    "score": "C",
     "status": "Finished",
     "chapter": "",
     "year": "2022",
-    "image": "/uploads/poster-56-my-guardian-angel.jpg"
+    "image": "/uploads/poster-56-my-guardian-angel.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-56-my-guardian-angel-thumb.jpg"
   },
   {
     "id": 57,
     "title": "I want to see you embarrassed",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "10",
     "year": "2022",
     "image": "/uploads/poster-57-i-want-to-see-you-embarrassed.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-57-i-want-to-see-you-embarrassed-thumb.jpg"
   },
   {
     "id": 58,
-    "title": "Kubo San doesnâ€™t leave me be",
+    "title": "Kubo San doesnÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢t leave me be",
     "score": "D",
     "status": "Finished",
     "chapter": "110",
     "year": "2022",
     "image": "/uploads/poster-58-kubo-san-doesn-t-leave-me-be.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-58-kubo-san-doesn-t-leave-me-be-thumb.jpg"
   },
   {
     "id": 59,
@@ -681,16 +740,18 @@
     "status": "Finished",
     "chapter": "82",
     "year": "2022",
-    "image": "/uploads/poster-59-juujika-no-rokun.jpg"
+    "image": "/uploads/poster-59-juujika-no-rokun.jpg",
+    "thumbnail": "/uploads/thumbs/poster-59-juujika-no-rokun-thumb.jpg"
   },
   {
     "id": 60,
     "title": "Nengara Nenbyaku Ansatsu Renka",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "15",
     "year": "2022",
-    "image": "/uploads/poster-60-nengara-nenbyaku-ansatsu-renka.jpg"
+    "image": "/uploads/poster-60-nengara-nenbyaku-ansatsu-renka.jpg",
+    "thumbnail": "/uploads/thumbs/poster-60-nengara-nenbyaku-ansatsu-renka-thumb.jpg"
   },
   {
     "id": 61,
@@ -702,29 +763,32 @@
     "image": "/uploads/poster-61-boy-s-abyss.png",
     "nsfw": false,
     "manualOrder": null,
-    "note": ""
+    "note": "",
+    "thumbnail": "/uploads/thumbs/poster-61-boy-s-abyss-thumb.jpg"
   },
   {
     "id": 62,
-    "title": "That girl is cuteâ€¦ but dangerous?",
+    "title": "That girl is cuteÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ but dangerous?",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "21",
     "year": "2022",
     "image": "/uploads/poster-62-that-girl-is-cute-but-dangerous.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-62-that-girl-is-cute-but-dangerous-thumb.jpg"
   },
   {
     "id": 63,
     "title": "Please go home, akutsu-San!",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "108",
     "year": "2022",
     "image": "/uploads/poster-63-please-go-home-akutsu-san.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-63-please-go-home-akutsu-san-thumb.jpg"
   },
   {
     "id": 64,
@@ -736,16 +800,18 @@
     "image": "/uploads/poster-64-blood-and-butterflies.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-64-blood-and-butterflies-thumb.jpg"
   },
   {
     "id": 65,
     "title": "Hisureba",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "19",
     "year": "2022",
-    "image": "/uploads/poster-65-hisureba.jpg"
+    "image": "/uploads/poster-65-hisureba.jpg",
+    "thumbnail": "/uploads/thumbs/poster-65-hisureba-thumb.jpg"
   },
   {
     "id": 66,
@@ -756,16 +822,18 @@
     "year": "2022",
     "image": "/uploads/poster-66-match-made-in-heaven-by-chance.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-66-match-made-in-heaven-by-chance-thumb.jpg"
   },
   {
     "id": 67,
-    "title": "Iâ€™m not the hero",
+    "title": "IÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢m not the hero",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "7",
     "year": "2022",
-    "image": "/uploads/poster-67-i-m-not-the-hero.jpg"
+    "image": "/uploads/poster-67-i-m-not-the-hero.jpg",
+    "thumbnail": "/uploads/thumbs/poster-67-i-m-not-the-hero-thumb.jpg"
   },
   {
     "id": 68,
@@ -774,13 +842,14 @@
     "status": "Unknown",
     "chapter": "22",
     "year": "2022",
-    "image": "/uploads/poster-68-my-charms-are-wasted-on-kuroiwa-medaka.png"
+    "image": "/uploads/poster-68-my-charms-are-wasted-on-kuroiwa-medaka.png",
+    "thumbnail": "/uploads/thumbs/poster-68-my-charms-are-wasted-on-kuroiwa-medaka-thumb.jpg"
   },
   {
     "id": 69,
     "title": "Keep this a secret from mom",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "53",
     "year": "2022",
     "image": "/uploads/1775695303155-966028982.webp",
@@ -792,7 +861,7 @@
     "id": 70,
     "title": "Madam",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "23",
     "year": "2022",
     "image": "/uploads/1775695070814-494371944.webp",
@@ -804,7 +873,7 @@
     "id": 71,
     "title": "Staying with ajumma",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "23",
     "year": "2022",
     "image": "/uploads/1775696076639-781514755.webp",
@@ -816,10 +885,11 @@
     "id": 72,
     "title": "A story about a dragon and the rising of an adventurer",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "9",
     "year": "2022",
-    "image": "/uploads/poster-72-a-story-about-a-dragon-and-the-rising-of-an-adventurer.jpg"
+    "image": "/uploads/poster-72-a-story-about-a-dragon-and-the-rising-of-an-adventurer.jpg",
+    "thumbnail": "/uploads/thumbs/poster-72-a-story-about-a-dragon-and-the-rising-of-an-adventurer-thumb.jpg"
   },
   {
     "id": 73,
@@ -831,11 +901,12 @@
     "note": "- good but should of ended where I stopped reading but they continue it for some reason",
     "image": "/uploads/poster-73-tokyo-revengers.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-73-tokyo-revengers-thumb.jpg"
   },
   {
     "id": 74,
-    "title": "Yugami doesnâ€™t have any friends",
+    "title": "Yugami doesn't have any friends",
     "score": "D",
     "status": "Finished",
     "chapter": "26",
@@ -843,27 +914,30 @@
     "note": "- it can be good and funny but has a lot of boring parts",
     "image": "/uploads/poster-74-yugami-doesn-t-have-any-friends.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-74-yugami-doesn-t-have-any-friends-thumb.jpg"
   },
   {
     "id": 75,
     "title": "Ice Guy and the Cool Female Colleague",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "34",
     "year": "2022",
     "image": "/uploads/poster-75-ice-guy-and-the-cool-female-colleague.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-75-ice-guy-and-the-cool-female-colleague-thumb.jpg"
   },
   {
     "id": 76,
     "title": "Youngest Scion of the Mages",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "20",
     "year": "2022",
-    "image": "/uploads/poster-76-youngest-scion-of-the-mages.jpg"
+    "image": "/uploads/poster-76-youngest-scion-of-the-mages.jpg",
+    "thumbnail": "/uploads/thumbs/poster-76-youngest-scion-of-the-mages-thumb.jpg"
   },
   {
     "id": 77,
@@ -881,22 +955,24 @@
     "id": 78,
     "title": "I Obtained a Mythic Item",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "22",
     "year": "2022",
-    "image": "/uploads/poster-78-i-obtained-a-mythic-item.jpg"
+    "image": "/uploads/poster-78-i-obtained-a-mythic-item.jpg",
+    "thumbnail": "/uploads/thumbs/poster-78-i-obtained-a-mythic-item-thumb.jpg"
   },
   {
     "id": 79,
     "title": "My Sisters Friends",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "43",
     "year": "2022",
     "image": "/uploads/poster-79-my-sisters-friends.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-79-my-sisters-friends-thumb.jpg"
   },
   {
     "id": 80,
@@ -920,17 +996,21 @@
     "note": "sad it got cancelled",
     "image": "/uploads/poster-81-ayashimon.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-81-ayashimon-thumb.jpg"
   },
   {
     "id": 82,
     "title": "I Want To Eat Your Pancreas",
-    "score": null,
+    "score": "C",
     "status": "Finished",
     "chapter": "",
     "year": "2022",
     "note": "weird and abrupt but still kinda good",
-    "image": "/uploads/poster-82-i-want-to-eat-your-pancreas.jpg"
+    "image": "/uploads/poster-82-i-want-to-eat-your-pancreas.jpg",
+    "nsfw": false,
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-82-i-want-to-eat-your-pancreas-thumb.jpg"
   },
   {
     "id": 83,
@@ -942,42 +1022,46 @@
     "image": "/uploads/poster-83-sex-and-dungeon.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-83-sex-and-dungeon-thumb.jpg"
   },
   {
     "id": 84,
     "title": "The Beginning After The End",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "172",
     "year": "2023",
     "image": "/uploads/poster-84-the-beginning-after-the-end.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-84-the-beginning-after-the-end-thumb.jpg"
   },
   {
     "id": 85,
     "title": "The Middle-Aged Newbie Adventurer, Trained to the Brink of Death by the Strongest Party, Became Unbeatable",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "37",
     "year": "2023",
     "image": "/uploads/1775691955952-840258886.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775691955952-840258886-thumb.jpg"
   },
   {
     "id": 86,
     "title": "I'm A Former Slave, But I Tried To Buy An Oni Slave Who I Later Found To Have Too Much Energy So I Want To Throw Him Away...",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "23",
     "year": "2023",
     "image": "/uploads/poster-86-i-m-a-former-slave-but-i-tried-to-buy-an-oni-slave-who.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-86-i-m-a-former-slave-but-i-tried-to-buy-an-oni-slave-who-thumb.jpg"
   },
   {
     "id": 87,
@@ -989,37 +1073,40 @@
     "image": "/uploads/poster-87-mizuki-senpai-no-koi-uranai.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-87-mizuki-senpai-no-koi-uranai-thumb.jpg"
   },
   {
     "id": 88,
     "title": "Isekai Ntr",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "26",
     "year": "2023",
     "image": "/uploads/poster-88-isekai-ntr.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-88-isekai-ntr-thumb.jpg"
   },
   {
     "id": 89,
     "title": "My Sister Is A Superstar",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "176",
     "year": "2023",
     "image": "/uploads/poster-89-my-sister-is-a-superstar.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-89-my-sister-is-a-superstar-thumb.jpg"
   },
   {
     "id": 91,
     "title": "Dorei wo Choukyoushite harem Tsukuru",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "37",
     "year": "2023",
     "image": "/uploads/1775696117504-760042707.webp",
@@ -1031,7 +1118,7 @@
     "id": 92,
     "title": "Crime & Punishment",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "40",
     "year": "2023",
     "image": "/uploads/1775695878078-246765801.webp",
@@ -1049,13 +1136,14 @@
     "image": "/uploads/poster-93-hero-manager.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-93-hero-manager-thumb.jpg"
   },
   {
     "id": 94,
     "title": "Elf Who Likes To Be Humiliated",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "66",
     "year": "2023",
     "image": "/uploads/1775695174364-930431541.webp",
@@ -1067,7 +1155,7 @@
     "id": 95,
     "title": "Chiisana Kanojo No Meswitch",
     "score": "",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "9",
     "year": "2023",
     "image": "/uploads/1776300693071-530230134.webp",
@@ -1079,7 +1167,7 @@
     "id": 96,
     "title": "Golden Facade",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "30",
     "year": "2024",
     "image": "/uploads/1775696435131-757800770.webp",
@@ -1091,21 +1179,23 @@
     "id": 97,
     "title": "Freezing The World: I Built A Doomsday Safehouse",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "39",
     "year": "2024",
     "image": "/uploads/poster-97-freezing-the-world-i-built-a-doomsday-safehouse.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-97-freezing-the-world-i-built-a-doomsday-safehouse-thumb.jpg"
   },
   {
     "id": 98,
     "title": "Akuma Wa Rozario Ni Kiss O Suru",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "3",
     "year": "2024",
-    "image": "/uploads/poster-98-akuma-wa-rozario-ni-kiss-o-suru.jpg"
+    "image": "/uploads/poster-98-akuma-wa-rozario-ni-kiss-o-suru.jpg",
+    "thumbnail": "/uploads/thumbs/poster-98-akuma-wa-rozario-ni-kiss-o-suru-thumb.jpg"
   },
   {
     "id": 99,
@@ -1117,11 +1207,12 @@
     "image": "/uploads/1775695350272-154669729.png",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775695350272-154669729-thumb.jpg"
   },
   {
     "id": 100,
-    "title": "Eden, itâ€™s a endless world",
+    "title": "Eden, itÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s a endless world",
     "score": "C",
     "status": "Finished",
     "chapter": "",
@@ -1129,13 +1220,14 @@
     "image": "/uploads/poster-100-eden-it-s-a-endless-world.jpg",
     "nsfw": false,
     "manualOrder": null,
-    "note": ""
+    "note": "",
+    "thumbnail": "/uploads/thumbs/poster-100-eden-it-s-a-endless-world-thumb.jpg"
   },
   {
     "id": 101,
     "title": "A hero trained by the most evil demon king is unrivaled in the academy of returnees from another world",
     "score": "",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "21",
     "year": "2024",
     "image": "/uploads/1776300741778-612063075.webp",
@@ -1147,19 +1239,21 @@
     "id": 102,
     "title": "Nimotsu Mochi No Nousuji Musou",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "9",
     "year": "2024",
-    "image": "/uploads/poster-102-nimotsu-mochi-no-nousuji-musou.jpg"
+    "image": "/uploads/poster-102-nimotsu-mochi-no-nousuji-musou.jpg",
+    "thumbnail": "/uploads/thumbs/poster-102-nimotsu-mochi-no-nousuji-musou-thumb.jpg"
   },
   {
     "id": 103,
     "title": "The reversal of my life as a side character",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "20",
     "year": "2024",
-    "image": "/uploads/poster-103-the-reversal-of-my-life-as-a-side-character.jpg"
+    "image": "/uploads/poster-103-the-reversal-of-my-life-as-a-side-character.jpg",
+    "thumbnail": "/uploads/thumbs/poster-103-the-reversal-of-my-life-as-a-side-character-thumb.jpg"
   },
   {
     "id": 104,
@@ -1171,29 +1265,32 @@
     "image": "/uploads/poster-104-an-outsider-s-way-in.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": 1
+    "manualOrder": 1,
+    "thumbnail": "/uploads/thumbs/poster-104-an-outsider-s-way-in-thumb.jpg"
   },
   {
     "id": 105,
     "title": "Mist might mayhem",
     "score": "S",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "41",
     "year": "2024",
     "image": "/uploads/1775620553265-358644665.jpg",
     "note": "",
-    "manualOrder": 9
+    "manualOrder": 9,
+    "thumbnail": "/uploads/thumbs/1775620553265-358644665-thumb.jpg"
   },
   {
     "id": 106,
-    "title": "Heavenly Grand Archiveâ€™s young master",
+    "title": "Heavenly Grand ArchiveÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s young master",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "82",
     "year": "2024",
     "image": "/uploads/poster-106-heavenly-grand-archive-s-young-master.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-106-heavenly-grand-archive-s-young-master-thumb.jpg"
   },
   {
     "id": 107,
@@ -1205,51 +1302,56 @@
     "image": "/uploads/poster-107-boku-wa-kimitachi-wo-shihai-suru.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-107-boku-wa-kimitachi-wo-shihai-suru-thumb.jpg"
   },
   {
     "id": 108,
     "title": "The invincible vanished shadow archer",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "15",
     "year": "2024",
-    "image": "/uploads/poster-108-the-invincible-vanished-shadow-archer.jpg"
+    "image": "/uploads/poster-108-the-invincible-vanished-shadow-archer.jpg",
+    "thumbnail": "/uploads/thumbs/poster-108-the-invincible-vanished-shadow-archer-thumb.jpg"
   },
   {
     "id": 109,
     "title": "Blinded by the setting sun",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "187",
     "year": "2024",
     "image": "/uploads/poster-109-blinded-by-the-setting-sun.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-109-blinded-by-the-setting-sun-thumb.jpg"
   },
   {
     "id": 110,
     "title": "Sousou Bo Freiren",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "139",
     "year": "12/13/2024",
     "note": "",
     "image": "/uploads/poster-110-sousou-bo-freiren.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-110-sousou-bo-freiren-thumb.jpg"
   },
   {
     "id": 111,
     "title": "Kagurabachi",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "61",
     "year": "2024",
     "note": "12/17/2024:",
     "image": "/uploads/poster-111-kagurabachi.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-111-kagurabachi-thumb.jpg"
   },
   {
     "id": 112,
@@ -1261,95 +1363,104 @@
     "note": "12/19/2024:",
     "image": "/uploads/poster-112-dungeon-defense.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-112-dungeon-defense-thumb.jpg"
   },
   {
     "id": 113,
     "title": "Childhood Friend of The Zenith",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "40",
     "year": "2024",
     "note": "12/19/2024:",
     "image": "/uploads/poster-113-childhood-friend-of-the-zenith.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-113-childhood-friend-of-the-zenith-thumb.jpg"
   },
   {
     "id": 114,
     "title": "Maplestory: The Last Adventurer",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "50",
     "year": "2024",
     "note": "12/21/2024:",
-    "image": "/uploads/poster-114-maplestory-the-last-adventurer.jpg"
+    "image": "/uploads/poster-114-maplestory-the-last-adventurer.jpg",
+    "thumbnail": "/uploads/thumbs/poster-114-maplestory-the-last-adventurer-thumb.jpg"
   },
   {
     "id": 115,
     "title": "I killed an academy player",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "66",
     "year": "2024",
-    "image": "/uploads/poster-115-i-killed-an-academy-player.png"
+    "image": "/uploads/poster-115-i-killed-an-academy-player.png",
+    "thumbnail": "/uploads/thumbs/poster-115-i-killed-an-academy-player-thumb.jpg"
   },
   {
     "id": 116,
     "title": "Demonic Evolution",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "86",
     "year": "2025",
     "note": "01/03/2025:",
     "image": "/uploads/poster-116-demonic-evolution.png",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-116-demonic-evolution-thumb.jpg"
   },
   {
     "id": 118,
     "title": "King Of The Labyrinth",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "14",
     "year": "2025",
-    "image": "/uploads/poster-118-king-of-the-labyrinth.jpg"
+    "image": "/uploads/poster-118-king-of-the-labyrinth.jpg",
+    "thumbnail": "/uploads/thumbs/poster-118-king-of-the-labyrinth-thumb.jpg"
   },
   {
     "id": 119,
     "title": "Dungeon Ni Hisomu Yandere Na Kanajo Ni Ore Wa Nando Mo Korosareru",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "21",
     "year": "2025",
     "image": "/uploads/1775598956807-631758279.jpg",
     "note": "",
     "manualOrder": null,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775598956807-631758279-thumb.jpg"
   },
   {
     "id": 120,
     "title": "The imminence in the shadow",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "61",
     "year": "2023",
     "image": "/uploads/poster-120-the-imminence-in-the-shadow.jpg",
     "nsfw": false,
     "manualOrder": null,
-    "note": ""
+    "note": "",
+    "thumbnail": "/uploads/thumbs/poster-120-the-imminence-in-the-shadow-thumb.jpg"
   },
   {
     "id": 121,
     "title": "The brilliant healers new life in the shadows",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "15.1",
     "year": "01/30/2024",
     "note": "",
     "image": "/uploads/poster-121-the-brilliant-healers-new-life-in-the-shadows.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-121-the-brilliant-healers-new-life-in-the-shadows-thumb.jpg"
   },
   {
     "id": 122,
@@ -1367,79 +1478,89 @@
     "id": 123,
     "title": "Let this grieving soul retire",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "53.2",
     "year": "2025",
-    "image": "/uploads/poster-123-let-this-grieving-soul-retire.jpg"
+    "image": "/uploads/poster-123-let-this-grieving-soul-retire.jpg",
+    "thumbnail": "/uploads/thumbs/poster-123-let-this-grieving-soul-retire-thumb.jpg"
   },
   {
     "id": 124,
     "title": "Bad Born Blood",
-    "score": "C",
-    "status": "Ongoing",
+    "score": "B",
+    "status": "Reading",
     "chapter": "21",
     "year": "2025",
     "image": "/uploads/poster-124-bad-born-blood.png",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-124-bad-born-blood-thumb.jpg"
   },
   {
     "id": 125,
     "title": "Infinite Mage",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "104",
     "year": "2025",
     "image": "/uploads/poster-125-infinite-mage.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-125-infinite-mage-thumb.jpg"
   },
   {
     "id": 126,
     "title": "Shuujin Tensei",
-    "score": null,
-    "status": "Ongoing",
+    "score": "",
+    "status": "Reading",
     "chapter": "2",
     "year": "2025",
-    "image": "/uploads/poster-126-shuujin-tensei.jpg"
+    "image": "/uploads/poster-126-shuujin-tensei.jpg",
+    "note": "",
+    "nsfw": true,
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-126-shuujin-tensei-thumb.jpg"
   },
   {
     "id": 127,
     "title": "Daredemo Dakeru Kimi ga Suki",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "50",
     "year": "2025",
-    "image": "/uploads/poster-127-daredemo-dakeru-kimi-ga-suki.jpg"
+    "image": "/uploads/poster-127-daredemo-dakeru-kimi-ga-suki.jpg",
+    "thumbnail": "/uploads/thumbs/poster-127-daredemo-dakeru-kimi-ga-suki-thumb.jpg"
   },
   {
     "id": 128,
     "title": "The Strongest Female Masters, Who Are Trying to Raise Me Up, Are in Shambles Over Their Training Policy",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "28",
     "year": "2025",
     "image": "/uploads/poster-128-the-strongest-female-masters-who-are-trying-to-raise-me.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-128-the-strongest-female-masters-who-are-trying-to-raise-me-thumb.jpg"
   },
   {
     "id": 130,
     "title": "Savage Hero",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "77",
     "year": "2025",
     "image": "/uploads/poster-130-savage-hero.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-130-savage-hero-thumb.jpg"
   },
   {
     "id": 131,
     "title": "Gomie Ika da to Tsuihousareta shounin",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "10.2",
     "year": "2025",
     "image": "/uploads/1775696476339-95814259.webp",
@@ -1451,79 +1572,85 @@
     "id": 132,
     "title": "Okaeri, papa",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "25",
     "year": "2025",
     "image": "/uploads/poster-132-okaeri-papa.png",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-132-okaeri-papa-thumb.jpg"
   },
   {
     "id": 133,
     "title": "Harem Ou no Isekai Press Manyuki ~Saikyou Musou no Ojisan wa Arayuru Shuzoku wo Yome ni suru",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "8",
     "year": "2025",
     "image": "/uploads/poster-133-harem-ou-no-isekai-press-manyuki-saikyou-musou-no-ojisa.jpg",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-133-harem-ou-no-isekai-press-manyuki-saikyou-musou-no-ojisa-thumb.jpg"
   },
   {
     "id": 134,
     "title": "Kyuutei Mahou-shi Kubi ni Nattande, Inaka ni Kaette mahou-ka no sensei ni Narimasu",
-    "score": null,
-    "status": "",
+    "score": "D",
+    "status": "Reading",
     "chapter": "",
     "year": "2025",
     "image": "/uploads/poster-134-kyuutei-mahou-shi-kubi-ni-nattande-inaka-ni-kaette-maho.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": 1
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-134-kyuutei-mahou-shi-kubi-ni-nattande-inaka-ni-kaette-maho-thumb.jpg"
   },
   {
     "id": 135,
     "title": "Choukyoushi wa Mamono ni Kakomarete ikite ikimasu ~yuusha party ni densetsu no mamono to deai saikyou ni natteta",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "8",
     "year": "06/12/2025",
     "note": "",
     "image": "/uploads/poster-135-choukyoushi-wa-mamono-ni-kakomarete-ikite-ikimasu-yuush.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-135-choukyoushi-wa-mamono-ni-kakomarete-ikite-ikimasu-yuush-thumb.jpg"
   },
   {
     "id": 136,
     "title": "Dungeon Odyssey",
     "score": "S+",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "124",
     "year": "06/26/2025",
     "note": "test",
     "image": "/uploads/1775596689806-40933008.jpg",
     "manualOrder": 0,
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775596689806-40933008-thumb.jpg"
   },
   {
     "id": 137,
     "title": "The witch and the mercenary",
     "score": "S",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "46",
     "year": "2025",
     "image": "/uploads/1775691915054-736496291.jpg",
     "manualOrder": 10,
     "note": "",
-    "nsfw": false
+    "nsfw": false,
+    "thumbnail": "/uploads/thumbs/1775691915054-736496291-thumb.jpg"
   },
   {
     "id": 139,
     "title": "Set It!",
     "score": null,
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "53",
     "year": "2025",
     "image": "/uploads/1775695831091-416244594.webp",
@@ -1535,30 +1662,32 @@
     "id": 140,
     "title": "Omniscient Readers Viewpoint",
     "score": "S",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "272",
     "year": "2025",
     "image": "/uploads/1775601905053-835061095.jpg",
     "note": "",
-    "manualOrder": 0
+    "manualOrder": 0,
+    "thumbnail": "/uploads/thumbs/1775601905053-835061095-thumb.jpg"
   },
   {
     "id": 141,
-    "title": "Goblinâ€™s Ascent",
+    "title": "Goblin's Ascent",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "16",
     "year": "2025",
     "image": "/uploads/poster-141-goblin-s-ascent.png",
     "note": "",
     "nsfw": true,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-141-goblin-s-ascent-thumb.jpg"
   },
   {
     "id": 142,
     "title": "Teachers Efforts",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "55",
     "year": "2025",
     "image": "/uploads/1775695928435-605822302.webp",
@@ -1570,43 +1699,46 @@
     "id": 143,
     "title": "Absolute Regression",
     "score": "B",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "93",
     "year": "2025",
     "image": "/uploads/poster-143-absolute-regression.png",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-143-absolute-regression-thumb.jpg"
   },
   {
     "id": 144,
     "title": "Nine Heavens Swordmaster",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "23",
     "year": "2025",
     "image": "/uploads/poster-144-nine-heavens-swordmaster.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-144-nine-heavens-swordmaster-thumb.jpg"
   },
   {
     "id": 145,
     "title": "Record of Highserk War",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "26",
     "year": "12/08/2025",
     "note": "",
     "image": "/uploads/poster-145-record-of-highserk-war.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-145-record-of-highserk-war-thumb.jpg"
   },
   {
     "id": 146,
     "title": "Surviving the game as a barbarian",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "134",
     "year": "2025",
     "image": "/uploads/1775602582769-608768944.webp",
@@ -1616,58 +1748,64 @@
   },
   {
     "id": 147,
-    "title": "Yuusha Party wo Tsuihosareta ore daga, ore Kara sudattekureta you de ureshii. â€¦â€¦ nanode Dai Seijo, omae ni ottekoraete wa komaru no daga?",
-    "score": null,
-    "status": "Ongoing",
+    "title": "Yuusha Party wo Tsuihosareta ore daga, ore Kara sudattekureta you de ureshii. Ã¢â‚¬Â¦Ã¢â‚¬Â¦ nanode Dai Seijo, omae ni",
+    "score": "C",
+    "status": "Reading",
     "chapter": "",
     "year": "2025",
     "image": "/uploads/1775614285070-573826476.webp",
-    "note": ""
+    "note": "",
+    "nsfw": false,
+    "manualOrder": null
   },
   {
     "id": 148,
     "title": "Mushoku Tensei",
     "score": "C",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "68",
     "year": "2025",
-    "note": "didnâ€™t finish",
+    "note": "didnÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢t finish",
     "image": "/uploads/1775601956488-655289674.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775601956488-655289674-thumb.jpg"
   },
   {
     "id": 149,
     "title": "Pick Me Up",
     "score": "S",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "182",
     "year": "2026",
     "image": "/uploads/1775601800379-727437996.jpg",
     "note": "",
-    "manualOrder": 2
+    "manualOrder": 2,
+    "thumbnail": "/uploads/thumbs/1775601800379-727437996-thumb.jpg"
   },
   {
     "id": 150,
     "title": "Tower Dungeon",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "23",
     "year": "2026",
     "image": "/uploads/poster-150-tower-dungeon.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-150-tower-dungeon-thumb.jpg"
   },
   {
     "id": 151,
     "title": "The Kept Man of The Princess Knight",
     "score": "D",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "5",
     "year": "2026",
     "image": "/uploads/poster-151-the-kept-man-of-the-princess-knight.jpg",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/poster-151-the-kept-man-of-the-princess-knight-thumb.jpg"
   },
   {
     "id": 152,
@@ -1679,7 +1817,8 @@
     "image": "/uploads/1775695230112-414948037.jpg",
     "note": "",
     "nsfw": false,
-    "manualOrder": null
+    "manualOrder": null,
+    "thumbnail": "/uploads/thumbs/1775695230112-414948037-thumb.jpg"
   },
   {
     "id": 153,
@@ -1691,13 +1830,14 @@
     "image": "/uploads/poster-153-legend-of-the-northern-blade.jpg",
     "nsfw": false,
     "manualOrder": null,
-    "note": ""
+    "note": "",
+    "thumbnail": "/uploads/thumbs/poster-153-legend-of-the-northern-blade-thumb.jpg"
   },
   {
     "id": 1775696307780,
     "title": "Road to Kingdom",
     "score": "S+",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "84",
     "year": "2025",
     "image": "/uploads/1775696307708-602875658.webp",
@@ -1709,7 +1849,7 @@
     "id": 1775699801852,
     "title": "Eternally Regressing Knight",
     "score": "S+",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "102",
     "year": "2026",
     "image": "/uploads/1775699801808-295817173.webp",
@@ -1721,7 +1861,7 @@
     "id": 1775598528494,
     "title": "Athletes Village: The Trap",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "",
     "year": "01/01/2025",
     "image": "/uploads/1775602334064-41657748.jpg",
@@ -1733,7 +1873,7 @@
     "id": 1775699547034,
     "title": "The Regressed Mercenary's Machinations",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "81",
     "year": "2026",
     "image": "/uploads/1775699546954-917655737.webp",
@@ -1745,7 +1885,7 @@
     "id": 1775699504502,
     "title": "Star Embracing Sword Master",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "114",
     "year": "2026",
     "image": "/uploads/1775699504458-149267189.webp",
@@ -1757,7 +1897,7 @@
     "id": 1775699306056,
     "title": "Absolute Sword Sense",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "172",
     "year": "2026",
     "image": "/uploads/1775699306009-270058102.webp",
@@ -1769,7 +1909,7 @@
     "id": 1775699402565,
     "title": "The Extra's Academy Survival Guide",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "97",
     "year": "2026",
     "image": "/uploads/1775699402515-554658425.webp",
@@ -1781,7 +1921,7 @@
     "id": 1775699682509,
     "title": "Damn Reincarnation",
     "score": "A",
-    "status": "Ongoing",
+    "status": "Reading",
     "chapter": "81",
     "year": "03/25/2026",
     "image": "/uploads/1775699682462-924780026.webp",
@@ -1792,13 +1932,344 @@
   {
     "id": 1775699233478,
     "title": "Absolute Dominion",
-    "score": "B",
-    "status": "Ongoing",
+    "score": "C",
+    "status": "Reading",
     "chapter": "81",
     "year": "2026",
     "image": "/uploads/1775699233429-813458685.webp",
     "note": "",
     "nsfw": false,
     "manualOrder": null
+  },
+  {
+    "id": 1776522895580,
+    "title": "Mabeop Hakgyo Apjeommyeol Cheonjae-ga Doeeotda",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776522895580-mabeop-hakgyo-apjeommyeol-cheonjae-ga-doeeotda.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 1,
+    "thumbnail": "/uploads/thumbs/poster-1776522895580-mabeop-hakgyo-apjeommyeol-cheonjae-ga-doeeotda-thumb.jpg"
+  },
+  {
+    "id": 1776522995314,
+    "title": "player",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776522995314-player.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 2,
+    "thumbnail": "/uploads/thumbs/poster-1776522995314-player-thumb.jpg"
+  },
+  {
+    "id": 1776524446477,
+    "title": "Nano Machine",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776524446477-nano-machine.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 3,
+    "thumbnail": "/uploads/thumbs/poster-1776524446477-nano-machine-thumb.jpg"
+  },
+  {
+    "id": 1776524469162,
+    "title": "Doom Breaker",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776524469162-doom-breaker.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 4,
+    "thumbnail": "/uploads/thumbs/poster-1776524469162-doom-breaker-thumb.jpg"
+  },
+  {
+    "id": 1776524857026,
+    "title": "Return of the Mount Hua Sect",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776524857026-return-of-the-mount-hua-sect.png",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 5,
+    "thumbnail": "/uploads/thumbs/poster-1776524857026-return-of-the-mount-hua-sect-thumb.jpg"
+  },
+  {
+    "id": 1776524874705,
+    "title": "Ending Maker",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776524874705-ending-maker.png",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 6,
+    "thumbnail": "/uploads/thumbs/poster-1776524874705-ending-maker-thumb.jpg"
+  },
+  {
+    "id": 1776524895017,
+    "title": "The Executioner",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776524895017-the-executioner.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 7,
+    "thumbnail": "/uploads/thumbs/poster-1776524895017-the-executioner-thumb.jpg"
+  },
+  {
+    "id": 1776525323455,
+    "title": "Boundless Ascension",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525323455-boundless-ascension.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 8,
+    "thumbnail": "/uploads/thumbs/poster-1776525323455-boundless-ascension-thumb.jpg"
+  },
+  {
+    "id": 1776525404317,
+    "title": "Defense Game Pokguni Doeeotda",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525404317-defense-game-pokguni-doeeotda.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 9,
+    "thumbnail": "/uploads/thumbs/poster-1776525404317-defense-game-pokguni-doeeotda-thumb.jpg"
+  },
+  {
+    "id": 1776525490200,
+    "title": "Jungle Juice",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525490200-jungle-juice.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 10,
+    "thumbnail": "/uploads/thumbs/poster-1776525490200-jungle-juice-thumb.jpg"
+  },
+  {
+    "id": 1776525543466,
+    "title": "Sunjeong Villain",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525543466-sunjeong-villain.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 11,
+    "thumbnail": "/uploads/thumbs/poster-1776525543466-sunjeong-villain-thumb.jpg"
+  },
+  {
+    "id": 1776525582800,
+    "title": "Ranking 1-wireul Yeonghonkkaji Teoreobeorim",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525582800-ranking-1-wireul-yeonghonkkaji-teoreobeorim.png",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 12,
+    "thumbnail": "/uploads/thumbs/poster-1776525582800-ranking-1-wireul-yeonghonkkaji-teoreobeorim-thumb.jpg"
+  },
+  {
+    "id": 1776525635251,
+    "title": "SSS-Class Revival Hunter",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525635251-sss-class-revival-hunter.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 13,
+    "thumbnail": "/uploads/thumbs/poster-1776525635251-sss-class-revival-hunter-thumb.jpg"
+  },
+  {
+    "id": 1776525655218,
+    "title": "The Greatest Estate Developer",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525655218-the-greatest-estate-developer.png",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 14,
+    "thumbnail": "/uploads/thumbs/poster-1776525655218-the-greatest-estate-developer-thumb.jpg"
+  },
+  {
+    "id": 1776525677853,
+    "title": "The Swordmaster's Youngest Son",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776525677853-the-swordmaster-s-youngest-son.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 15,
+    "thumbnail": "/uploads/thumbs/poster-1776525677853-the-swordmaster-s-youngest-son-thumb.jpg"
+  },
+  {
+    "id": 1776526077413,
+    "title": "Reincarnation of the Veteran Soldier",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776526077413-reincarnation-of-the-veteran-soldier.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 16,
+    "thumbnail": "/uploads/thumbs/poster-1776526077413-reincarnation-of-the-veteran-soldier-thumb.jpg"
+  },
+  {
+    "id": 1776526114879,
+    "title": "Hellper",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776526114879-hellper.png",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 17,
+    "thumbnail": "/uploads/thumbs/poster-1776526114879-hellper-thumb.jpg"
+  },
+  {
+    "id": 1776526705224,
+    "title": "Hurejasik",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776526705224-hurejasik.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 18,
+    "thumbnail": "/uploads/thumbs/poster-1776526705224-hurejasik-thumb.jpg"
+  },
+  {
+    "id": 1776533518091,
+    "title": "Revenge of the Iron-Blooded Sword Hound",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776533518091-revenge-of-the-iron-blooded-sword-hound.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 19,
+    "thumbnail": "/uploads/thumbs/poster-1776533518091-revenge-of-the-iron-blooded-sword-hound-thumb.jpg"
+  },
+  {
+    "id": 1776802592612,
+    "title": "The Bastard of Swordborne",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776802592612-the-bastard-of-swordborne.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 20
+  },
+  {
+    "id": 1776802895582,
+    "title": "Wicked Trapper: Hunter of Heroes",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776802895582-wicked-trapper-hunter-of-heroes.jpg",
+    "note": "",
+    "nsfw": true,
+    "manualOrder": 21
+  },
+  {
+    "id": 1776803823277,
+    "title": "Tensei Shitara Joban de Shinu Chuu-Boss datta - Heroine Kenzokuka de Ikinokoru",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776803823277-tensei-shitara-joban-de-shinu-chuu-boss-datta-heroine-kenzokuka-de-ikinokoru.jpg",
+    "note": "",
+    "nsfw": true,
+    "manualOrder": 22
+  },
+  {
+    "id": 1776895278639,
+    "title": "The Nebula's Civilization",
+    "score": "C",
+    "status": "Reading",
+    "chapter": "118",
+    "year": "2026",
+    "image": "/uploads/poster-1776895278639-the-nebula-s-civilization.png",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": null
+  },
+  {
+    "id": 1776917160851,
+    "title": "latna saga",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776917160851-latna-saga.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 23
+  },
+  {
+    "id": 1776917171561,
+    "title": "ragna crimson",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776917171561-ragna-crimson.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 24
+  },
+  {
+    "id": 1776920712887,
+    "title": "lady devil",
+    "score": "",
+    "status": "Want to Read",
+    "chapter": "",
+    "year": "",
+    "image": "/uploads/poster-1776920712887-lady-devil.jpg",
+    "note": "",
+    "nsfw": false,
+    "manualOrder": 25
   }
 ]

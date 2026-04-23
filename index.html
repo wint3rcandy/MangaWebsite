@@ -35,6 +35,10 @@
       </div>
 
       <div class="top-bar-right">
+        <button class="add-toggle" type="button" onclick="toggleForm()" aria-expanded="false" aria-controls="add-form">
+          <span class="toggle-btn" id="toggle-btn">+</span>
+          <span>Add Entry</span>
+        </button>
         <button class="nsfw-toggle" type="button" id="home-nsfw-toggle" onclick="toggleHomeNsfw()" aria-pressed="false">
           Hide NSFW
         </button>
@@ -42,61 +46,81 @@
       </div>
     </div>
 
-    <section class="home-hero">
-      <div class="home-hero-copy">
-        <span class="home-kicker">Welcome back</span>
-        <h1 class="home-hero-title">Jump straight into the manga you can read right now.</h1>
-        <p class="home-hero-text">
-          This page is your reading front door. Anything with uploaded CBZ files shows up here,
-          and the full rankings are still one click away whenever you want to organize the whole list.
-        </p>
-        <div class="home-hero-actions">
-          <a class="hero-btn hero-btn-primary" href="#reader-library">Browse Library</a>
-          <a class="hero-btn hero-btn-secondary" href="/rankings">Manage Rankings</a>
+    <div class="add-panel" id="add-panel">
+      <div class="add-form" id="add-form">
+        <div class="field field-title">
+          <label>TITLE</label>
+          <input type="text" id="f-title" placeholder="Enter manga title">
+        </div>
+
+        <div class="field">
+          <label>TIER</label>
+          <select id="f-score">
+            <option value="">-- Ungraded --</option>
+            <option value="S+">S+</option>
+            <option value="S">S</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>STATUS</label>
+          <select id="f-status">
+            <option>Want to Read</option>
+            <option>Reading</option>
+            <option>Finished</option>
+            <option>Hiatus</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>CHAPTER</label>
+          <input type="number" id="f-ch" placeholder="0">
+        </div>
+
+        <div class="field">
+          <label>STARTED READING</label>
+          <input type="text" id="f-year" placeholder="YYYY or MM/DD/YYYY">
+        </div>
+
+        <div class="field">
+          <label>POSTER (optional, auto-fetch if blank)</label>
+          <input type="file" id="f-image" accept="image/*">
+        </div>
+
+        <div class="field field-note">
+          <label>NOTE / REVIEW</label>
+          <input type="text" id="f-note" placeholder="Optional note">
+        </div>
+
+        <div class="field field-flag">
+          <label>CONTENT FLAG</label>
+          <label class="check-chip" for="f-nsfw">
+            <input type="checkbox" id="f-nsfw">
+            <span>NSFW</span>
+          </label>
+        </div>
+
+        <button class="add-btn" id="add-submit-btn" type="button" onclick="addEntry()">Add Entry</button>
+
+        <div class="add-progress" id="add-progress" hidden aria-live="polite">
+          <div class="add-progress-head">
+            <span class="add-progress-label" id="add-progress-label">Preparing entry...</span>
+            <span class="add-progress-value" id="add-progress-value">0%</span>
+          </div>
+          <div class="add-progress-track" aria-hidden="true">
+            <div class="add-progress-fill" id="add-progress-fill"></div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="home-hero-panel">
-        <div class="home-panel-head">
-          <span class="home-panel-kicker">Library Snapshot</span>
-          <span class="home-panel-count" id="home-volume-count">0 files</span>
-        </div>
-
-        <div class="home-stat-grid">
-          <div class="home-stat-card">
-            <span class="home-stat-value" id="home-ready-count">0</span>
-            <span class="home-stat-label">Readable series</span>
-          </div>
-          <div class="home-stat-card">
-            <span class="home-stat-value" id="home-total-count">0</span>
-            <span class="home-stat-label">Started</span>
-          </div>
-          <div class="home-stat-card">
-            <span class="home-stat-value" id="home-visible-count">0</span>
-            <span class="home-stat-label">Visible now</span>
-          </div>
-          <div class="home-stat-card">
-            <span class="home-stat-value" id="home-unread-count">0</span>
-            <span class="home-stat-label">To read</span>
-          </div>
-        </div>
-
-        <div class="home-spotlight" id="home-spotlight">
-          <div class="home-spotlight-empty">Loading your spotlight shelf...</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="home-section" id="reader-library">
-      <div class="home-section-head">
-        <div>
-          <span class="home-section-kicker">Reader Library</span>
-          <h2 class="home-section-title">Ready To Read</h2>
-          <p class="home-section-copy" id="home-results-copy">Loading your manga library...</p>
-        </div>
-        <a class="nav-link-btn" href="/rankings">Open full rankings</a>
-      </div>
-
+    <section class="home-section home-library-section" id="reader-library">
       <div class="entry-grid home-library-grid" id="home-library-grid">
         <div class="empty-state">Loading your reader library...</div>
       </div>

@@ -763,9 +763,27 @@
       });
     }
 
+    function normalizeStatusValue(status) {
+      let value = String(status || "").trim().toLowerCase();
+      if (value === "canceled") value = "cancelled";
+      if (value === "want-to-read" || value === "wanttoread") value = "want to read";
+      if (value === "ongoing") value = "reading";
+      return value;
+    }
+
+    function getStatusLabel(status) {
+      const value = normalizeStatusValue(status);
+      if (value === "reading") return "Reading";
+      if (value === "want to read") return "Want to Read";
+      if (value === "finished") return "Finished";
+      if (value === "hiatus") return "Hiatus";
+      if (value === "cancelled") return "Cancelled";
+      return String(status || "").trim();
+    }
+
     function statusClass(s) {
-      s = String(s||"").toLowerCase();
-      return s==="ongoing"?"status-ongoing":s==="finished"?"status-finished":s==="hiatus"?"status-hiatus":s==="cancelled"?"status-cancelled":"status-unknown";
+      const value = normalizeStatusValue(s);
+      return value==="reading"?"status-reading":value==="want to read"?"status-want-to-read":value==="finished"?"status-finished":value==="hiatus"?"status-hiatus":value==="cancelled"?"status-cancelled":"status-unknown";
     }
 
     function renderHero(e) {
@@ -777,10 +795,10 @@
         cw.outerHTML = `<img class="reader-hero-cover" id="hero-cover-wrap" src="${escapeHtml(e.image)}" alt="${escapeHtml(e.title)}">`;
       }
       const parts = [];
-      if(e.status)  parts.push(`<span class="badge ${statusClass(e.status)}">${escapeHtml(e.status)}</span>`);
+      if(e.status)  parts.push(`<span class="badge ${statusClass(e.status)}">${escapeHtml(getStatusLabel(e.status))}</span>`);
       if(e.score)   parts.push(`<span class="badge" style="background:rgba(178,28,42,0.12);border:1px solid rgba(178,28,42,0.3);color:#e06070;">${escapeHtml(e.score)}</span>`);
       if(e.chapter) parts.push(`<span style="font-size:12px;color:#777;">Ch: <b style="color:#aaa">${escapeHtml(e.chapter)}</b></span>`);
-      if(e.year)    parts.push(`<span style="font-size:12px;color:#777;">${e.status==="Finished"?"Read":"Started"}: <b style="color:#aaa">${escapeHtml(e.year)}</b></span>`);
+      if(e.year)    parts.push(`<span style="font-size:12px;color:#777;">${normalizeStatusValue(e.status)==="finished"?"Read":normalizeStatusValue(e.status)==="want to read"?"Added":"Started"}: <b style="color:#aaa">${escapeHtml(e.year)}</b></span>`);
       document.getElementById("hero-meta").innerHTML = parts.join("");
       const noteEl = document.getElementById("hero-note");
       if (e.note) {

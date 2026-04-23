@@ -7,18 +7,31 @@ let searchClearFocused = false;
 let draggedRankId = null;
 let draggedScoreValue = null;
 let isSavingManualOrder = false;
+let isAddingEntry = false;
+const STATUS_LABELS = {
+  reading: "Reading",
+  "want to read": "Want to Read",
+  finished: "Finished",
+  hiatus: "Hiatus",
+  cancelled: "Cancelled"
+};
 const SORT_CONFIG = {
   default: { label: "Default", defaultDirection: "desc" },
+  tiered: { label: "Tiered", defaultDirection: "desc" },
   year: { label: "Year", defaultDirection: "desc", allowsDirection: true },
   created: { label: "Added", defaultDirection: "desc", allowsDirection: true },
   score: { label: "Tier", defaultDirection: "desc", allowsDirection: true },
   "status-finished": { label: "Finished", defaultDirection: "desc", filterType: "status", filterValue: "finished" },
-  "status-ongoing": { label: "Ongoing", defaultDirection: "desc", filterType: "status", filterValue: "ongoing" },
+  "status-reading": { label: "Reading", defaultDirection: "desc", filterType: "status", filterValue: "reading" },
+  "status-ongoing": { label: "Reading", defaultDirection: "desc", filterType: "status", filterValue: "reading" },
+  "status-want-to-read": { label: "Want to Read", defaultDirection: "desc", filterType: "status", filterValue: "want to read" },
   "status-hiatus": { label: "Hiatus", defaultDirection: "desc", filterType: "status", filterValue: "hiatus" },
   "status-cancelled": { label: "Cancelled", defaultDirection: "desc", filterType: "status", filterValue: "cancelled" },
   nsfw: { label: "NSFW", defaultDirection: "desc", filterType: "nsfw", filterValue: true }
 };
 let currentSort = { key: "default", direction: "desc" };
+const posterFetchInFlight = new Set();
+const posterFetchAttempted = new Set();
 
 try {
   hideNsfw = localStorage.getItem("hide-nsfw") === "true";
@@ -39,30 +52,16 @@ function getSortDirectionSymbol(direction) {
 
 function updateSortUI() {
   const trigger = document.getElementById("sort-trigger");
-  const label = document.getElementById("sort-current-label");
-  const icon = document.getElementById("sort-current-icon");
   const currentConfig = SORT_CONFIG[currentSort.key] || SORT_CONFIG.default;
 
-  if (label) {
-    label.textContent = currentConfig.label || "Default";
-  }
-
-  if (icon) {
-    if (!currentConfig.allowsDirection) {
-      icon.textContent = "";
-      icon.hidden = true;
-    } else {
-      icon.hidden = false;
-      icon.textContent = getSortDirectionGlyph(currentSort.direction);
-    }
-  }
-
   if (trigger) {
+    const currentLabel = currentConfig.label || "Default";
+    const currentDescription = currentConfig.allowsDirection
+      ? `${currentLabel} ${currentSort.direction === "asc" ? "ascending" : "descending"}`
+      : currentLabel;
     trigger.setAttribute(
       "aria-label",
-      currentConfig.allowsDirection
-        ? `Sort: ${currentConfig.label || "Default"} ${currentSort.direction === "asc" ? "ascending" : "descending"}`
-        : `Sort: ${currentConfig.label || "Default"}`
+      `Filter menu. Current selection: ${currentDescription}`
     );
   }
 
@@ -116,8 +115,8 @@ function selectSortOption(sortKey) {
   const config = SORT_CONFIG[sortKey];
   if (!config) return;
 
-  if (sortKey === "default") {
-    currentSort = { key: "default", direction: "desc" };
+  if (sortKey === "default" || sortKey === "tiered") {
+    currentSort = { key: sortKey, direction: "desc" };
   } else if (config.allowsDirection && currentSort.key === sortKey) {
     currentSort.direction = currentSort.direction === "desc" ? "asc" : "desc";
   } else {
@@ -133,15 +132,71 @@ function selectSortOption(sortKey) {
 }
 
 function toggleForm() {
+  if (isAddingEntry) return;
+
   const form = document.getElementById("add-form");
   const panel = document.getElementById("add-panel");
   const btn = document.getElementById("toggle-btn");
   const toggle = document.querySelector(".add-toggle");
 
+  if (!form || !panel || !btn) return;
+
   const isOpen = form.classList.toggle("visible");
   panel.classList.toggle("open", isOpen);
   btn.classList.toggle("open", isOpen);
   toggle?.setAttribute("aria-expanded", String(isOpen));
+
+  if (isOpen) {
+    document.getElementById("f-title")?.focus();
+  }
+}
+
+function getAddProgressElements() {
+  return {
+    form: document.getElementById("add-form"),
+    submit: document.getElementById("add-submit-btn"),
+    progress: document.getElementById("add-progress"),
+    label: document.getElementById("add-progress-label"),
+    value: document.getElementById("add-progress-value"),
+    fill: document.getElementById("add-progress-fill")
+  };
+}
+
+function setAddFormBusy(isBusy) {
+  const { form, submit } = getAddProgressElements();
+  if (!form) return;
+
+  form.classList.toggle("is-busy", isBusy);
+  form.querySelectorAll("input, select, button").forEach(control => {
+    control.disabled = isBusy;
+  });
+
+  if (submit) {
+    submit.textContent = isBusy ? "Working..." : "Add Entry";
+  }
+}
+
+function setAddProgress(percent, label) {
+  const { progress, label: labelEl, value, fill } = getAddProgressElements();
+  if (!progress || !labelEl || !value || !fill) return;
+
+  const safePercent = Math.max(0, Math.min(100, Math.round(percent)));
+  progress.hidden = false;
+  progress.classList.add("visible");
+  labelEl.textContent = label;
+  value.textContent = `${safePercent}%`;
+  fill.style.width = `${safePercent}%`;
+}
+
+function resetAddProgress() {
+  const { progress, label, value, fill } = getAddProgressElements();
+  if (!progress || !label || !value || !fill) return;
+
+  progress.hidden = true;
+  progress.classList.remove("visible");
+  label.textContent = "Preparing entry...";
+  value.textContent = "0%";
+  fill.style.width = "0%";
 }
 
 function escapeHtml(str) {
@@ -155,11 +210,65 @@ function escapeHtml(str) {
 
 function statusClass(status) {
   const s = normalizeStatus(status);
-  if (s === "ongoing") return "status-ongoing";
+  if (s === "want to read") return "status-want-to-read";
+  if (s === "reading") return "status-reading";
   if (s === "finished") return "status-finished";
   if (s === "hiatus") return "status-hiatus";
   if (s === "cancelled") return "status-cancelled";
   return "status-unknown";
+}
+
+function getStatusLabel(status) {
+  const normalized = normalizeStatus(status);
+  if (!normalized) return "";
+  return STATUS_LABELS[normalized] || String(status || "").trim();
+}
+
+function getStatusSelectValue(status) {
+  return getStatusLabel(status) || "Want to Read";
+}
+
+function getStatusProgressLabel(status) {
+  const normalized = normalizeStatus(status);
+  if (normalized === "finished") return "Read";
+  if (normalized === "want to read") return "Added";
+  return "Started";
+}
+
+async function fetchPosterForEntry(id) {
+  const response = await fetch(`${API}/${encodeURIComponent(id)}/fetch-poster`, {
+    method: "POST"
+  });
+
+  if (!response.ok) return null;
+  return response.json();
+}
+
+async function requestMissingPoster(id) {
+  const key = String(id || "");
+  if (!key || posterFetchInFlight.has(key) || posterFetchAttempted.has(key)) return;
+
+  posterFetchAttempted.add(key);
+  posterFetchInFlight.add(key);
+
+  try {
+    const updatedEntry = await fetchPosterForEntry(key);
+    if (updatedEntry?.image) {
+      entryCache[key] = {
+        ...(entryCache[key] || {}),
+        ...updatedEntry
+      };
+      await loadEntries();
+    }
+  } catch (error) {
+    console.error(`Failed to fetch missing poster for entry ${key}`, error);
+  } finally {
+    posterFetchInFlight.delete(key);
+  }
+}
+
+function getCardPosterSrc(entry) {
+  return entry?.thumbnail || entry?.image || "";
 }
 
 function isNsfwEntry(entry) {
@@ -224,7 +333,8 @@ function ensureEditModal() {
         <div class="field">
           <label>STATUS</label>
           <select id="edit-status">
-            <option>Ongoing</option>
+            <option>Want to Read</option>
+            <option>Reading</option>
             <option>Finished</option>
             <option>Hiatus</option>
             <option>Cancelled</option>
@@ -279,7 +389,7 @@ function openEditModal(id) {
 
   document.getElementById("edit-title").value = entry.title || "";
   document.getElementById("edit-score").value = entry.score || "";
-  document.getElementById("edit-status").value = entry.status || "Ongoing";
+  document.getElementById("edit-status").value = getStatusSelectValue(entry.status);
   document.getElementById("edit-chapter").value = entry.chapter || "";
   document.getElementById("edit-year").value = entry.year || "";
   document.getElementById("edit-nsfw").checked = isNsfwEntry(entry);
@@ -335,6 +445,17 @@ async function saveEditEntry() {
 }
 
 async function addEntry() {
+  if (isAddingEntry) return;
+
+  const titleInput = document.getElementById("f-title");
+  const title = titleInput?.value.trim() || "";
+
+  if (!title) {
+    alert("Enter a title.");
+    titleInput?.focus();
+    return;
+  }
+
   const formData = new FormData();
   const yearInput = document.getElementById("f-year").value.trim();
 
@@ -349,7 +470,7 @@ async function addEntry() {
 
   const score = document.getElementById("f-score").value;
 
-  formData.append("title", document.getElementById("f-title").value.trim());
+  formData.append("title", title);
   formData.append("score", score);
   formData.append("status", document.getElementById("f-status").value);
   formData.append("chapter", document.getElementById("f-ch").value);
@@ -360,20 +481,59 @@ async function addEntry() {
   const file = document.getElementById("f-image").files[0];
   if (file) formData.append("image", file);
 
-  await fetch(API, {
-    method: "POST",
-    body: formData
-  });
+  isAddingEntry = true;
+  setAddFormBusy(true);
+  setAddProgress(16, file ? "Uploading your entry..." : "Creating your entry...");
 
-  document.getElementById("f-title").value = "";
-  document.getElementById("f-score").value = "";
-  document.getElementById("f-ch").value = "";
-  document.getElementById("f-year").value = "";
-  document.getElementById("f-image").value = "";
-  document.getElementById("f-note").value = "";
-  document.getElementById("f-nsfw").checked = false;
+  try {
+    const response = await fetch(API, {
+      method: "POST",
+      body: formData
+    });
 
-  loadEntries();
+    if (!response.ok) {
+      throw new Error("Failed to add the entry.");
+    }
+
+    let createdEntry = await response.json();
+    setAddProgress(54, file ? "Saving uploaded poster..." : "Entry saved. Checking poster...");
+
+    if (!file && createdEntry?.id && !createdEntry?.image) {
+      setAddProgress(76, "Fetching poster from AniList...");
+      const fetchedEntry = await fetchPosterForEntry(createdEntry.id);
+      if (fetchedEntry?.image) {
+        createdEntry = fetchedEntry;
+        setAddProgress(94, "Poster saved to uploads.");
+      } else {
+        setAddProgress(94, "Finishing without a poster.");
+      }
+    } else {
+      setAddProgress(94, file ? "Poster uploaded." : "Poster saved to uploads.");
+    }
+
+    titleInput.value = "";
+    document.getElementById("f-score").value = "";
+    document.getElementById("f-ch").value = "";
+    document.getElementById("f-year").value = "";
+    document.getElementById("f-image").value = "";
+    document.getElementById("f-note").value = "";
+    document.getElementById("f-nsfw").checked = false;
+
+    await loadEntries();
+    setAddProgress(100, "Complete.");
+    await new Promise(resolve => setTimeout(resolve, 320));
+    resetAddProgress();
+    titleInput.focus();
+  } catch (error) {
+    console.error(error);
+    setAddProgress(100, "Something went wrong.");
+    await new Promise(resolve => setTimeout(resolve, 500));
+    resetAddProgress();
+    alert("Failed to add the entry.");
+  } finally {
+    setAddFormBusy(false);
+    isAddingEntry = false;
+  }
 }
 
 async function deleteEntry(id) {
@@ -452,11 +612,14 @@ const TIER_ORDER = { "S+": 0, "S": 1, "A": 2, "B": 3, "C": 4, "D": 5, "F": 6 };
 
 function normalizeStatus(status) {
   const normalized = String(status || "").trim().toLowerCase();
+  if (!normalized) return "";
   if (normalized === "canceled") return "cancelled";
-  if (normalized === "ongoing" || normalized === "finished" || normalized === "hiatus" || normalized === "cancelled") {
+  if (normalized === "want-to-read" || normalized === "wanttoread") return "want to read";
+  if (normalized === "ongoing") return "reading";
+  if (normalized === "reading" || normalized === "finished" || normalized === "hiatus" || normalized === "cancelled" || normalized === "want to read") {
     return normalized;
   }
-  return "unknown";
+  return normalized;
 }
 
 function getTierOrder(entry) {
@@ -774,7 +937,7 @@ async function loadEntries() {
     container.appendChild(grid);
     return;
   }
-  const canReorderTies = sortValue === "default" && search === "" && !hideNsfw;
+  const canReorderTies = (sortValue === "default" || sortValue === "tiered") && search === "" && !hideNsfw;
   const scoreCounts = new Map();
 
   if (canReorderTies) {
@@ -804,7 +967,7 @@ async function loadEntries() {
   } else {
     sortDefaultEntries(filtered);
   }
-  const useTierGroups = sortValue === "default" || sortValue === "score" || sortConfig.filterType === "status" || sortConfig.filterType === "nsfw";
+  const useTierGroups = sortValue === "tiered" || sortValue === "score" || sortConfig.filterType === "status" || sortConfig.filterType === "nsfw";
 
   function buildCard(entry, index, canDragRank, hasCbz) {
     const score = entry.score || null;
@@ -812,6 +975,10 @@ async function loadEntries() {
     const year = entry.year || "-";
     const nsfw = isNsfwEntry(entry);
     const numericScore = getNumericScore(entry);
+    const isPriorityPoster = index < 8;
+    if (!entry.image) {
+      void requestMissingPoster(entry.id);
+    }
     const rankBadgeHtml = canDragRank
       ? `<div class="rank-badge rank-badge-draggable" draggable="true" title="Drag to reorder ties" aria-label="Drag to reorder ties">#${index + 1}</div>`
       : `<div class="rank-badge">#${index + 1}</div>`;
@@ -822,8 +989,8 @@ async function loadEntries() {
     card.dataset.scoreValue = String(numericScore);
     card.innerHTML = `
       <a class="entry-poster entry-poster-link" href="/reader?id=${entry.id}" aria-label="Open reader for ${escapeHtml(entry.title)}">
-        ${entry.image
-          ? `<img class="poster-img" src="${entry.image}" alt="${escapeHtml(entry.title)}">`
+        ${getCardPosterSrc(entry)
+          ? `<img class="poster-img" src="${getCardPosterSrc(entry)}" alt="${escapeHtml(entry.title)}" loading="${isPriorityPoster ? "eager" : "lazy"}" decoding="async" fetchpriority="${isPriorityPoster ? "high" : "low"}" width="300" height="400">`
           : `<div class="poster-empty">No Image</div>`
         }
         ${rankBadgeHtml}
@@ -831,12 +998,12 @@ async function loadEntries() {
       <div class="entry-content">
         <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
         <div class="entry-meta">
-          <span class="badge ${statusClass(entry.status)}">${escapeHtml(entry.status || "Unknown")}</span>
+          <span class="badge ${statusClass(entry.status)}">${escapeHtml(getStatusLabel(entry.status) || "Unknown")}</span>
           ${nsfw ? `<span class="badge badge-nsfw">NSFW</span>` : ""}
           <span class="tier-badge tier-${(score || "ungraded").replace("+","plus")} tier-quick-edit" data-entry-id="${entry.id}" data-current-score="${score || ""}" onclick="openQuickTierEdit(event, this)" title="Click to change tier"><span class="tier-label-text">${score ? escapeHtml(score) : "—"}</span></span>
           ${chapter && chapter !== "-" ? `<span>Ch: <b>${escapeHtml(chapter)}</b></span>` : ""}
           <span>
-            ${String(entry.status).toLowerCase() === "finished" ? "Read" : "Started"}:
+            ${getStatusProgressLabel(entry.status)}:
             <b>${escapeHtml(year)}</b>
           </span>
         </div>
@@ -897,7 +1064,7 @@ async function loadEntries() {
       // Tier label row
       const labelRow = document.createElement("div");
       labelRow.className = "tier-label-row";
-      labelRow.innerHTML = `<span class="tier-label-pill ${tierClass}">${tierLabel || "Ungraded"}</span><span class="tier-count">${entries.length}</span>`;
+      labelRow.innerHTML = `<span class="tier-label-pill ${tierClass}">${tierLabel || "Ungraded"}</span><span class="tier-count ${tierClass}">${entries.length}</span>`;
       container.appendChild(labelRow);
 
       // Grid for this tier
